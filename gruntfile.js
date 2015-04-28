@@ -46,7 +46,7 @@ module.exports = function(grunt) {
         },
         clean: ['dist'],
         copy: [
-            { expand: true, flatten: true, src: ['resources/*'], dest: 'dist/' }
+            { expand: true,flatten:true, src: ['resources/*.*', 'resources/**/*.*'], dest: 'dist/' }
         ],
         simplemocha: {
             options: {
