@@ -17,8 +17,14 @@
         <!-- Custom styles for this template -->
     </head>
     
-    <body></body>
+    <body>
+        <div id="menu"></div>
+        <div id="vis" style="height:100%;width:100%;"></div>
+    </body>
     <!-- App Script  -->
     <script src="js/App.js"></script>
-    <script>App.url('data/sample1.json').init();</script>
+    <script>
+        
+        App.url('sample1.json').selector('#vis').height(1000).width($('#vis').width()).init();
+    </script>
 </html>
