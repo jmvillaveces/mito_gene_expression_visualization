@@ -4,7 +4,6 @@ Backbone.$ = jQuery;
 
 Handlebars = require('handlebars');
 _ = require('underscore');
+d3 = require('d3');
 
-
-App = {};
-App.init = function(options){};
+App = require('./js/main');
