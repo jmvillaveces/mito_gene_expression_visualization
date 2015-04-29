@@ -14,17 +14,14 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <!-- Custom styles for this template -->
+        <!-- Bootstrap -->
+        <link href='bootstrap.min.css' rel='stylesheet' type='text/css'>
     </head>
     
-    <body>
-        <div id="menu"></div>
-        <div id="vis" style="height:100%;width:100%;"></div>
-    </body>
+    <body></body>
     <!-- App Script  -->
     <script src="js/App.js"></script>
     <script>
-        
-        App.url('sample1.json').selector('#vis').height(1000).width($('#vis').width()).init();
+        App.init({});
     </script>
 </html>
