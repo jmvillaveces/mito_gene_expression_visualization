@@ -61,7 +61,7 @@ var _create_vis = function(){
     _circles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
     
     _circles.enter().append('circle')
-        .attr('r', function(d){return d.radius;})
+        .attr('r', 0)
         .attr('fill', function(d){ return d.color; })
         .attr('id', function(d) { return 'bubble_' + d.id; })
         .on('mouseover', function(d, i) {
@@ -69,7 +69,10 @@ var _create_vis = function(){
         }).on('mouseout', function(d, i) {
             console.log('mouseout');
         })
-        .on('click', function(d){console.log(d);});
+        .on('click', function(d){console.log(d);})
+        .transition().duration(2000).attr("r", function(d) {
+            return d.radius;
+        });
     
     _center = { x:_width/2, y: _height/2 };
     _force = d3.layout.force().nodes(_data.nodes).size([_width, _height]);
@@ -153,6 +156,10 @@ App.displayTowardProcess = function(){
     _display_by_process();
 };
 
+App.displayGroupAll = function(){
+    _display_group_all();
+};
+
 App.init = function(){
     d3.json(_url, function(error, json) {
         if (error) return console.warn(error);
@@ -172,7 +179,7 @@ _ = require('underscore');
 d3 = require('d3');
 
 App = require('./js/main');
-},{"./js/main":1,"backbone":3,"d3":4,"handlebars":25,"jquery":37,"underscore":38}],3:[function(require,module,exports){
+},{"./js/main":1,"backbone":3,"d3":4,"handlebars":26,"jquery":38,"underscore":39}],3:[function(require,module,exports){
 //     Backbone.js 1.1.2
 
 //     (c) 2010-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1782,7 +1789,7 @@ App = require('./js/main');
 
 }));
 
-},{"underscore":38}],4:[function(require,module,exports){
+},{"underscore":39}],4:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.5"
@@ -11578,16 +11585,15 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],8:[function(require,module,exports){
-(function (global){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
 
 exports.__esModule = true;
 
-var _Handlebars = require('./handlebars.runtime');
+var _runtime = require('./handlebars.runtime');
 
-var _Handlebars2 = _interopRequireWildcard(_Handlebars);
+var _runtime2 = _interopRequireWildcard(_runtime);
 
 // Compiler imports
 
@@ -11607,7 +11613,11 @@ var _Visitor = require('./handlebars/compiler/visitor');
 
 var _Visitor2 = _interopRequireWildcard(_Visitor);
 
-var _create = _Handlebars2['default'].create;
+var _noConflict = require('./handlebars/no-conflict');
+
+var _noConflict2 = _interopRequireWildcard(_noConflict);
+
+var _create = _runtime2['default'].create;
 function create() {
   var hb = _create();
 
@@ -11630,31 +11640,20 @@ function create() {
 var inst = create();
 inst.create = create;
 
-inst.Visitor = _Visitor2['default'];
+_noConflict2['default'](inst);
 
-/*jshint -W040 */
-/* istanbul ignore next */
-var $Handlebars = global.Handlebars;
-/* istanbul ignore next */
-inst.noConflict = function () {
-  if (global.Handlebars === inst) {
-    global.Handlebars = $Handlebars;
-  }
-};
+inst.Visitor = _Visitor2['default'];
 
 inst['default'] = inst;
 
 exports['default'] = inst;
 module.exports = exports['default'];
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./handlebars.runtime":9,"./handlebars/compiler/ast":11,"./handlebars/compiler/base":12,"./handlebars/compiler/compiler":14,"./handlebars/compiler/javascript-compiler":16,"./handlebars/compiler/visitor":19}],9:[function(require,module,exports){
-(function (global){
+},{"./handlebars.runtime":9,"./handlebars/compiler/ast":11,"./handlebars/compiler/base":12,"./handlebars/compiler/compiler":14,"./handlebars/compiler/javascript-compiler":16,"./handlebars/compiler/visitor":19,"./handlebars/no-conflict":22}],9:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
 
 exports.__esModule = true;
-/*global window */
 
 var _import = require('./handlebars/base');
 
@@ -11679,6 +11678,10 @@ var _import3 = require('./handlebars/runtime');
 
 var runtime = _interopRequireWildcard(_import3);
 
+var _noConflict = require('./handlebars/no-conflict');
+
+var _noConflict2 = _interopRequireWildcard(_noConflict);
+
 // For compatibility and usage outside of module systems, make the Handlebars object a namespace
 function create() {
   var hb = new base.HandlebarsEnvironment();
@@ -11697,26 +11700,16 @@ function create() {
   return hb;
 }
 
-var Handlebars = create();
-Handlebars.create = create;
+var inst = create();
+inst.create = create;
 
-/*jshint -W040 */
-/* istanbul ignore next */
-var root = typeof global !== 'undefined' ? global : window,
-    $Handlebars = root.Handlebars;
-/* istanbul ignore next */
-Handlebars.noConflict = function () {
-  if (root.Handlebars === Handlebars) {
-    root.Handlebars = $Handlebars;
-  }
-};
+_noConflict2['default'](inst);
 
-Handlebars['default'] = Handlebars;
+inst['default'] = inst;
 
-exports['default'] = Handlebars;
+exports['default'] = inst;
 module.exports = exports['default'];
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./handlebars/base":10,"./handlebars/exception":21,"./handlebars/runtime":22,"./handlebars/safe-string":23,"./handlebars/utils":24}],10:[function(require,module,exports){
+},{"./handlebars/base":10,"./handlebars/exception":21,"./handlebars/no-conflict":22,"./handlebars/runtime":23,"./handlebars/safe-string":24,"./handlebars/utils":25}],10:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
@@ -11990,7 +11983,7 @@ function createFrame(object) {
 }
 
 /* [args, ]options */
-},{"./exception":21,"./utils":24}],11:[function(require,module,exports){
+},{"./exception":21,"./utils":25}],11:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -12190,7 +12183,7 @@ function parse(input, options) {
   var strip = new _WhitespaceControl2['default']();
   return strip.accept(_parser2['default'].parse(input));
 }
-},{"../utils":24,"./ast":11,"./helpers":15,"./parser":17,"./whitespace-control":20}],13:[function(require,module,exports){
+},{"../utils":25,"./ast":11,"./helpers":15,"./parser":17,"./whitespace-control":20}],13:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -12355,7 +12348,7 @@ exports['default'] = CodeGen;
 module.exports = exports['default'];
 
 /* NOP */
-},{"../utils":24,"source-map":26}],14:[function(require,module,exports){
+},{"../utils":25,"source-map":27}],14:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
@@ -12883,7 +12876,7 @@ function transformLiteralToPath(sexpr) {
     sexpr.path = new _AST2['default'].PathExpression(false, 0, [literal.original + ''], literal.original + '', literal.loc);
   }
 }
-},{"../exception":21,"../utils":24,"./ast":11}],15:[function(require,module,exports){
+},{"../exception":21,"../utils":25,"./ast":11}],15:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
@@ -12934,7 +12927,6 @@ function stripComment(comment) {
 }
 
 function preparePath(data, parts, locInfo) {
-  /*jshint -W040 */
   locInfo = this.locInfo(locInfo);
 
   var original = data ? '@' : '',
@@ -12966,7 +12958,6 @@ function preparePath(data, parts, locInfo) {
 }
 
 function prepareMustache(path, params, hash, open, strip, locInfo) {
-  /*jshint -W040 */
   // Must use charAt to support IE pre-10
   var escapeFlag = open.charAt(3) || open.charAt(2),
       escaped = escapeFlag !== '{' && escapeFlag !== '&';
@@ -12975,7 +12966,6 @@ function prepareMustache(path, params, hash, open, strip, locInfo) {
 }
 
 function prepareRawBlock(openRawBlock, content, close, locInfo) {
-  /*jshint -W040 */
   if (openRawBlock.path.original !== close) {
     var errorNode = { loc: openRawBlock.path.loc };
 
@@ -12989,7 +12979,6 @@ function prepareRawBlock(openRawBlock, content, close, locInfo) {
 }
 
 function prepareBlock(openBlock, program, inverseAndProgram, close, inverted, locInfo) {
-  /*jshint -W040 */
   // When we are chaining inverse calls, we will not have a close path
   if (close && close.path && openBlock.path.original !== close.path.original) {
     var errorNode = { loc: openBlock.path.loc };
@@ -13457,7 +13446,6 @@ JavaScriptCompiler.prototype = {
   //
   // Push the data lookup operator
   lookupData: function lookupData(depth, parts) {
-    /*jshint -W083 */
     if (!depth) {
       this.pushStackLiteral('data');
     } else {
@@ -13470,7 +13458,6 @@ JavaScriptCompiler.prototype = {
   resolvePath: function resolvePath(type, parts, i, falsy) {
     var _this = this;
 
-    /*jshint -W083 */
     if (this.options.strict || this.options.assumeObjects) {
       this.push(strictLookup(this.options.strict, this, parts, type));
       return;
@@ -14084,11 +14071,10 @@ function strictLookup(requireTerminal, compiler, parts, type) {
 
 exports['default'] = JavaScriptCompiler;
 module.exports = exports['default'];
-},{"../base":10,"../exception":21,"../utils":24,"./code-gen":13}],17:[function(require,module,exports){
+},{"../base":10,"../exception":21,"../utils":25,"./code-gen":13}],17:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
-/* jshint ignore:start */
 /* istanbul ignore next */
 /* Jison generated parser */
 var handlebars = (function () {
@@ -14763,8 +14749,6 @@ var handlebars = (function () {
     }Parser.prototype = parser;parser.Parser = Parser;
     return new Parser();
 })();exports["default"] = handlebars;
-
-/* jshint ignore:end */
 module.exports = exports["default"];
 },{}],18:[function(require,module,exports){
 'use strict';
@@ -15318,6 +15302,27 @@ Exception.prototype = new Error();
 exports['default'] = Exception;
 module.exports = exports['default'];
 },{}],22:[function(require,module,exports){
+(function (global){
+'use strict';
+
+exports.__esModule = true;
+/*global window */
+
+exports['default'] = function (Handlebars) {
+  /* istanbul ignore next */
+  var root = typeof global !== 'undefined' ? global : window,
+      $Handlebars = root.Handlebars;
+  /* istanbul ignore next */
+  Handlebars.noConflict = function () {
+    if (root.Handlebars === Handlebars) {
+      root.Handlebars = $Handlebars;
+    }
+  };
+};
+
+module.exports = exports['default'];
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],23:[function(require,module,exports){
 'use strict';
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
@@ -15550,7 +15555,7 @@ function initData(context, data) {
   }
   return data;
 }
-},{"./base":10,"./exception":21,"./utils":24}],23:[function(require,module,exports){
+},{"./base":10,"./exception":21,"./utils":25}],24:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -15565,7 +15570,7 @@ SafeString.prototype.toString = SafeString.prototype.toHTML = function () {
 
 exports['default'] = SafeString;
 module.exports = exports['default'];
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -15577,7 +15582,6 @@ exports.escapeExpression = escapeExpression;
 exports.isEmpty = isEmpty;
 exports.blockParams = blockParams;
 exports.appendContextPath = appendContextPath;
-/*jshint -W004 */
 var escape = {
   '&': '&amp;',
   '<': '&lt;',
@@ -15681,7 +15685,7 @@ function blockParams(params, ids) {
 function appendContextPath(contextPath, id) {
   return (contextPath ? contextPath + '.' : '') + id;
 }
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 // USAGE:
 // var handlebars = require('handlebars');
 /* eslint-disable no-var */
@@ -15708,7 +15712,7 @@ if (typeof require !== 'undefined' && require.extensions) {
   require.extensions['.hbs'] = extension;
 }
 
-},{"../dist/cjs/handlebars":8,"../dist/cjs/handlebars/compiler/printer":18,"fs":5}],26:[function(require,module,exports){
+},{"../dist/cjs/handlebars":8,"../dist/cjs/handlebars/compiler/printer":18,"fs":5}],27:[function(require,module,exports){
 /*
  * Copyright 2009-2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE.txt or:
@@ -15718,7 +15722,7 @@ exports.SourceMapGenerator = require('./source-map/source-map-generator').Source
 exports.SourceMapConsumer = require('./source-map/source-map-consumer').SourceMapConsumer;
 exports.SourceNode = require('./source-map/source-node').SourceNode;
 
-},{"./source-map/source-map-consumer":32,"./source-map/source-map-generator":33,"./source-map/source-node":34}],27:[function(require,module,exports){
+},{"./source-map/source-map-consumer":33,"./source-map/source-map-generator":34,"./source-map/source-node":35}],28:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -15817,7 +15821,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":35,"amdefine":36}],28:[function(require,module,exports){
+},{"./util":36,"amdefine":37}],29:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -15961,7 +15965,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./base64":29,"amdefine":36}],29:[function(require,module,exports){
+},{"./base64":30,"amdefine":37}],30:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -16005,7 +16009,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":36}],30:[function(require,module,exports){
+},{"amdefine":37}],31:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -16087,7 +16091,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":36}],31:[function(require,module,exports){
+},{"amdefine":37}],32:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2014 Mozilla Foundation and contributors
@@ -16175,7 +16179,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":35,"amdefine":36}],32:[function(require,module,exports){
+},{"./util":36,"amdefine":37}],33:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -16752,7 +16756,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":27,"./base64-vlq":28,"./binary-search":30,"./util":35,"amdefine":36}],33:[function(require,module,exports){
+},{"./array-set":28,"./base64-vlq":29,"./binary-search":31,"./util":36,"amdefine":37}],34:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -17154,7 +17158,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":27,"./base64-vlq":28,"./mapping-list":31,"./util":35,"amdefine":36}],34:[function(require,module,exports){
+},{"./array-set":28,"./base64-vlq":29,"./mapping-list":32,"./util":36,"amdefine":37}],35:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -17570,7 +17574,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./source-map-generator":33,"./util":35,"amdefine":36}],35:[function(require,module,exports){
+},{"./source-map-generator":34,"./util":36,"amdefine":37}],36:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -17891,7 +17895,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":36}],36:[function(require,module,exports){
+},{"amdefine":37}],37:[function(require,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 0.1.0 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
@@ -18194,9 +18198,9 @@ function amdefine(module, requireFn) {
 module.exports = amdefine;
 
 }).call(this,require('_process'),"/node_modules/handlebars/node_modules/source-map/node_modules/amdefine/amdefine.js")
-},{"_process":7,"path":6}],37:[function(require,module,exports){
+},{"_process":7,"path":6}],38:[function(require,module,exports){
 /*!
- * jQuery JavaScript Library v2.1.3
+ * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -18206,7 +18210,7 @@ module.exports = amdefine;
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2014-12-18T15:11Z
+ * Date: 2015-04-28T16:01Z
  */
 
 (function( global, factory ) {
@@ -18264,7 +18268,7 @@ var
 	// Use the correct document accordingly with window argument (sandbox)
 	document = window.document,
 
-	version = "2.1.3",
+	version = "2.1.4",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -18728,7 +18732,12 @@ jQuery.each("Boolean Number String Function Array Date RegExp Object Error".spli
 });
 
 function isArraylike( obj ) {
-	var length = obj.length,
+
+	// Support: iOS 8.2 (not reproducible in simulator)
+	// `in` check used to prevent JIT error (gh-2145)
+	// hasOwn isn't used here due to false negatives
+	// regarding Nodelist length in IE
+	var length = "length" in obj && obj.length,
 		type = jQuery.type( obj );
 
 	if ( type === "function" || jQuery.isWindow( obj ) ) {
@@ -27401,7 +27410,7 @@ return jQuery;
 
 }));
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
