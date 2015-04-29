@@ -69,7 +69,7 @@ var _create_vis = function(){
             console.log('mouseout');
         })
         .on('click', function(d){console.log(d);})
-        .transition().duration(2000).attr("r", function(d) {
+        .transition().duration(2000).attr('r', function(d) {
             return d.radius;
         });
     
