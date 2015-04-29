@@ -60,7 +60,7 @@ var _create_vis = function(){
     _circles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
     
     _circles.enter().append('circle')
-        .attr('r', function(d){return d.radius;})
+        .attr('r', 0)
         .attr('fill', function(d){ return d.color; })
         .attr('id', function(d) { return 'bubble_' + d.id; })
         .on('mouseover', function(d, i) {
@@ -68,7 +68,10 @@ var _create_vis = function(){
         }).on('mouseout', function(d, i) {
             console.log('mouseout');
         })
-        .on('click', function(d){console.log(d);});
+        .on('click', function(d){console.log(d);})
+        .transition().duration(2000).attr("r", function(d) {
+            return d.radius;
+        });
     
     _center = { x:_width/2, y: _height/2 };
     _force = d3.layout.force().nodes(_data.nodes).size([_width, _height]);
