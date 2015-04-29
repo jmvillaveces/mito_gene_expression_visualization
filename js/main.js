@@ -152,6 +152,10 @@ App.displayTowardProcess = function(){
     _display_by_process();
 };
 
+App.displayGroupAll = function(){
+    _display_group_all();
+};
+
 App.init = function(){
     d3.json(_url, function(error, json) {
         if (error) return console.warn(error);
