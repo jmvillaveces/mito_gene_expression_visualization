@@ -42,6 +42,7 @@ var _display_group_all = function() {
 };
 
 var _display_by_process = function(){
+    
     _force.gravity(_gravity)
         .charge(_charge)
         .friction(0.9)
@@ -54,6 +55,20 @@ var _display_by_process = function(){
         .start();
 };
 
+var _display_chart = function() {
+    _force.stop();
+    
+    _circles
+        .transition()
+        .duration(2000)
+        .attr('cy', function(d) {
+            return d.chart.y;
+        })
+        .attr('cx', function(d) {
+            return d.chart.x;
+        });
+};
+
 
 var _create_vis = function(){
     _vis = d3.select(_selector).append('svg').attr('width', _width).attr('height', _height).attr('id', 'svg_vis');
@@ -62,6 +77,10 @@ var _create_vis = function(){
     _circles.enter().append('circle')
         .attr('r', 0)
         .attr('fill', function(d){ return d.color; })
+        .attr('stroke-width', '1px')
+        .attr('stroke', function(d){
+            return (d.color === '#d84b2a') ? '#C72D0A' : (d.color === '#7aa25c') ? '#7E965D' : '#A7BB8F';
+        })
         .attr('id', function(d) { return 'bubble_' + d.id; })
         .on('mouseover', function(d, i) {
             console.log('mouseover');
@@ -79,22 +98,31 @@ var _create_vis = function(){
 };
 
 var _format_data = function(json){
-
+    _data = json;
+    _calc_process_centers();
+    
     var max_abs_log2 = d3.max(json.nodes, function(d) {
         return Math.abs(d.Log2fold_change);
     });
     
-    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([0.5, 40]);
+    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([0.5, 30]);
     
-    json.nodes = _.map(json.nodes, function(d){ 
+    
+    var processes = _.keys(_p_centers);
+    var x = d3.scale.linear().domain([0, processes.length]).range([100, _width]).nice();
+    var y = d3.scale.linear().domain(d3.extent(_data.nodes, function(d){ return d.Log2fold_change;})).range([50, 500]).nice();
+    
+    _data.nodes = _.map(_data.nodes, function(d){ 
         var val = Math.abs(d.Log2fold_change) + 1;
         d.radius = _radius_scale(val);
         d.color = (d.Log2fold_change > 1.5) ? '#7aa25c' : (d.Log2fold_change < - 1.5) ? '#d84b2a' : (d.p_value < 0.05 && d.Log2fold_change > 0) ? '#7aa25c' : (d.p_value < 0.05 && d.Log2fold_change < 0) ? '#d84b2a' : '#beccae';
+        
+        d.chart = { x: x(_p_centers[d.process].i), y: y(d.Log2fold_change) };
+        
         return d;
     });
     
-    _data = json;
-    _calc_process_centers();
+    _data.nodes = _data.nodes.sort(function(a,b){return b.radius - a.radius;});
 };
 
 var _calc_process_centers = function(){
@@ -111,9 +139,8 @@ var _calc_process_centers = function(){
     });
     
     parr.sort(function(a,b){return b.percentage - a.percentage;});
-    _.each(parr, function(p){
-        
-        _p_centers[p.process] = { x:wScale(this.row), y:hScale(this.col) };
+    _.each(parr, function(p, i){
+        _p_centers[p.process] = { x:wScale(this.row), y:hScale(this.col), i:i };
         
         if(this.row < rows -1){ 
             this.row ++;
@@ -161,6 +188,10 @@ Vis.displayTowardProcess = function(){
 
 Vis.displayGroupAll = function(){
     _display_group_all();
+};
+
+Vis.displayChart = function(){
+    _display_chart();
 };
 
 Vis.init = function(){
