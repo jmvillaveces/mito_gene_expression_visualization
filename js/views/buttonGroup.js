@@ -17,6 +17,8 @@ module.exports = Backbone.View.extend({
         var val = $(e.target).val();
         if(val === 'all'){
             App.views.vis.displayGroupAll();
+        }else if (val === 'chart'){
+            App.views.vis.displayChart();
         }else{
             App.views.vis.displayTowardProcess();
         }
