@@ -1,11 +1,14 @@
-var _url = '', _selector = null, _width = 500, _height = 500, _gravity = -0.01, _damper = 0.1, _center = null, _data = null, _vis = null, _circles = null, _force = null, _fill_color = null, _radius_scale = null, _p_centers = [];
+var _url = '', _selector = null, _width = 500, _height = 500, _gravity = -0.01, _damper = 0.1, _center = null, _data = null, _vis = null, _circles = null, _force = null, _radius_scale = null, _p_centers = {};
 
 var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
+
+var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
+var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
 
 var _buoyancy = function(alpha) {
     return function(d) {
         var val = d.y * 0.05 * alpha * alpha * alpha * 100;
-        d.y = (d.color === '#d84b2a') ? d.y + val : (d.color === '#7aa25c') ? d.y - val : d.y;
+        d.y = (d.reg === 'down') ? d.y + val : (d.reg === 'up') ? d.y - val : d.y;
     };
 };
 
@@ -62,9 +65,11 @@ var _display_chart = function() {
         .transition()
         .duration(2000)
         .attr('cy', function(d) {
+            d.y = d.chart.y; 
             return d.chart.y;
         })
         .attr('cx', function(d) {
+            d.x = d.chart.x;
             return d.chart.x;
         });
 };
@@ -76,10 +81,10 @@ var _create_vis = function(){
     
     _circles.enter().append('circle')
         .attr('r', 0)
-        .attr('fill', function(d){ return d.color; })
+        .attr('fill', function(d){ return _fill(d.reg); })
         .attr('stroke-width', '1px')
         .attr('stroke', function(d){
-            return (d.color === '#d84b2a') ? '#C72D0A' : (d.color === '#7aa25c') ? '#7E965D' : '#A7BB8F';
+            return _stroke(d.reg);
         })
         .attr('id', function(d) { return 'bubble_' + d.id; })
         .on('mouseover', function(d, i) {
@@ -97,50 +102,74 @@ var _create_vis = function(){
     _display_group_all();
 };
 
+var _create_process_ann = function(){
+    
+    var _process_ann = _vis.append('g');
+    
+    var x = _.map(_p_centers, function(val, key){
+        
+        var s = d3.extent(val.genes, function(d){ return d.y;});
+        console.log(s);
+        return {x:val.x, y:s[0]};//{x:val.x, y:val.y};
+    });
+    
+    _process_ann.selectAll('rect').data(x)
+        .enter().append('rect')
+            .attr('x', function(d) { return d.x; })
+            .attr('y', function(d) { return d.y; })
+            .attr('width', 10)
+            .attr('height', 10);
+        
+        
+    
+};
+
 var _format_data = function(json){
     _data = json;
-    _calc_process_centers();
     
     var max_abs_log2 = d3.max(json.nodes, function(d) {
         return Math.abs(d.Log2fold_change);
     });
     
-    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([0.5, 30]);
-    
-    
-    var processes = _.keys(_p_centers);
-    var x = d3.scale.linear().domain([0, processes.length]).range([100, _width]).nice();
-    var y = d3.scale.linear().domain(d3.extent(_data.nodes, function(d){ return d.Log2fold_change;})).range([50, 500]).nice();
+    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
     
     _data.nodes = _.map(_data.nodes, function(d){ 
         var val = Math.abs(d.Log2fold_change) + 1;
         d.radius = _radius_scale(val);
-        d.color = (d.Log2fold_change > 1.5) ? '#7aa25c' : (d.Log2fold_change < - 1.5) ? '#d84b2a' : (d.p_value < 0.05 && d.Log2fold_change > 0) ? '#7aa25c' : (d.p_value < 0.05 && d.Log2fold_change < 0) ? '#d84b2a' : '#beccae';
-        
+        d.reg = (d.Log2fold_change > 1.5) ? 'up' : (d.Log2fold_change < - 1.5) ? 'down' : (d.p_value < 0.05 && d.Log2fold_change > 0) ? 'up' : (d.p_value < 0.05 && d.Log2fold_change < 0) ? 'down' : 'none';
+        return d;
+    });
+    
+    _calc_positions();
+    
+    var processes = _.keys(_p_centers);
+    var x = d3.scale.linear().domain([0, processes.length]).range([100, _width]).nice();
+    var y = d3.scale.linear().domain(d3.extent(_data.nodes, function(d){ return d.Log2fold_change;})).range([0, 500]).nice();
+    
+    _data.nodes = _.map(_data.nodes, function(d){
         d.chart = { x: x(_p_centers[d.process].i), y: y(d.Log2fold_change) };
-        
         return d;
     });
     
     _data.nodes = _data.nodes.sort(function(a,b){return b.radius - a.radius;});
 };
 
-var _calc_process_centers = function(){
+var _calc_positions = function(){
     
     var rows = 4, cols = 5;
-    var wScale = d3.scale.linear().domain([0, rows]).range([250, _width]);
-    var hScale = d3.scale.linear().domain([0, cols]).range([250, _height]);
+    var wScale = d3.scale.linear().domain([0, rows]).range([230, _width]);
+    var hScale = d3.scale.linear().domain([0, cols]).range([230, _height]);
     
     _p_centers = _.groupBy(_data.nodes, function(n){ return n.process; }); 
-    var parr = [];
+    var _p_centers_arr = [];
     _.each(_p_centers, function(val, key){
-        var affected = _.filter(val, function(n){ return (n.color === '#d84b2a' || n.color === '#7aa25c'); }).length;
-        parr.push({percentage: (affected * 100)/ val.length, process: key});
+        var affected = _.filter(val, function(n){ return (n.reg === 'up' || n.reg === 'down'); }).length;
+        _p_centers_arr.push({percentage: (affected * 100) / val.length, process: key, genes : val});
     });
     
-    parr.sort(function(a,b){return b.percentage - a.percentage;});
-    _.each(parr, function(p, i){
-        _p_centers[p.process] = { x:wScale(this.row), y:hScale(this.col), i:i };
+    _p_centers_arr.sort(function(a,b){return b.percentage - a.percentage;});
+    _p_centers_arr = _.map(_p_centers_arr, function(p, i){
+        _p_centers[p.process] = { x:wScale(this.row), y:hScale(this.col), i : i, percentage : p.percentage, genes : p.genes };
         
         if(this.row < rows -1){ 
             this.row ++;
@@ -148,6 +177,8 @@ var _calc_process_centers = function(){
             this.col ++;
             this.row =0;
         }
+        
+        return p;
     }, {col:0,row:0});
 };
 

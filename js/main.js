@@ -14,9 +14,11 @@ App.init = function(options){
     App.views.main.setElement('body').render();
     
     App.views.buttonGroup = new ButtonGroup();
-    App.views.buttonGroup.setElement('#header').render();
+    App.views.buttonGroup.setElement('#navbar').render();
     
-    App.views.vis.url('sample1.json').selector('#vis').height(1000).width($('#vis').width()).init();
+    
+    
+    App.views.vis.url('sample1.json').selector('#vis').height($('#vis').height()).width($('#vis').width()).init();
 };
 
 module.exports = App;
