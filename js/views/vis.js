@@ -1,91 +1,83 @@
-var _url = '', _selector = null, _width = 500, _height = 500, _gravity = -0.01, _damper = 0.1, _center = null, _data = null, _vis = null, _circles = null, _force = null, _radius_scale = null, _p_centers = {};
-
-var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
+var _url, _width, _height, _force;
 
 var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
 var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
 
-var _buoyancy = function(alpha) {
-    return function(d) {
-        var val = d.y * 0.05 * alpha * alpha * alpha * 100;
-        d.y = (d.reg === 'down') ? d.y + val : (d.reg === 'up') ? d.y - val : d.y;
-    };
-};
-
-var _move_towards_center = function(alpha){
-    return function(d) {
-        d.x = d.x + (_center.x - d.x) * (_damper + 0.02) * alpha;
-        d.y = d.y + (_center.y - d.y) * (_damper + 0.02) * alpha;
-    };
-};
-
-var _move_towards_process = function(alpha) {
-    return function(d) {
-        var target = _p_centers[d.process];
-        d.x = d.x + (target.x - d.x) * (_damper + 0.02) * alpha * 1.1;
-        d.y = d.y + (target.y - d.y) * (_damper + 0.02) * alpha * 1.1;
-    };
-};
+var _format_data = function(json){
     
-
-var _display_group_all = function() {
-    _force.gravity(_gravity)
-        .charge(_charge)
-        .friction(0.9)
-        .on('tick', function(e) {
-            _circles.each(_move_towards_center(e.alpha)).each(_buoyancy(e.alpha))
-            .attr('cx', function(d) {
-                return d.x;
-            })
-            .attr('cy', function(d) {
-                return d.y;
-            });
-        })
-        .start();
-};
-
-var _display_by_process = function(){
+    var max_abs_log2 = d3.max(json.nodes, function(d) {
+        return Math.abs(d.Log2fold_change);
+    });
     
-    _force.gravity(_gravity)
-        .charge(_charge)
-        .friction(0.9)
-        .on('tick', function(e) {
-            _circles
-                .each(_move_towards_process(e.alpha))
-                .attr('cx', function(d) { return d.x; })
-                .attr('cy', function(d) { return d.y; });
-        })
-        .start();
-};
-
-var _display_chart = function() {
-    _force.stop();
+    var radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
     
-    _circles
-        .transition()
-        .duration(2000)
-        .attr('cy', function(d) {
-            d.y = d.chart.y; 
-            return d.chart.y;
+    _data = {};
+    _data.nodes = _.map(json.nodes, function(d){
+        d.regulated = (d.Log2fold_change > 1.5 || d.p_value < 0.05 && d.Log2fold_change > 0) ? 'up' : 
+            (d.Log2fold_change < - 1.5 || d.p_value < 0.05 && d.Log2fold_change < 0) ? 'down' : 'none';
+        
+        d.radius = radius_scale(Math.abs(d.Log2fold_change) + 1);
+        return d;
+    });
+    
+    // Calculate process centers
+    var rows = 4, cols = 3;
+    var wScale = d3.scale.linear().domain([-1, cols + 1 ]).range([0, _width]);
+    var hScale = d3.scale.linear().domain([-1, rows + 1 ]).range([25, _height]);
+    
+    _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
+    _processes = _.map(_processes, function(val, key){
+        var affected = _.filter(val, function(n){ return (n.reg === 'up' || n.reg === 'down'); }).length;
+        return {percentage: (affected * 100) / val.length, process: key, genes : val};
+    });
+    
+    _processes.sort(function(a,b){return b.percentage - a.percentage;});
+    
+    _processes = _.map(_processes, function(p){
+        p.px = wScale(this.row);
+        p.py = hScale(this.col);
+        
+         if(this.row < rows-1){
+            this.row++;
+        }else{
+            this.row = 0;
+            this.col++;
+        }
+        
+        return p; 
+    }, {col:0,row:0});
+    
+    //Pack Layout positions
+    var bubble = d3.layout.pack()
+        .sort(function(a, b) {
+            return -(a.value - b.value);
         })
-        .attr('cx', function(d) {
-            d.x = d.chart.x;
-            return d.chart.x;
-        });
+        .radius(function(r){ return r;})
+        .size([_width, _height])
+        .value(function(d){return d.radius;})
+        .children(function(d) { return d.genes;})
+        .padding(1);
+    
+    bubble.nodes({genes:_processes, name:'root'});
+    
+    _data.nodes = _.map(_data.nodes, function(d){
+        d.pack = {x: d.x, y: d.y};
+        d.x = 0;
+        d.y = 0;
+        return d;
+    });
 };
-
 
 var _create_vis = function(){
-    _vis = d3.select(_selector).append('svg').attr('width', _width).attr('height', _height).attr('id', 'svg_vis');
+    _vis = d3.select(_selector).append('svg').attr('class', 'canvas').attr('width', _width).attr('height', _height).attr('id', 'svg_vis');
+    
     _circles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
     
     _circles.enter().append('circle')
         .attr('r', 0)
-        .attr('fill', function(d){ return _fill(d.reg); })
+        .attr('fill', function(d){ return _fill(d.regulated); })
         .attr('stroke-width', '1px')
-        .attr('stroke', function(d){
-            return _stroke(d.reg);
-        })
+        .attr('stroke', function(d){ return _stroke(d.regulated);})
         .attr('id', function(d) { return 'bubble_' + d.id; })
         .on('mouseover', function(d, i) {
             console.log('mouseover');
@@ -95,92 +87,15 @@ var _create_vis = function(){
         .on('click', function(d){console.log(d);})
         .transition().duration(2000).attr('r', function(d) {
             return d.radius;
-        });
+        })
+        //.attr('transform', function(d) { return 'translate(' + d.parent.px + ',' + d.parent.py + ')'; });
+        .attr('transform', function(d) { return 'translate(0,0)'; });
     
-    _center = { x:_width/2, y: _height/2 };
-    _force = d3.layout.force().nodes(_data.nodes).size([_width, _height]);
-    _display_group_all();
+    _circles.attr('cx', function(d){return d.pack.x;})
+        .attr('cy', function(d){return d.pack.y;});
+
 };
 
-var _create_process_ann = function(){
-    
-    var _process_ann = _vis.append('g');
-    
-    var x = _.map(_p_centers, function(val, key){
-        
-        var s = d3.extent(val.genes, function(d){ return d.y;});
-        console.log(s);
-        return {x:val.x, y:s[0]};//{x:val.x, y:val.y};
-    });
-    
-    _process_ann.selectAll('rect').data(x)
-        .enter().append('rect')
-            .attr('x', function(d) { return d.x; })
-            .attr('y', function(d) { return d.y; })
-            .attr('width', 10)
-            .attr('height', 10);
-        
-        
-    
-};
-
-var _format_data = function(json){
-    _data = json;
-    
-    var max_abs_log2 = d3.max(json.nodes, function(d) {
-        return Math.abs(d.Log2fold_change);
-    });
-    
-    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
-    
-    _data.nodes = _.map(_data.nodes, function(d){ 
-        var val = Math.abs(d.Log2fold_change) + 1;
-        d.radius = _radius_scale(val);
-        d.reg = (d.Log2fold_change > 1.5) ? 'up' : (d.Log2fold_change < - 1.5) ? 'down' : (d.p_value < 0.05 && d.Log2fold_change > 0) ? 'up' : (d.p_value < 0.05 && d.Log2fold_change < 0) ? 'down' : 'none';
-        return d;
-    });
-    
-    _calc_positions();
-    
-    var processes = _.keys(_p_centers);
-    var x = d3.scale.linear().domain([0, processes.length]).range([100, _width]).nice();
-    var y = d3.scale.linear().domain(d3.extent(_data.nodes, function(d){ return d.Log2fold_change;})).range([0, 500]).nice();
-    
-    _data.nodes = _.map(_data.nodes, function(d){
-        d.chart = { x: x(_p_centers[d.process].i), y: y(d.Log2fold_change) };
-        return d;
-    });
-    
-    _data.nodes = _data.nodes.sort(function(a,b){return b.radius - a.radius;});
-};
-
-var _calc_positions = function(){
-    
-    var rows = 4, cols = 5;
-    var wScale = d3.scale.linear().domain([0, rows]).range([230, _width]);
-    var hScale = d3.scale.linear().domain([0, cols]).range([230, _height]);
-    
-    _p_centers = _.groupBy(_data.nodes, function(n){ return n.process; }); 
-    var _p_centers_arr = [];
-    _.each(_p_centers, function(val, key){
-        var affected = _.filter(val, function(n){ return (n.reg === 'up' || n.reg === 'down'); }).length;
-        _p_centers_arr.push({percentage: (affected * 100) / val.length, process: key, genes : val});
-    });
-    
-    _p_centers_arr.sort(function(a,b){return b.percentage - a.percentage;});
-    _p_centers_arr = _.map(_p_centers_arr, function(p, i){
-        _p_centers[p.process] = { x:wScale(this.row), y:hScale(this.col), i : i, percentage : p.percentage, genes : p.genes };
-        
-        if(this.row < rows -1){ 
-            this.row ++;
-        }else{
-            this.col ++;
-            this.row =0;
-        }
-        
-        return p;
-    }, {col:0,row:0});
-};
 
 //Public members
 var Vis = function(){};
