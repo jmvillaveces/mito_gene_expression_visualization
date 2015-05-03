@@ -18,7 +18,7 @@ App.init = function(options){
     
     
     
-    App.views.vis.url('sample1.json').selector('#vis').height($('#vis').height()).width($('#vis').width()).init();
+    App.views.vis.url('sample1.json').selector('#vis').height(960).width(960).init();
 };
 
 module.exports = App;
