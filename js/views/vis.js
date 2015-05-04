@@ -1,4 +1,4 @@
-var _url, _width, _height, _force, _gravity = -0.01, _damper = 0.1, _center;
+var _url, _width, _height, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150;
 
 var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
 var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
@@ -51,6 +51,19 @@ var _display_group_all = function() {
         .start();
 };
 
+var init_process_annotations = function(){
+    _p_annotations = _vis.append('g');
+    
+    _p_annotations.selectAll('text').data(_processes).enter().append('text')
+        .attr('x', function(d){return d.px;})
+        .attr('y', function(d){return d.py - 50;})
+        .attr('class', 'annotation')
+        .attr('text-anchor', 'middle')
+        .text(function(d){return d.process;});
+    
+    
+};
+
 var _format_data = function(json){
     
     _center = { x:_width/2, y: _height/2 };
@@ -72,8 +85,8 @@ var _format_data = function(json){
     
     // Calculate process centers
     var rows = 4, cols = 3;
-    var wScale = d3.scale.linear().domain([0, cols]).range([132, _width - 132]);
-    var hScale = d3.scale.linear().domain([0, rows]).range([132, _height - 132]);
+    var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
+    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _height - _offset]);
     
     _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
     _processes = _.map(_processes, function(val, key){
@@ -86,8 +99,6 @@ var _format_data = function(json){
     _processes = _.map(_processes, function(p){
         p.px = wScale(this.row);
         p.py = hScale(this.col);
-        
-        console.log(p.process);
         
         if(this.row < rows-1){
             this.row++;
@@ -143,7 +154,8 @@ var _create_vis = function(){
         .transition().duration(2000).attr('r', function(d) {
             return d.radius;
         });
-        //.attr('transform', function(d) { return 'translate(' + d.parent.px + ',' + d.parent.py + ')'; });
+    
+    init_process_annotations();
 };
 
 
