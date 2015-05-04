@@ -1,9 +1,11 @@
-var _url, _width, _height, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150;
+var _url, _width, _height, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations;
 
 var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
 var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
 
 var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
+
+var Annotations = require('./annotations');
 
 var _buoyancy = function(alpha) {
     return function(d) {
@@ -28,13 +30,16 @@ var _display_by_process = function(){
         })
         .attr('cy', function(d) {
             return d.pack.y;
-        }).attr('transform', function(d) { return 'translate(' + d.parent.px + ',' + d.parent.py + ')'; });
+        })
+        .attr('transform', function(d) { return 'translate(' + d.parent.px + ',' + d.parent.py + ')'; });
     
+    _p_annotations.fadeIn();
 };
 
 var _display_group_all = function() {
     
     _circles.attr('transform', null);
+    _p_annotations.hide();
     
     _force.gravity(_gravity)
         .charge(_charge)
@@ -52,16 +57,14 @@ var _display_group_all = function() {
 };
 
 var init_process_annotations = function(){
-    _p_annotations = _vis.append('g');
     
-    _p_annotations.selectAll('text').data(_processes).enter().append('text')
-        .attr('x', function(d){return d.px;})
-        .attr('y', function(d){return d.py - 50;})
-        .attr('class', 'annotation')
-        .attr('text-anchor', 'middle')
-        .text(function(d){return d.process;});
+    _p_annotations = $('<div id="_p_annotations" class="annotations"></div>').appendTo(_selector).hide();
     
     
+    var p = _.map(_processes, function(p){
+        return {px:p.px, py:p.py - 55, process: p.process, percentage: p.percentage};
+    });
+    var ann = new Annotations().setElement('#_p_annotations').render(p);
 };
 
 var _format_data = function(json){
@@ -91,7 +94,7 @@ var _format_data = function(json){
     _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
     _processes = _.map(_processes, function(val, key){
         var affected = _.filter(val, function(n){ return (n.regulated === 'up' || n.regulated === 'down'); }).length;
-        return {percentage: (affected * 100) / val.length, process: key, genes : val};
+        return {percentage: d3.round((affected * 100) / val.length, 2), process: key, genes : val};
     });
     
     _processes.sort(function(a,b){return b.percentage - a.percentage;});
@@ -157,7 +160,6 @@ var _create_vis = function(){
     
     init_process_annotations();
 };
-
 
 //Public members
 var Vis = function(){};
