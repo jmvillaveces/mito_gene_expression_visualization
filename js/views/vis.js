@@ -1,9 +1,59 @@
-var _url, _width, _height, _force;
+var _url, _width, _height, _force, _gravity = -0.01, _damper = 0.1, _center;
 
 var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
 var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
 
+var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
+
+var _buoyancy = function(alpha) {
+    return function(d) {
+        var val = d.y * 0.05 * alpha * alpha * alpha * 100;
+        d.y = (d.regulated === 'down') ? d.y + val : (d.regulated === 'up') ? d.y - val : d.y;
+    };
+};
+
+var _move_towards_center = function(alpha){
+    return function(d) {
+        d.x = d.x + (_center.x - d.x) * (_damper + 0.02) * alpha;
+        d.y = d.y + (_center.y - d.y) * (_damper + 0.02) * alpha;
+    };
+};
+
+var _display_by_process = function(){
+    _force.stop();
+    
+    _circles.transition().duration(2000)
+        .attr('cx', function(d) {
+            return d.pack.x;
+        })
+        .attr('cy', function(d) {
+            return d.pack.y;
+        }).attr('transform', function(d) { return 'translate(' + d.parent.px + ',' + d.parent.py + ')'; });
+    
+};
+
+var _display_group_all = function() {
+    
+    _circles.attr('transform', null);
+    
+    _force.gravity(_gravity)
+        .charge(_charge)
+        .friction(0.9)
+        .on('tick', function(e) {
+            _circles.each(_move_towards_center(e.alpha)).each(_buoyancy(e.alpha))
+                .attr('cx', function(d) {
+                    return d.x;
+                })
+                .attr('cy', function(d) {
+                    return d.y;
+                });
+        })
+        .start();
+};
+
 var _format_data = function(json){
+    
+    _center = { x:_width/2, y: _height/2 };
     
     var max_abs_log2 = d3.max(json.nodes, function(d) {
         return Math.abs(d.Log2fold_change);
@@ -22,12 +72,12 @@ var _format_data = function(json){
     
     // Calculate process centers
     var rows = 4, cols = 3;
-    var wScale = d3.scale.linear().domain([-1, cols + 1 ]).range([0, _width]);
-    var hScale = d3.scale.linear().domain([-1, rows + 1 ]).range([25, _height]);
+    var wScale = d3.scale.linear().domain([0, cols]).range([132, _width - 132]);
+    var hScale = d3.scale.linear().domain([0, rows]).range([132, _height - 132]);
     
     _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
     _processes = _.map(_processes, function(val, key){
-        var affected = _.filter(val, function(n){ return (n.reg === 'up' || n.reg === 'down'); }).length;
+        var affected = _.filter(val, function(n){ return (n.regulated === 'up' || n.regulated === 'down'); }).length;
         return {percentage: (affected * 100) / val.length, process: key, genes : val};
     });
     
@@ -37,7 +87,9 @@ var _format_data = function(json){
         p.px = wScale(this.row);
         p.py = hScale(this.col);
         
-         if(this.row < rows-1){
+        console.log(p.process);
+        
+        if(this.row < rows-1){
             this.row++;
         }else{
             this.row = 0;
@@ -47,25 +99,28 @@ var _format_data = function(json){
         return p; 
     }, {col:0,row:0});
     
-    //Pack Layout positions
-    var bubble = d3.layout.pack()
-        .sort(function(a, b) {
-            return -(a.value - b.value);
-        })
-        .radius(function(r){ return r;})
-        .size([_width, _height])
-        .value(function(d){return d.radius;})
-        .children(function(d) { return d.genes;})
-        .padding(1);
-    
-    bubble.nodes({genes:_processes, name:'root'});
+    _.each(_processes, function(p){
+        
+        //Pack Layout positions
+        var bubble = d3.layout.pack()
+            .sort(function(a, b) {
+                return -(a.value - b.value);
+            })
+            .radius(function(r){ return r;})
+            .value(function(d){return d.radius;})
+            .children(function(d) { return d.genes;})
+            .padding(1);
+        
+        bubble.nodes(p);
+    });
     
     _data.nodes = _.map(_data.nodes, function(d){
         d.pack = {x: d.x, y: d.y};
-        d.x = 0;
-        d.y = 0;
-        return d;
+        return _.omit(d, ['x', 'y']);
     });
+    
+    //init force
+    _force = d3.layout.force().nodes(_data.nodes).size([_width, _height]);
 };
 
 var _create_vis = function(){
@@ -87,13 +142,8 @@ var _create_vis = function(){
         .on('click', function(d){console.log(d);})
         .transition().duration(2000).attr('r', function(d) {
             return d.radius;
-        })
+        });
         //.attr('transform', function(d) { return 'translate(' + d.parent.px + ',' + d.parent.py + ')'; });
-        .attr('transform', function(d) { return 'translate(0,0)'; });
-    
-    _circles.attr('cx', function(d){return d.pack.x;})
-        .attr('cy', function(d){return d.pack.y;});
-
 };
 
 
@@ -145,6 +195,7 @@ Vis.init = function(){
         if (error) return console.warn(error);
         _format_data(json);
         _create_vis();
+        _display_group_all();
     });
 };
 
