@@ -27,7 +27,7 @@ this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[6,">= 2.0.0-
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div id=\"vis\" class=\"vis\"></div>\n    <div id=\"legend\"></div>\n</div>";
+    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-5\">\n                <div class=\"col-md-5\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-7\"></div>\n            </div>\n            <div class=\"col-md-2\"></div>\n            <div class=\"col-md-5\">\n                <div class=\"col-md-5\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-7\"></div>\n            </div>\n        </div>\n    </div>\n    <div id=\"vis\" class=\"vis\">\n    </div>\n</div>";
 },"useData":true});
 
 if (typeof exports === 'object' && exports) {module.exports = this["Templates"];}

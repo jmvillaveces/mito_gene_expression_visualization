@@ -52,7 +52,7 @@ this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[6,">= 2.0.0-
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div id=\"vis\" class=\"vis\"></div>\n    <div id=\"legend\"></div>\n</div>";
+    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-5\">\n                <div class=\"col-md-5\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-7\"></div>\n            </div>\n            <div class=\"col-md-2\"></div>\n            <div class=\"col-md-5\">\n                <div class=\"col-md-5\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-7\"></div>\n            </div>\n        </div>\n    </div>\n    <div id=\"vis\" class=\"vis\">\n    </div>\n</div>";
 },"useData":true});
 
 if (typeof exports === 'object' && exports) {module.exports = this["Templates"];}
@@ -109,7 +109,7 @@ module.exports = Backbone.View.extend({
     }
 });
 },{"../templates":2}],6:[function(require,module,exports){
-var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale;
+var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view;
 
 var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
 var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
@@ -134,6 +134,7 @@ var _move_towards_center = function(alpha){
 
 var _display_by_process = function(){
     _force.stop();
+    d3.selectAll('.axis').style('opacity', 0);
     d3.select(_selector).transition().duration(2000).style('height', _pheight);
     
     _circles.transition().duration(2000)
@@ -152,6 +153,7 @@ var _display_group_all = function() {
     
     d3.select(_selector).transition().duration(2000).style('height', _fheight);
     
+    d3.selectAll('.axis').style('opacity', 0);
     _circles.attr('transform', null);
     _p_annotations.hide();
     
@@ -168,6 +170,22 @@ var _display_group_all = function() {
                 });
         })
         .start();
+};
+
+var _display_chart = function() {
+    _force.stop();
+    _p_annotations.hide();
+    
+    _circles
+        .attr('cx', function(d){ return (_view === 'group') ? d.x : d.pack.x * 20; })
+        .attr('cy', function(d){ return (_view === 'group') ? d.y : d.pack.y * 20; })
+        .attr('transform', null);
+    
+    _circles.transition().duration(2000)
+        .attr('cx', function(d){ return d.chart.x; })
+        .attr('cy', function(d){ return d.chart.y; });
+    
+    d3.selectAll('.axis').transition().duration(2000).style('opacity', 1);
 };
 
 var init_process_annotations = function(){
@@ -251,6 +269,41 @@ var _format_data = function(json){
     _force = d3.layout.force().nodes(_data.nodes).size([_width, _fheight]);
 };
 
+var _init_chart = function(){
+    var margins = { top: 20, right: 20, bottom: 20, left: 50};
+    var pvalExtent = d3.extent(_data.nodes, function(d){ return d.p_value;});
+    var xRange = d3.scale.linear().range([margins.left, _width - margins.right]).domain(pvalExtent);
+    var yRange = d3.scale.linear().range([_fheight - margins.top, margins.bottom]).domain(d3.extent(_data.nodes, function(d){ return d.Log2fold_change;}));
+    
+    var xAxis = d3.svg.axis()
+        .scale(xRange)
+        .tickSize(5)
+        .tickSubdivide(true);
+    
+    var yAxis = d3.svg.axis()
+        .scale(yRange)
+        .tickSize(5)
+        .orient('left')
+        .tickSubdivide(true);
+    
+    _vis.append('g')
+        .attr('class', 'axis')
+        .attr('transform', 'translate(0,' + (_fheight - margins.bottom) + ')')
+        .attr('opacity', 0)
+        .call(xAxis);
+ 
+    _vis.append('g')
+        .attr('class', 'axis')
+        .attr('transform', 'translate(' + (margins.left) + ',0)')
+        .attr('opacity', 0)
+        .call(yAxis);
+    
+    _data.nodes = _.map(_data.nodes, function(d){
+        d.chart =  {x:xRange(d.p_value), y:yRange(d.Log2fold_change)};
+        return d;
+    });
+};
+
 var _create_vis = function(){
     
     _vis = d3.select(_selector).append('svg').attr('class', 'canvas').attr('width', _width).attr('id', 'svg_vis');
@@ -273,13 +326,14 @@ var _create_vis = function(){
             return d.radius;
         });
     
+    _init_chart();
     init_process_annotations();
     create_legend();
 };
 
 var create_legend = function(){
 
-    var legend = d3.select('#legend')
+    var legend = d3.select('#color_scale')
         .append('ul')
         .attr('class', 'list-inline');
 
@@ -293,7 +347,7 @@ var create_legend = function(){
             return d;
         });
     
-    var svg = d3.select('#legend').append('svg')
+    var svg = d3.select('#size_scale').append('svg')
             .attr('width', 150)
             .attr('height', 70).append('g').attr('transform', function(d) { return 'translate(' + 35 + ',' + 35 + ')'; });
     
@@ -321,15 +375,13 @@ var create_legend = function(){
         { r:d[1], log: Math.abs((min.Log2fold_change + max.Log2fold_change)/2)},
         { r:d[2], log: Math.abs(max.Log2fold_change)}
     ];
-    console.log(l);
+    
     svg.selectAll('text').data(l).enter()
         .append('text')
             .attr('x', 60)
             .attr('y', function(d){ return 30 - 2*d.r; })
             .attr('class', 'scale_text')
             .text(function(d){ return d3.round(d.log,3); });
-    
-    //d3.round((affected * 100) / val.length, 2)
 };
 
 //Public members
@@ -358,14 +410,17 @@ Vis.width = function(_){
 
 Vis.displayTowardProcess = function(){
     _display_by_process();
+    _view = 'process';
 };
 
 Vis.displayGroupAll = function(){
     _display_group_all();
+    _view = 'group';
 };
 
 Vis.displayChart = function(){
     _display_chart();
+    _view = 'chart';
 };
 
 Vis.init = function(){
