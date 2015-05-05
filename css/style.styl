@@ -1,4 +1,5 @@
 .container {
+    width:970;
 }
 
 .vis {
@@ -19,7 +20,7 @@
     border-bottom: solid 1px #DDD;
     padding: 15px 0 0;
     margin: 0 10px;
-    width: 100%;
+    width: 970;
 }
 
 .annotations {
@@ -40,7 +41,7 @@
     width:200px;
 }
 
-#legend {
+.legend {
     padding: 1.5em 0 0 1.5em;
 }
 
@@ -75,4 +76,19 @@ li.key:first-letter {
     font-size: .75em;
     text-align: center;
     alignment-baseline: middle;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+        
+.axis text {
+    font-family: 'Arial';
+    font-size: 13px;
+}
+
+.tick {
+    stroke-dasharray: 1, 2;
 }
