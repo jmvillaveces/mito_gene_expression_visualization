@@ -17,7 +17,7 @@ App.init = function(options){
     App.views.buttonGroup = new ButtonGroup();
     App.views.buttonGroup.setElement('#navbar').render();
     
-    App.views.vis.url('sample1.json').selector('#vis').height(960).width(1200).init();
+    App.views.vis.url('sample1.json').selector('#vis').width(970).init();
 };
 
 module.exports = App;
@@ -52,7 +52,7 @@ this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[6,">= 2.0.0-
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div id=\"vis\" class=\"vis\"></div>\n</div>";
+    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div id=\"vis\" class=\"vis\"></div>\n    <div id=\"legend\"></div>\n</div>";
 },"useData":true});
 
 if (typeof exports === 'object' && exports) {module.exports = this["Templates"];}
@@ -109,7 +109,7 @@ module.exports = Backbone.View.extend({
     }
 });
 },{"../templates":2}],6:[function(require,module,exports){
-var _url, _width, _height, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations;
+var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale;
 
 var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
 var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
@@ -134,6 +134,7 @@ var _move_towards_center = function(alpha){
 
 var _display_by_process = function(){
     _force.stop();
+    d3.select(_selector).transition().duration(2000).style('height', _pheight);
     
     _circles.transition().duration(2000)
         .attr('cx', function(d) {
@@ -148,6 +149,8 @@ var _display_by_process = function(){
 };
 
 var _display_group_all = function() {
+    
+    d3.select(_selector).transition().duration(2000).style('height', _fheight);
     
     _circles.attr('transform', null);
     _p_annotations.hide();
@@ -180,27 +183,27 @@ var init_process_annotations = function(){
 
 var _format_data = function(json){
     
-    _center = { x:_width/2, y: _height/2 };
+    _center = { x:_width/2, y: _fheight/2 };
     
     var max_abs_log2 = d3.max(json.nodes, function(d) {
         return Math.abs(d.Log2fold_change);
     });
     
-    var radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
+    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
     
     _data = {};
     _data.nodes = _.map(json.nodes, function(d){
         d.regulated = (d.Log2fold_change > 1.5 || d.p_value < 0.05 && d.Log2fold_change > 0) ? 'up' : 
             (d.Log2fold_change < - 1.5 || d.p_value < 0.05 && d.Log2fold_change < 0) ? 'down' : 'none';
         
-        d.radius = radius_scale(Math.abs(d.Log2fold_change) + 1);
+        d.radius = _radius_scale(Math.abs(d.Log2fold_change) + 1);
         return d;
     });
     
     // Calculate process centers
     var rows = 4, cols = 3;
     var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
-    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _height - _offset]);
+    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _pheight - _offset]);
     
     _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
     _processes = _.map(_processes, function(val, key){
@@ -245,11 +248,12 @@ var _format_data = function(json){
     });
     
     //init force
-    _force = d3.layout.force().nodes(_data.nodes).size([_width, _height]);
+    _force = d3.layout.force().nodes(_data.nodes).size([_width, _fheight]);
 };
 
 var _create_vis = function(){
-    _vis = d3.select(_selector).append('svg').attr('class', 'canvas').attr('width', _width).attr('height', _height).attr('id', 'svg_vis');
+    
+    _vis = d3.select(_selector).append('svg').attr('class', 'canvas').attr('width', _width).attr('id', 'svg_vis');
     
     _circles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
     
@@ -270,6 +274,62 @@ var _create_vis = function(){
         });
     
     init_process_annotations();
+    create_legend();
+};
+
+var create_legend = function(){
+
+    var legend = d3.select('#legend')
+        .append('ul')
+        .attr('class', 'list-inline');
+
+    var keys = legend.selectAll('li.key')
+        .data(_fill.domain());
+
+    keys.enter().append('li')
+        .attr('class', 'key')
+        .style('border-top-color', function(d){ return _fill(d);})
+        .text(function(d) {
+            return d;
+        });
+    
+    var svg = d3.select('#legend').append('svg')
+            .attr('width', 150)
+            .attr('height', 70).append('g').attr('transform', function(d) { return 'translate(' + 35 + ',' + 35 + ')'; });
+    
+    var min = _.min(_data.nodes, function(d){ return Math.abs(d.Log2fold_change); });
+    var max = _.max(_data.nodes, function(d){ return Math.abs(d.Log2fold_change); });
+    
+    var d = [min.radius, (max.radius + min.radius)/2, max.radius];
+    
+    svg.selectAll('circle').data(d).enter()
+        .append('circle')
+            .attr('r', function(d){ return d; })
+            .attr('class', 'scale_circle')
+            .attr('cy', function(d){ return 30 - d;});
+    
+    svg.selectAll('line').data(d).enter()
+        .append('line')
+            .attr('x1', 0)
+            .attr('y1', function(d){ return 30 - 2*d; })
+            .attr('x2', 60)
+            .attr('y2', function(d){ return 30 - 2*d; })
+            .attr('class', 'scale_line');
+    
+    var l = [
+        { r:d[0], log: Math.abs(min.Log2fold_change)},
+        { r:d[1], log: Math.abs((min.Log2fold_change + max.Log2fold_change)/2)},
+        { r:d[2], log: Math.abs(max.Log2fold_change)}
+    ];
+    console.log(l);
+    svg.selectAll('text').data(l).enter()
+        .append('text')
+            .attr('x', 60)
+            .attr('y', function(d){ return 30 - 2*d.r; })
+            .attr('class', 'scale_text')
+            .text(function(d){ return d3.round(d.log,3); });
+    
+    //d3.round((affected * 100) / val.length, 2)
 };
 
 //Public members
@@ -293,13 +353,6 @@ Vis.width = function(_){
     if (!arguments.length)
         return _width;
     _width = _;
-    return Vis;
-};
-
-Vis.height = function(_){
-    if (!arguments.length)
-        return _height;
-    _height = _;
     return Vis;
 };
 

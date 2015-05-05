@@ -27,7 +27,7 @@ this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[6,">= 2.0.0-
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div id=\"vis\" class=\"vis\"></div>\n</div>";
+    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div id=\"vis\" class=\"vis\"></div>\n    <div id=\"legend\"></div>\n</div>";
 },"useData":true});
 
 if (typeof exports === 'object' && exports) {module.exports = this["Templates"];}
