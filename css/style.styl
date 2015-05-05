@@ -10,7 +10,8 @@
 
 
 .canvas {
-    
+    height: 100%;
+    overflow: hidden;
 }
 
 
@@ -37,4 +38,41 @@
     transform: translate(-50%);
     text-align: center;
     width:200px;
+}
+
+#legend {
+    padding: 1.5em 0 0 1.5em;
+}
+
+li.key {
+    border-top-width: 5px;
+    border-top-style: solid;
+    font-size: .75em;
+    width: 50px;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+
+li.key:first-letter {
+    text-transform:capitalize;
+}
+
+.scale_circle {
+  stroke-width: 1;
+  stroke: #999;
+  stroke-dasharray: 2 2;
+  fill: none;
+}
+
+.scale_line {
+    stroke: #999;
+    stroke-width:1;
+    shape-rendering: crispEdges;
+}
+
+.scale_text {
+    font-size: .75em;
+    text-align: center;
+    alignment-baseline: middle;
 }
