@@ -265,6 +265,8 @@ var _format_data = function(json){
         return _.omit(d, ['x', 'y']);
     });
     
+    _data.nodes.sort(function(a, b){ return (a.regulated < b.regulated) ? -1 : (a.regulated > b.regulated) ? 1 : 0; });
+    
     //init force
     _force = d3.layout.force().nodes(_data.nodes).size([_width, _fheight]);
 };
