@@ -1,0 +1,18 @@
+<div>
+    <div class="tip-name"><strong>{{name}}</strong></div>
+    <div class="tip-rule"></div>
+    <div class="tip-process">{{process}}</div>
+    <div class="tip-function">{{gene_function}}</div>
+    <div class="tip-pvalue"><strong>Pvalue: {{p_value}}</strong></div>
+    <div><strong>Log2 fold change:</strong> 
+        <span class="tip-{{regulated}}"><strong>{{Log2fold_change}}</strong></span>
+    </div>
+
+    {{#if Variant_sites}}
+        <div class="tip-process">
+            <strong>Variant Sites:</strong> {{Variant_sites}}
+            <br>
+            {{#if Chromosome_number}}<strong>Chromosome:</strong> {{Chromosome_number}}{{/if}}
+        </div>
+    {{/if}}
+</div>
