@@ -300,6 +300,22 @@ var _init_chart = function(){
         .attr('opacity', 0)
         .call(yAxis);
     
+    var d = [/*{x:0, y:0},*/ {x:0, y:1.5}, {x:0, y:-1.5}];
+    
+    /*.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
+    
+    _circles.enter().append('circle')*/
+    var g = _vis.append('g');
+    
+    var lines = g.selectAll('line').data(d);
+    lines.enter().append('line')
+            .attr('x1', function(d){ return xRange(d.x);})
+            .attr('x2', xRange(_width - margins.right))
+            .attr('y1', function(d){ return yRange(d.y);})
+            .attr('y2', function(d){ return yRange(d.y);})
+            .attr('fill', '#000')
+            .attr('class', 'axis scale_line tick');
+    
     _data.nodes = _.map(_data.nodes, function(d){
         d.chart =  {x:xRange(d.p_value), y:yRange(d.Log2fold_change)};
         return d;
