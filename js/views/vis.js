@@ -7,6 +7,10 @@ var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
 
 var Annotations = require('./annotations');
 
+// Initialize tooltip
+var _tipTemplate = require('../templates.js').tooltip;
+var _tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return _tipTemplate(d); });
+
 var _buoyancy = function(alpha) {
     return function(d) {
         var val = d.y * 0.05 * alpha * alpha * alpha * 100;
@@ -28,12 +32,11 @@ var _display_by_process = function(){
     
     _circles.transition().duration(2000)
         .attr('cx', function(d) {
-            return d.pack.x;
+            return d.parent.px + d.pack.x;
         })
         .attr('cy', function(d) {
-            return d.pack.y;
-        })
-        .attr('transform', function(d) { return 'translate(' + d.parent.px + ',' + d.parent.py + ')'; });
+            return d.parent.py + d.pack.y;
+        });
     
     _p_annotations.fadeIn();
 };
@@ -218,17 +221,15 @@ var _create_vis = function(){
         .attr('r', 0)
         .attr('fill', function(d){ return _fill(d.regulated); })
         .attr('stroke-width', '1px')
-        .attr('stroke', function(d){ return _stroke(d.regulated);})
+        .attr('stroke', function(d){ return (d.Variant_sites.length) ? '#333333' : _stroke(d.regulated);})
         .attr('id', function(d) { return 'bubble_' + d.id; })
-        .on('mouseover', function(d, i) {
-            console.log('mouseover');
-        }).on('mouseout', function(d, i) {
-            console.log('mouseout');
-        })
+        .on('mouseover', _tip.show)
+        .on('mouseout', _tip.hide)
         .on('click', function(d){console.log(d);})
         .transition().duration(2000).attr('r', function(d) {
             return d.radius;
-        });
+        })
+        .call(_tip);
     
     _init_chart();
     init_process_annotations();
