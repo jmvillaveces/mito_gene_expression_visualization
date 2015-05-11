@@ -164,22 +164,23 @@ var _format_data = function(json){
 };
 
 var _init_chart = function(){
-    var margins = { top: 20, right: 20, bottom: 20, left: 50};
+    var margins = { top: 50, right: 50, bottom: 20, left: 50};
     var pvalExtent = d3.extent(_data.nodes, function(d){ return d.p_value;});
     var xRange = d3.scale.linear().range([margins.left, _width - margins.right]).domain(pvalExtent);
-    var yRange = d3.scale.linear().range([_fheight - margins.top, margins.bottom]).domain(d3.extent(_data.nodes, function(d){ return d.Log2fold_change;}));
+    var log2Extent = d3.extent(_data.nodes, function(d){ return d.Log2fold_change;});
+    var yRange = d3.scale.linear().range([_fheight - margins.top, margins.bottom]).domain(log2Extent);
     
     var xAxis = d3.svg.axis()
         .scale(xRange)
         .tickSize(2)
-        .tickValues([0.05])
+        .tickValues([0.05].concat(pvalExtent))
         .tickSubdivide(true)
         .tickFormat(d3.format(".1r"));
     
     var yAxis = d3.svg.axis()
         .scale(yRange)
         .tickSize(2)
-        .tickValues([0, -1.5, 1.5])
+        .tickValues([0, -1.5, 1.5].concat(log2Extent))
         .orient('left')
         .tickSubdivide(true)
         .tickFormat(d3.format(".3r"));
@@ -196,16 +197,16 @@ var _init_chart = function(){
         .attr('opacity', 0)
         .call(yAxis);
     
-    var d = [{x:0, y:1.5}, {x:0, y:-1.5}];
+    var d = [{x1:0, y1:1.5, x2: pvalExtent[1] ,y2:1.5 }, {x1:0, y1:-1.5, x2: pvalExtent[1] ,y2:-1.5}, {x1:0.05, y1:log2Extent[0], x2: 0.05 ,y2:log2Extent[1]}];
     
     var g = _vis.append('g');
     
     var lines = g.selectAll('line').data(d);
     lines.enter().append('line')
-            .attr('x1', function(d){ return xRange(d.x);})
-            .attr('x2', xRange(_width - margins.right))
-            .attr('y1', function(d){ return yRange(d.y);})
-            .attr('y2', function(d){ return yRange(d.y);})
+            .attr('x1', function(d){ return xRange(d.x1);})
+            .attr('x2', function(d){ return xRange(d.x2);})
+            .attr('y1', function(d){ return yRange(d.y1);})
+            .attr('y2', function(d){ return yRange(d.y2);})
             .attr('fill', '#000')
             .attr('class', 'axis scale_line tick');
     
