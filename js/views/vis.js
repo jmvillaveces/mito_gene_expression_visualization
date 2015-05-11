@@ -171,8 +171,10 @@ var _init_chart = function(){
     
     var xAxis = d3.svg.axis()
         .scale(xRange)
-        .tickSize(5)
-        .tickSubdivide(true);
+        .tickSize(2)
+        .tickValues([0.05])
+        .tickSubdivide(true)
+        .tickFormat(d3.format(".1r"));
     
     var yAxis = d3.svg.axis()
         .scale(yRange)
