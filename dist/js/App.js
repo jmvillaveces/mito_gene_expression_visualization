@@ -52,7 +52,7 @@ this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[6,">= 2.0.0-
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-5\">\n                <div class=\"col-md-5\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-7\"></div>\n            </div>\n            <div class=\"col-md-2\"></div>\n            <div class=\"col-md-5\">\n                <div class=\"col-md-5\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-7\"></div>\n            </div>\n        </div>\n    </div>\n    <div id=\"vis\" class=\"vis\">\n    </div>\n</div>";
+    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\n            </div>\n        </div>\n    </div>\n    <div id=\"vis\" class=\"vis\">\n    </div>\n</div>";
 },"useData":true});
 
 this["Templates"]["tooltip"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -401,6 +401,8 @@ var create_legend = function(){
             return d;
         });
     
+    // Size
+    
     var svg = d3.select('#size_scale').append('svg')
             .attr('width', 150)
             .attr('height', 70).append('g').attr('transform', function(d) { return 'translate(' + 35 + ',' + 35 + ')'; });
@@ -413,7 +415,7 @@ var create_legend = function(){
     svg.selectAll('circle').data(d).enter()
         .append('circle')
             .attr('r', function(d){ return d; })
-            .attr('class', 'scale_circle')
+            .attr('class', 'size_circle')
             .attr('cy', function(d){ return 30 - d;});
     
     svg.selectAll('line').data(d).enter()
@@ -436,6 +438,16 @@ var create_legend = function(){
             .attr('y', function(d){ return 30 - 2*d.r; })
             .attr('class', 'scale_text')
             .text(function(d){ return d3.round(d.log,3); });
+    
+    // Border
+    svg = d3.select('#border_scale').append('svg')
+            .attr('width', 34)
+            .attr('height', 34).append('g').attr('transform', function(d) { return 'translate(' + 17 + ',' + 17 + ')'; });
+    
+    svg.selectAll('circle').data([d[1]]).enter()
+        .append('circle')
+            .attr('r', function(d){ return d; })
+            .attr('class', 'border_circle');
 };
 
 //Public members
