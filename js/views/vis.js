@@ -176,9 +176,11 @@ var _init_chart = function(){
     
     var yAxis = d3.svg.axis()
         .scale(yRange)
-        .tickSize(5)
+        .tickSize(2)
+        .tickValues([0, -1.5, 1.5])
         .orient('left')
-        .tickSubdivide(true);
+        .tickSubdivide(true)
+        .tickFormat(d3.format(".3r"));
     
     _vis.append('g')
         .attr('class', 'axis')
