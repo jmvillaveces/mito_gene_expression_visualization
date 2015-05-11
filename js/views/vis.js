@@ -257,6 +257,8 @@ var create_legend = function(){
             return d;
         });
     
+    // Size
+    
     var svg = d3.select('#size_scale').append('svg')
             .attr('width', 150)
             .attr('height', 70).append('g').attr('transform', function(d) { return 'translate(' + 35 + ',' + 35 + ')'; });
@@ -269,7 +271,7 @@ var create_legend = function(){
     svg.selectAll('circle').data(d).enter()
         .append('circle')
             .attr('r', function(d){ return d; })
-            .attr('class', 'scale_circle')
+            .attr('class', 'size_circle')
             .attr('cy', function(d){ return 30 - d;});
     
     svg.selectAll('line').data(d).enter()
@@ -292,6 +294,16 @@ var create_legend = function(){
             .attr('y', function(d){ return 30 - 2*d.r; })
             .attr('class', 'scale_text')
             .text(function(d){ return d3.round(d.log,3); });
+    
+    // Border
+    svg = d3.select('#border_scale').append('svg')
+            .attr('width', 34)
+            .attr('height', 34).append('g').attr('transform', function(d) { return 'translate(' + 17 + ',' + 17 + ')'; });
+    
+    svg.selectAll('circle').data([d[1]]).enter()
+        .append('circle')
+            .attr('r', function(d){ return d; })
+            .attr('class', 'border_circle');
 };
 
 //Public members
