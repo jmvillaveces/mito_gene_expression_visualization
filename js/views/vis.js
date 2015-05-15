@@ -1,7 +1,7 @@
 var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view;
 
-var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7AA25C', '#BECCAE', '#D84B2A']);
-var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#7E965D', '#A7BB8F', '#C72D0A']);
+var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']);
+var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']);
 
 var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
 
@@ -225,7 +225,7 @@ var _create_vis = function(){
     _circles.enter().append('circle')
         .attr('r', 0)
         .attr('fill', function(d){ return _fill(d.regulated); })
-        .attr('stroke-width', '1px')
+        .attr('stroke-width', function(d){ return (d.Variant_sites.length) ? 1.2 : 1; })
         .attr('stroke', function(d){ return (d.Variant_sites.length) ? '#333333' : _stroke(d.regulated);})
         .attr('id', function(d) { return 'bubble_' + d.id; })
         .on('mouseover', _tip.show)
