@@ -5,8 +5,6 @@ var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5'
 
 var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
 
-var Annotations = require('./annotations');
-
 // Initialize tooltip
 var _tipTemplate = require('../templates.js').tooltip;
 var _tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return _tipTemplate(d); });
