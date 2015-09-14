@@ -38,7 +38,7 @@ var _display_by_process = function(){
             return d.parent.py + d.pack.y;
         });
     
-    _p_annotations.fadeIn();
+    _p_annotations.style('opacity', 1);
 };
 
 var _display_group_all = function() {
@@ -47,7 +47,7 @@ var _display_group_all = function() {
     
     d3.selectAll('.axis').style('opacity', 0);
     _circles.attr('transform', null);
-    _p_annotations.hide();
+    _p_annotations.style('opacity', 0);
     
     _force.gravity(_gravity)
         .charge(_charge)
@@ -66,7 +66,7 @@ var _display_group_all = function() {
 
 var _display_chart = function() {
     _force.stop();
-    _p_annotations.hide();
+    _p_annotations.style('opacity', 0);
     
     _circles
         .attr('cx', function(d){ return (_view === 'group') ? d.x : d.pack.x * 20; })
@@ -82,13 +82,23 @@ var _display_chart = function() {
 
 var init_process_annotations = function(){
     
-    _p_annotations = $('<div id="_p_annotations" class="annotations"></div>').appendTo(_selector).hide();
+    _p_annotations = _vis.append('g').attr('id', '_p_annotations');
+    
+    var ann = _p_annotations.selectAll('text').data(_processes);
     
     
-    var p = _.map(_processes, function(p){
-        return {px:p.px, py:p.py - 55, process: p.process, percentage: p.percentage};
-    });
-    var ann = new Annotations().setElement('#_p_annotations').render(p);
+    ann.enter().append('text')
+        .attr('class', 'annotation')
+        .attr('text-anchor', 'middle')
+        .attr('y', function(d){return d.py - 55;})
+        .attr('x', function(d){return d.px;})
+        .append('tspan')
+        .attr('dy', 0)
+        .text(function(d){return d.process;})
+        .append('tspan')
+        .attr('x', function(d){return d.px;})
+        .attr('dy', 15)
+        .text(function(d){return d.percentage + '%';});
 };
 
 var _format_data = function(json){
@@ -175,7 +185,7 @@ var _init_chart = function(){
         .tickSize(2)
         .tickValues([0.05].concat(pvalExtent))
         .tickSubdivide(true)
-        .tickFormat(d3.format(".1r"));
+        .tickFormat(d3.format('.1r'));
     
     var yAxis = d3.svg.axis()
         .scale(yRange)
@@ -183,19 +193,32 @@ var _init_chart = function(){
         .tickValues([0, -1.5, 1.5].concat(log2Extent))
         .orient('left')
         .tickSubdivide(true)
-        .tickFormat(d3.format(".3r"));
+        .tickFormat(d3.format('.3r'));
     
     _vis.append('g')
         .attr('class', 'axis')
         .attr('transform', 'translate(0,' + (_fheight - margins.bottom) + ')')
         .attr('opacity', 0)
-        .call(xAxis);
+        .call(xAxis)
+        .append('text')
+            .attr('class', 'x label')
+            .attr('text-anchor', 'end')
+            .attr('y', -5)
+            .attr('dx', '-50')
+            .attr('x', _width)
+            .text('p-value');
  
     _vis.append('g')
         .attr('class', 'axis')
         .attr('transform', 'translate(' + (margins.left) + ',0)')
         .attr('opacity', 0)
-        .call(yAxis);
+        .call(yAxis)
+        .append('text')
+            .attr('class', 'y label')
+            .attr('text-anchor', 'end')
+            .attr('y', -35)
+            .attr('transform', 'rotate(-90)')
+            .text('log2 fold chain');
     
     var d = [{x1:0, y1:1.5, x2: pvalExtent[1] ,y2:1.5 }, {x1:0, y1:-1.5, x2: pvalExtent[1] ,y2:-1.5}, {x1:0.05, y1:log2Extent[0], x2: 0.05 ,y2:log2Extent[1]}];
     
@@ -258,7 +281,6 @@ var create_legend = function(){
         });
     
     // Size
-    
     var svg = d3.select('#size_scale').append('svg')
             .attr('width', 150)
             .attr('height', 70).append('g').attr('transform', function(d) { return 'translate(' + 35 + ',' + 35 + ')'; });
