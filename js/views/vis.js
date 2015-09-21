@@ -125,8 +125,16 @@ var _format_data = function(json){
     
     _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
     _processes = _.map(_processes, function(val, key){
-        var affected = _.filter(val, function(n){ return (n.regulated === 'up' || n.regulated === 'down'); }).length;
-        return {percentage: d3.round((affected * 100) / val.length, 2), process: key, genes : val};
+        //Number of regulated genes
+        var regulated = 0;
+        
+        _.each(val, function(n){
+            regulated = (n.regulated === 'up' || n.regulated === 'down' || n.Chromosome_number.length > 0) ? regulated + 1 : regulated;
+        });
+        
+        var percentage = (regulated * 100)  / val.length;
+        
+        return {percentage: d3.round(percentage, 2), process: key, genes : val};
     });
     
     _processes.sort(function(a,b){return b.percentage - a.percentage;});
