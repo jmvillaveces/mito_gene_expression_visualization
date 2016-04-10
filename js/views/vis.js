@@ -109,7 +109,10 @@ var _format_data = function(json){
     
     _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
     
+    // Init data
     _data = {};
+    
+    // Create nodes
     _data.nodes = _.map(json.nodes, function(d){
         d.regulated = (d.Log2fold_change > 1.5 || d.p_value < 0.05 && d.Log2fold_change > 0) ? 'up' : 
             (d.Log2fold_change < - 1.5 || d.p_value < 0.05 && d.Log2fold_change < 0) ? 'down' : 'none';
@@ -123,18 +126,28 @@ var _format_data = function(json){
     var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
     var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _pheight - _offset]);
     
+    // Create Groups
     _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
-    _processes = _.map(_processes, function(val, key){
+    _processes = _.map(_processes, function(genes, key){
         //Number of regulated genes
         var regulated = 0;
         
-        _.each(val, function(n){
+        _.each(genes, function(n){
             regulated = (n.regulated === 'up' || n.regulated === 'down' || n.Chromosome_number.length > 0) ? regulated + 1 : regulated;
         });
         
-        var percentage = (regulated * 100)  / val.length;
+        var obj = _.groupBy(genes, function(g){ return g.regulated; });
         
-        return {percentage: d3.round(percentage, 2), process: key, genes : val};
+        var percentage = (regulated * 100)  / genes.length;
+        
+        return { 
+            percentage: d3.round(percentage, 2), 
+            process: key, 
+            genes : genes, 
+            down: (obj.down) ? obj.down.length : 0,
+            up: (obj.up) ? obj.up.length : 0,
+            none: (obj.none) ? obj.none.length : 0
+        };
     });
     
     _processes.sort(function(a,b){return b.percentage - a.percentage;});
@@ -267,10 +280,10 @@ var _create_vis = function(){
     
     _init_chart();
     init_process_annotations();
-    create_legend();
+    _create_legend();
 };
 
-var create_legend = function(){
+var _create_legend = function(){
 
     var legend = d3.select('#color_scale')
         .append('ul')
@@ -377,8 +390,8 @@ Vis.init = function(){
     d3.json(_url, function(error, json) {
         if (error) return console.warn(error);
         _format_data(json);
-        _create_vis();
-        _display_group_all();
+        //_create_vis();
+        //_display_group_all();
     });
 };
 
