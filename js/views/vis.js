@@ -62,6 +62,17 @@ var _display_group_all = function() {
         .start();
 };
 
+var _display_network = function(){
+
+    d3.selectAll('.axis').style('opacity', 0);
+    _circles.attr('transform', null);
+    _p_annotations.style('opacity', 0);
+    
+    
+    
+    
+};
+
 var _display_chart = function() {
     _force.stop();
     _p_annotations.style('opacity', 0);
@@ -82,7 +93,7 @@ var init_process_annotations = function(){
     
     _p_annotations = _vis.append('g').attr('id', '_p_annotations');
     
-    var ann = _p_annotations.selectAll('text').data(_processes);
+    var ann = _p_annotations.selectAll('text').data(_data.processes);
     
     
     ann.enter().append('text')
@@ -96,7 +107,7 @@ var init_process_annotations = function(){
         .append('tspan')
         .attr('x', function(d){return d.px;})
         .attr('dy', 15)
-        .text(function(d){return d.percentage + '%';});
+        .text(function(d){return d.regulated_genes + '%';});
 };
 
 var _format_data = function(json){
@@ -121,14 +132,9 @@ var _format_data = function(json){
         return d;
     });
     
-    // Calculate process centers
-    var rows = 4, cols = 3;
-    var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
-    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _pheight - _offset]);
-    
     // Create Groups
-    _processes = _.groupBy(_data.nodes, function(n){ return n.process; });
-    _processes = _.map(_processes, function(genes, key){
+    _data.processes = _.groupBy(_data.nodes, function(n){ return n.process; });
+    _data.processes = _.map(_data.processes, function(genes, key){
         //Number of regulated genes
         var regulated = 0;
         
@@ -138,21 +144,35 @@ var _format_data = function(json){
         
         var obj = _.groupBy(genes, function(g){ return g.regulated; });
         
-        var percentage = (regulated * 100)  / genes.length;
+        function getPercentage(n, total){
+            return n * 100 / total;
+        }
+        
+        
+        var regulated_genes = getPercentage(regulated, genes.length);
         
         return { 
-            percentage: d3.round(percentage, 2), 
+            regulated_genes: d3.round(regulated_genes, 2), 
             process: key, 
             genes : genes, 
-            down: (obj.down) ? obj.down.length : 0,
-            up: (obj.up) ? obj.up.length : 0,
-            none: (obj.none) ? obj.none.length : 0
+            down: (obj.down) ? getPercentage(obj.down.length, genes.length) : 0,
+            up: (obj.up) ?  getPercentage(obj.up.length, genes.length) : 0,
+            none: (obj.none) ?  getPercentage(obj.none.length, genes.length) : 0
         };
     });
     
-    _processes.sort(function(a,b){return b.percentage - a.percentage;});
+    console.log(_data.processes);
     
-    _processes = _.map(_processes, function(p){
+    
+    
+    // Calculate process centers
+    var rows = 4, cols = 3;
+    var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
+    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _pheight - _offset]);
+    
+    _data.processes.sort(function(a,b){return b.regulated_genes - a.regulated_genes;});
+    
+    _data.processes = _.map(_data.processes, function(p){
         p.px = wScale(this.row);
         p.py = hScale(this.col);
         
@@ -166,7 +186,7 @@ var _format_data = function(json){
         return p; 
     }, {col:0,row:0});
     
-    _.each(_processes, function(p){
+    _.each(_data.processes, function(p){
         
         //Pack Layout positions
         var bubble = d3.layout.pack()
@@ -392,6 +412,7 @@ Vis.init = function(){
         _format_data(json);
         //_create_vis();
         //_display_group_all();
+        _display_network();
     });
 };
 
