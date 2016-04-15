@@ -1,4 +1,6 @@
-var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view;
+var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view, _data, _circles, _process_circles;
+
+var p_pos = require('../data/process_positions.json');
 
 var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']);
 var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']);
@@ -63,13 +65,22 @@ var _display_group_all = function() {
 };
 
 var _display_network = function(){
-
-    d3.selectAll('.axis').style('opacity', 0);
-    _circles.attr('transform', null);
+    
+    _circles
+        .attr('transform', null)
+        .style('opacity', 0);
+    
     _p_annotations.style('opacity', 0);
     
+    _process_circles
+        .attr('cx', function(d) {
+            return d.network.x ;
+        })
+        .attr('cy', function(d) {
+            return d.network.y ;
+        });
     
-    
+    _process_circles.transition().duration(3000).style('opacity', 1);
     
 };
 
@@ -89,12 +100,47 @@ var _display_chart = function() {
     d3.selectAll('.axis').transition().duration(2000).style('opacity', 1);
 };
 
-var init_process_annotations = function(){
+var _init_processes = function(){
+    
+    var g = _vis.append('g').attr('id', '_processes');
+    
+    _process_circles = g.selectAll('circle').data(_data.processes);
+    
+    _process_circles.enter().append('circle')
+        .attr('fill', '#3690c0')
+        .attr('r', function(d) { return d.r; })
+        .attr('id', function(d) { return  d.id; })
+        .attr('class', 'process')
+        .style('opacity', 0)
+        .on('click', function(p){
+        
+            var genes = d3.selectAll('.'+p.id)
+                .attr('cx', function(d) {
+                    return d.parent.network.x;
+                })
+                .attr('cy', function(d) {
+                    return d.parent.network.y;
+                });
+        
+            d3.select(this).transition(2000).style('r', 0);
+        
+            genes.transition(2000)
+                .style('opacity', 1)
+                .attr('cx', function(d) {
+                    return d.parent.network.x + d.pack.x ;
+                })
+                .attr('cy', function(d) {
+                    return d.parent.network.y + d.pack.y ;
+                });
+        
+        });
+};
+
+var _init_process_annotations = function(){
     
     _p_annotations = _vis.append('g').attr('id', '_p_annotations');
     
     var ann = _p_annotations.selectAll('text').data(_data.processes);
-    
     
     ann.enter().append('text')
         .attr('class', 'annotation')
@@ -114,63 +160,67 @@ var _format_data = function(json){
     
     _center = { x:_width/2, y: _fheight/2 };
     
-    var max_abs_log2 = d3.max(json.nodes, function(d) {
-        return Math.abs(d.Log2fold_change);
-    });
-    
-    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
-    
-    // Init data
     _data = {};
-    
-    // Create nodes
     _data.nodes = _.map(json.nodes, function(d){
         d.regulated = (d.Log2fold_change > 1.5 || d.p_value < 0.05 && d.Log2fold_change > 0) ? 'up' : 
             (d.Log2fold_change < - 1.5 || d.p_value < 0.05 && d.Log2fold_change < 0) ? 'down' : 'none';
-        
-        d.radius = _radius_scale(Math.abs(d.Log2fold_change) + 1);
+
         return d;
     });
-    
-    // Create Groups
-    _data.processes = _.groupBy(_data.nodes, function(n){ return n.process; });
-    _data.processes = _.map(_data.processes, function(genes, key){
-        //Number of regulated genes
-        var regulated = 0;
-        
-        _.each(genes, function(n){
-            regulated = (n.regulated === 'up' || n.regulated === 'down' || n.Chromosome_number.length > 0) ? regulated + 1 : regulated;
-        });
-        
-        var obj = _.groupBy(genes, function(g){ return g.regulated; });
-        
-        function getPercentage(n, total){
-            return n * 100 / total;
-        }
-        
-        
-        var regulated_genes = getPercentage(regulated, genes.length);
-        
-        return { 
-            regulated_genes: d3.round(regulated_genes, 2), 
-            process: key, 
-            genes : genes, 
-            down: (obj.down) ? getPercentage(obj.down.length, genes.length) : 0,
-            up: (obj.up) ?  getPercentage(obj.up.length, genes.length) : 0,
-            none: (obj.none) ?  getPercentage(obj.none.length, genes.length) : 0
-        };
-    });
-    
-    console.log(_data.processes);
-    
-    
     
     // Calculate process centers
     var rows = 4, cols = 3;
     var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
     var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _pheight - _offset]);
+    function getPercentage(n, total){
+        return n * 100 / total;
+    }   
+    
+    var i = 1;
+    _data.processes = _.groupBy(_data.nodes, function(n){ return n.process; });
+    _data.processes = _.map(_data.processes, function(genes, key){
+        
+        //Number of regulated genes
+        var regulated = 0;
+        var log = 0;
+        var p_id = 'process_' + (++i);
+        
+        var reg_groups = _.groupBy(genes, function(n){
+            regulated = (n.regulated === 'up' || n.regulated === 'down' || n.Chromosome_number.length > 0) ? regulated + 1 : regulated;
+            log += n.Log2fold_change;
+            
+            n.p_id = p_id;
+            
+            return n.regulated;
+        });
+        
+        var regulated_genes = getPercentage(regulated, genes.length);
+        
+        return {
+            regulated_genes: d3.round(regulated_genes, 2), 
+            process: key, 
+            genes : genes, 
+            id: p_id,
+            down: (regulated_genes.down) ? getPercentage(regulated_genes.down.length, genes.length) : 0,
+            up: (regulated_genes.up) ?  getPercentage(regulated_genes.up.length, genes.length) : 0,
+            none: (regulated_genes.none) ?  getPercentage(regulated_genes.none.length, genes.length) : 0,
+            Log2fold_change: log,
+            network: p_pos[p_id]
+        };
+    });
     
     _data.processes.sort(function(a,b){return b.regulated_genes - a.regulated_genes;});
+    
+    //Calculate radius for all nodes
+    var all_nodes = _.flatten( [_data.processes, _data.nodes] );
+    var max_abs_log2 = d3.max( all_nodes, function(d) {
+        return Math.abs(d.Log2fold_change);
+    });
+    
+    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
+    _.each(all_nodes, function(d){
+        d.radius = _radius_scale(Math.abs(d.Log2fold_change) + 1);
+    });
     
     _data.processes = _.map(_data.processes, function(p){
         p.px = wScale(this.row);
@@ -290,6 +340,7 @@ var _create_vis = function(){
         .attr('stroke-width', function(d){ return (d.Variant_sites.length) ? 1.2 : 1; })
         .attr('stroke', function(d){ return (d.Variant_sites.length) ? '#333333' : _stroke(d.regulated);})
         .attr('id', function(d) { return 'bubble_' + d.id; })
+        .attr('class', function(d){ return d.p_id; })
         .on('mouseover', _tip.show)
         .on('mouseout', _tip.hide)
         .on('click', function(d){console.log(d);})
@@ -299,7 +350,8 @@ var _create_vis = function(){
         .call(_tip);
     
     _init_chart();
-    init_process_annotations();
+    _init_process_annotations();
+    _init_processes();
     _create_legend();
 };
 
@@ -410,7 +462,7 @@ Vis.init = function(){
     d3.json(_url, function(error, json) {
         if (error) return console.warn(error);
         _format_data(json);
-        //_create_vis();
+        _create_vis();
         //_display_group_all();
         _display_network();
     });
