@@ -66,11 +66,12 @@ var _display_group_all = function() {
 
 var _display_network = function(){
     
+    d3.selectAll('.axis').style('opacity', 0);
     _circles
         .attr('transform', null)
         .style('opacity', 0);
     
-    _p_annotations.style('opacity', 0);
+    _p_annotations.style('opacity', 1);
     
     _process_circles
         .attr('cx', function(d) {
@@ -138,22 +139,18 @@ var _init_processes = function(){
 
 var _init_process_annotations = function(){
     
-    _p_annotations = _vis.append('g').attr('id', '_p_annotations');
+    var ann_scale = d3.scale.log().domain(d3.extent(_data.processes, function(d){ return d.r; })).range([10,20]);
     
-    var ann = _p_annotations.selectAll('text').data(_data.processes);
+    _p_annotations = d3.select(_selector)
+        .append('div')
+        .attr('class', 'node-label-container');
     
-    ann.enter().append('text')
-        .attr('class', 'annotation')
-        .attr('text-anchor', 'middle')
-        .attr('y', function(d){return d.py - 55;})
-        .attr('x', function(d){return d.px;})
-        .append('tspan')
-        .attr('dy', 0)
-        .text(function(d){return d.process;})
-        .append('tspan')
-        .attr('x', function(d){return d.px;})
-        .attr('dy', 15)
-        .text(function(d){return d.regulated_genes + '%';});
+    var ann = _p_annotations.selectAll('div').data(_data.processes);
+    
+    ann.enter().append('div')
+        .attr('class', 'node theme')
+        .text(function(d){ return d.process; })
+        .attr('style', function(d){ return 'font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; });
 };
 
 var _format_data = function(json){
@@ -217,7 +214,7 @@ var _format_data = function(json){
         return Math.abs(d.Log2fold_change);
     });
     
-    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
+    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([2, 30]);
     _.each(all_nodes, function(d){
         d.radius = _radius_scale(Math.abs(d.Log2fold_change) + 1);
     });
@@ -257,6 +254,44 @@ var _format_data = function(json){
     });
     
     _data.nodes.sort(function(a, b){ return (a.regulated < b.regulated) ? -1 : (a.regulated > b.regulated) ? 1 : 0; });
+    
+    //Calculate Links!
+    var node_dic = {}, process_links_dic = {};
+    _.each(_data.nodes, function(n){ node_dic[n.id] = n; });
+    
+    function get_link(source, target){
+        var k = source.id + target.id;
+        
+        if(_.isUndefined(process_links_dic[k])){
+            process_links_dic[k] = { source: source , target: target, links: 0 };
+        }
+        
+        return process_links_dic[k];
+    }
+    
+    function process_links(l){
+        
+        var source = node_dic[l.source];
+        var target = node_dic[l.target];
+        var p1 = source.parent;
+        var p2 = target.parent;
+        
+        var b = p1.process.localeCompare(p2.process), p_link;
+        
+        if(b === -1){
+            p_link = get_link(p1, p2);
+            p_link.links ++;
+        }else if (b === 1){
+            p_link = get_link(p2, p1);
+            p_link.links ++;
+        }
+        
+        return { source: source , target: target};
+    }
+    
+    _data.links = _.map(json.links, process_links);
+    
+    _data.p_links = _.values(process_links_dic);
     
     //init force
     _force = d3.layout.force().nodes(_data.nodes).size([_width, _fheight]);
