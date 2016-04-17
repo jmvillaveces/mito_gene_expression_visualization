@@ -50,21 +50,21 @@ Handlebars = glob.Handlebars || require('handlebars');
 this["Templates"] = this["Templates"] || {};
 
 this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\" checked=\"\"> All Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\n</ul>\n\n";
+    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\r\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\" checked=\"\"> All Gene Expression\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\r\n    </label>\r\n</div>\r\n<ul class=\"nav nav-pills pull-right\">\r\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\r\n</ul>\r\n\r\n";
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\n            </div>\n        </div>\n    </div>\n    <div id=\"vis\" class=\"vis\">\n    </div>\n</div>";
+    return "<div id=\"container\" class=\"container\">\r\n    <div id=\"navbar\" class=\"nav_bar\"></div>\r\n    <div class=\"legend\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\r\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\r\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\r\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div id=\"vis\" class=\"vis\">\r\n    </div>\r\n</div>";
 },"useData":true});
 
 this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "        <div class=\"tip-process\">\n            <strong>Variant Sites:</strong> "
+  return "        <div class=\"tip-process\">\r\n            <strong>Variant Sites:</strong> "
     + container.escapeExpression(((helper = (helper = helpers.Variant_sites || (depth0 != null ? depth0.Variant_sites : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"Variant_sites","hash":{},"data":data}) : helper)))
-    + "\n            <br>\n            "
+    + "\r\n            <br>\r\n            "
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Chromosome_number : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n        </div>\n";
+    + "\r\n        </div>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var helper;
 
@@ -73,19 +73,19 @@ this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div>\n    <div class=\"tip-name\"><strong>"
+  return "<div>\r\n    <div class=\"tip-name\"><strong>"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div class=\"tip-rule\"></div>\n    <div class=\"tip-process\">"
+    + "</strong></div>\r\n    <div class=\"tip-rule\"></div>\r\n    <div class=\"tip-process\">"
     + alias4(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-function\">"
+    + "</div>\r\n    <div class=\"tip-function\">"
     + alias4(((helper = (helper = helpers.gene_function || (depth0 != null ? depth0.gene_function : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gene_function","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
+    + "</div>\r\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
     + alias4(((helper = (helper = helpers.p_value || (depth0 != null ? depth0.p_value : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"p_value","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div><strong>Log2 fold change:</strong> \n        <span class=\"tip-"
+    + "</strong></div>\r\n    <div><strong>Log2 fold change:</strong> \r\n        <span class=\"tip-"
     + alias4(((helper = (helper = helpers.regulated || (depth0 != null ? depth0.regulated : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"regulated","hash":{},"data":data}) : helper)))
     + "\"><strong>"
     + alias4(((helper = (helper = helpers.Log2fold_change || (depth0 != null ? depth0.Log2fold_change : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Log2fold_change","hash":{},"data":data}) : helper)))
-    + "</strong></span>\n    </div>\n\n"
+    + "</strong></span>\r\n    </div>\r\n\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Variant_sites : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</div>";
 },"useData":true});
@@ -139,7 +139,7 @@ module.exports = Backbone.View.extend({
     }
 });
 },{"../templates":3}],6:[function(require,module,exports){
-var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view, _data, _circles, _process_circles;
+var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view, _data, _circles, _process_circles, _links;
 
 var p_pos = require('../data/process_positions.json');
 
@@ -207,11 +207,12 @@ var _display_group_all = function() {
 
 var _display_network = function(){
     
+    d3.selectAll('.axis').style('opacity', 0);
     _circles
         .attr('transform', null)
         .style('opacity', 0);
     
-    _p_annotations.style('opacity', 0);
+    _p_annotations.style('opacity', 1);
     
     _process_circles
         .attr('cx', function(d) {
@@ -221,7 +222,7 @@ var _display_network = function(){
             return d.network.y ;
         });
     
-    _process_circles.transition().duration(3000).style('opacity', 1);
+    _process_circles.transition().duration(3000).attr('opacity', 1);
     
 };
 
@@ -241,6 +242,30 @@ var _display_chart = function() {
     d3.selectAll('.axis').transition().duration(2000).style('opacity', 1);
 };
 
+var _init_links = function(links){
+    
+    var lScale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
+    
+    var g = _vis.append('g').attr('id', '_links');
+    
+    _links = g.selectAll('path').data(links);
+    
+    _links.enter().append('path')
+        .attr('class', 'link')
+        .style('stroke-width', function(l){ return lScale(l.links); })
+        .attr('stroke', 'rgba(95, 96, 98, 0.4)')
+        .attr('opacity', 0)
+        .attr('fill', 'none')
+        .attr('d', function (d) {
+            
+            var dx = d.target.network.x - d.source.network.x,
+            dy = d.target.network.y - d.source.network.y,
+            dr = Math.sqrt(dx * dx + dy * dy);
+            
+            return "M" + d.source.network.x + "," + d.source.network.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.network.x + "," + d.target.network.y;
+        });
+};
+
 var _init_processes = function(){
     
     var g = _vis.append('g').attr('id', '_processes');
@@ -252,7 +277,7 @@ var _init_processes = function(){
         .attr('r', function(d) { return d.r; })
         .attr('id', function(d) { return  d.id; })
         .attr('class', 'process')
-        .style('opacity', 0)
+        .attr('opacity', 0)
         .on('click', function(p){
         
             var genes = d3.selectAll('.'+p.id)
@@ -274,27 +299,46 @@ var _init_processes = function(){
                     return d.parent.network.y + d.pack.y ;
                 });
         
+        })
+        .on('mouseout', function(d){ 
+            _links.attr('opacity', 0);
+            _process_circles.attr('opacity', 1);
+        })
+        .on('mouseover', function(d){
+            
+            var p = [];
+        
+            _links.attr('opacity', function(l){
+                
+                if(l.target.id === d.id || l.source.id === d.id){
+                    p.push(l.target.id);
+                    p.push(l.source.id);
+                    return 1;
+                }
+                return 0;
+            });
+        
+            _process_circles.attr('opacity', function(n){
+                return (_.contains(p, n.id) === true) ? 1 : 0.2;
+            });    
+        
         });
 };
 
 var _init_process_annotations = function(){
     
-    _p_annotations = _vis.append('g').attr('id', '_p_annotations');
+    var ann_scale = d3.scale.log().domain(d3.extent(_data.processes, function(d){ return d.r; })).range([10,20]);
     
-    var ann = _p_annotations.selectAll('text').data(_data.processes);
+    _p_annotations = d3.select(_selector)
+        .append('div')
+        .attr('class', 'node-label-container');
     
-    ann.enter().append('text')
-        .attr('class', 'annotation')
-        .attr('text-anchor', 'middle')
-        .attr('y', function(d){return d.py - 55;})
-        .attr('x', function(d){return d.px;})
-        .append('tspan')
-        .attr('dy', 0)
-        .text(function(d){return d.process;})
-        .append('tspan')
-        .attr('x', function(d){return d.px;})
-        .attr('dy', 15)
-        .text(function(d){return d.regulated_genes + '%';});
+    var ann = _p_annotations.selectAll('div').data(_data.processes);
+    
+    ann.enter().append('div')
+        .attr('class', 'node theme')
+        .text(function(d){ return d.process; })
+        .attr('style', function(d){ return 'font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; });
 };
 
 var _format_data = function(json){
@@ -358,7 +402,7 @@ var _format_data = function(json){
         return Math.abs(d.Log2fold_change);
     });
     
-    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([1, 30]);
+    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([2, 30]);
     _.each(all_nodes, function(d){
         d.radius = _radius_scale(Math.abs(d.Log2fold_change) + 1);
     });
@@ -398,6 +442,44 @@ var _format_data = function(json){
     });
     
     _data.nodes.sort(function(a, b){ return (a.regulated < b.regulated) ? -1 : (a.regulated > b.regulated) ? 1 : 0; });
+    
+    //Calculate Links!
+    var node_dic = {}, process_links_dic = {};
+    _.each(_data.nodes, function(n){ node_dic[n.id] = n; });
+    
+    function get_link(source, target){
+        var k = source.id + target.id;
+        
+        if(_.isUndefined(process_links_dic[k])){
+            process_links_dic[k] = { source: source , target: target, links: 0 };
+        }
+        
+        return process_links_dic[k];
+    }
+    
+    function process_links(l){
+        
+        var source = node_dic[l.source];
+        var target = node_dic[l.target];
+        var p1 = source.parent;
+        var p2 = target.parent;
+        
+        var b = p1.process.localeCompare(p2.process), p_link;
+        
+        if(b === -1){
+            p_link = get_link(p1, p2);
+            p_link.links ++;
+        }else if (b === 1){
+            p_link = get_link(p2, p1);
+            p_link.links ++;
+        }
+        
+        return { source: source , target: target};
+    }
+    
+    _data.links = _.map(json.links, process_links);
+    
+    _data.p_links = _.values(process_links_dic);
     
     //init force
     _force = d3.layout.force().nodes(_data.nodes).size([_width, _fheight]);
@@ -491,6 +573,7 @@ var _create_vis = function(){
         .call(_tip);
     
     _init_chart();
+    _init_links(_data.p_links);
     _init_process_annotations();
     _init_processes();
     _create_legend();
@@ -927,7 +1010,7 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,require('_process'),"/node_modules/amdefine/amdefine.js")
+}).call(this,require('_process'),"/node_modules\\amdefine\\amdefine.js")
 },{"_process":46,"path":45}],9:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.3
