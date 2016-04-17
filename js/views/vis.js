@@ -1,4 +1,4 @@
-var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view, _data, _circles, _process_circles;
+var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view, _data, _circles, _process_circles, _links;
 
 var p_pos = require('../data/process_positions.json');
 
@@ -81,7 +81,7 @@ var _display_network = function(){
             return d.network.y ;
         });
     
-    _process_circles.transition().duration(3000).style('opacity', 1);
+    _process_circles.transition().duration(3000).attr('opacity', 1);
     
 };
 
@@ -101,6 +101,30 @@ var _display_chart = function() {
     d3.selectAll('.axis').transition().duration(2000).style('opacity', 1);
 };
 
+var _init_links = function(links){
+    
+    var lScale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
+    
+    var g = _vis.append('g').attr('id', '_links');
+    
+    _links = g.selectAll('path').data(links);
+    
+    _links.enter().append('path')
+        .attr('class', 'link')
+        .style('stroke-width', function(l){ return lScale(l.links); })
+        .attr('stroke', 'rgba(95, 96, 98, 0.4)')
+        .attr('opacity', 0)
+        .attr('fill', 'none')
+        .attr('d', function (d) {
+            
+            var dx = d.target.network.x - d.source.network.x,
+            dy = d.target.network.y - d.source.network.y,
+            dr = Math.sqrt(dx * dx + dy * dy);
+            
+            return "M" + d.source.network.x + "," + d.source.network.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.network.x + "," + d.target.network.y;
+        });
+};
+
 var _init_processes = function(){
     
     var g = _vis.append('g').attr('id', '_processes');
@@ -112,7 +136,7 @@ var _init_processes = function(){
         .attr('r', function(d) { return d.r; })
         .attr('id', function(d) { return  d.id; })
         .attr('class', 'process')
-        .style('opacity', 0)
+        .attr('opacity', 0)
         .on('click', function(p){
         
             var genes = d3.selectAll('.'+p.id)
@@ -133,6 +157,29 @@ var _init_processes = function(){
                 .attr('cy', function(d) {
                     return d.parent.network.y + d.pack.y ;
                 });
+        
+        })
+        .on('mouseout', function(d){ 
+            _links.attr('opacity', 0);
+            _process_circles.attr('opacity', 1);
+        })
+        .on('mouseover', function(d){
+            
+            var p = [];
+        
+            _links.attr('opacity', function(l){
+                
+                if(l.target.id === d.id || l.source.id === d.id){
+                    p.push(l.target.id);
+                    p.push(l.source.id);
+                    return 1;
+                }
+                return 0;
+            });
+        
+            _process_circles.attr('opacity', function(n){
+                return (_.contains(p, n.id) === true) ? 1 : 0.2;
+            });    
         
         });
 };
@@ -385,6 +432,7 @@ var _create_vis = function(){
         .call(_tip);
     
     _init_chart();
+    _init_links(_data.p_links);
     _init_process_annotations();
     _init_processes();
     _create_legend();
