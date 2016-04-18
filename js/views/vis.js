@@ -101,7 +101,9 @@ var _display_chart = function() {
     d3.selectAll('.axis').transition().duration(2000).style('opacity', 1);
 };
 
-var _init_links = function(links){
+var _init_links = function(){
+    
+    var links = _data.p_links;//_.union(_data.p_links, _data.links);
     
     var lScale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
     
@@ -152,10 +154,10 @@ var _init_processes = function(){
             genes.transition(2000)
                 .style('opacity', 1)
                 .attr('cx', function(d) {
-                    return d.parent.network.x + d.pack.x ;
+                    return d.network.x;
                 })
                 .attr('cy', function(d) {
-                    return d.parent.network.y + d.pack.y ;
+                    return d.network.y;
                 });
         
         })
@@ -302,6 +304,7 @@ var _format_data = function(json){
     
     _data.nodes = _.map(_data.nodes, function(d){
         d.pack = {x: d.x, y: d.y};
+        d.network = {x: d.parent.network.x + d.pack.x, y: d.parent.network.y + d.pack.y};
         return _.omit(d, ['x', 'y']);
     });
     
@@ -437,7 +440,7 @@ var _create_vis = function(){
         .call(_tip);
     
     _init_chart();
-    _init_links(_data.p_links);
+    _init_links();
     _init_process_annotations();
     _init_processes();
     _create_legend();
