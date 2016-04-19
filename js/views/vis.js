@@ -103,9 +103,66 @@ var _display_chart = function() {
 
 var _init_links = function(){
     
-    var links = _data.p_links;//_.union(_data.p_links, _data.links);
+    var links = _.union(_data.p_links/*, _data.links*/);
+    
+    var l_dic = {};
+    function get_node(n){
+        if(_.isUndefined(l_dic[n.id])){
+            l_dic[n.id] = [];
+        }
+        
+        return l_dic[n.id];
+    }
+    
+    _.each(links, function(l){       
+        get_node(l.source).push(l);
+        get_node(l.target).push(l);
+    });
+    
+    var number = 0;
+    _.each(l_dic, function(v, k){
+        number = (number > v.length) ? number : v.length;
+    });
+    
+    var g = _vis.append('g').attr('id', '_links');
+    
+    _links = g.selectAll('path').data(_.range(0, number))
+        .enter()
+        .append('path')
+        .attr('class', 'link')
+        .attr('opacity', 1)
+        .attr('fill', 'none')
+        .attr('stroke', 'rgba(95, 96, 98, 0.4)');
     
     var lScale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
+    
+    _handle_links = function(source){
+        
+        var node_links = l_dic[source.id];
+        
+        
+        _links.each(function(n, i){
+            
+            if(node_links.length > i){
+                
+                var l = node_links[i];
+                console.log(lScale(l.links));
+                
+                d3.select(this)
+                    .style('stroke-width', lScale(l.links))
+                    .attr('d', function (d) {
+                        var dx = l.target.network.x - l.source.network.x, dy = l.target.network.y - l.source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
+                        return "M" + l.source.network.x + "," + l.source.network.y + "A" + dr + "," + dr + " 0 0,1 " + l.target.network.x + "," + l.target.network.y;
+                    });
+            }
+            
+        });
+        
+        
+    };
+    _handle_links(_data.processes[5]);
+    
+    /*var lScale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
     
     var g = _vis.append('g').attr('id', '_links');
     
@@ -118,27 +175,53 @@ var _init_links = function(){
         .attr('opacity', 0)
         .attr('fill', 'none')
         .attr('d', function (d) {
-            
-            var dx = d.target.network.x - d.source.network.x,
-            dy = d.target.network.y - d.source.network.y,
-            dr = Math.sqrt(dx * dx + dy * dy);
-            
+            var dx = d.target.network.x - d.source.network.x, dy = d.target.network.y - d.source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
             return "M" + d.source.network.x + "," + d.source.network.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.network.x + "," + d.target.network.y;
-        });
+        });*/
+    
+    
+    
+    
 };
 
 var _init_processes = function(){
     
     var g = _vis.append('g').attr('id', '_processes');
     
-    _process_circles = g.selectAll('circle').data(_data.processes);
+    _process_circles = g.selectAll('g').data(_data.processes);
     
-    _process_circles.enter().append('circle')
-        .attr('fill', '#3690c0')
-        .attr('r', function(d) { return d.r; })
+    function find_radius(a){
+        return Math.sqrt( a / Math.PI); 
+    }
+    
+    function find_area(r){
+        return r * r * Math.PI;
+    }
+    
+    function append_circles(d){
+        
+        var g = d3.select(this),
+            a = d.r * d.r * Math.PI,
+            arr = [ 
+                { color: '#3690C0', r: find_radius(d.up * a/100) }, 
+                { color: '#BECCAE', r: find_radius(d.none * a/100) }, 
+                { color: '#D84B2A', r: find_radius(d.down * a/100) }
+            ];
+        
+        arr = _.sortBy(arr, function(n){ return - n.r; });
+        
+        g.selectAll('circle').data(arr)
+            .enter()
+            .append('circle')
+                .attr('fill', function(n){ return n.color; })
+                .attr('r', function(n){ return n.r; });
+    }
+    
+    _process_circles.enter().append('g')
         .attr('id', function(d) { return  d.id; })
         .attr('class', 'process')
         .attr('opacity', 0)
+        .attr('transform', function(d){ return 'translate(' + d.network.x + ',' + d.network.y + ')'; })
         .on('click', function(p){
         
             var genes = d3.selectAll('.'+p.id)
@@ -149,7 +232,7 @@ var _init_processes = function(){
                     return d.parent.network.y;
                 });
         
-            d3.select(this).transition(2000).style('r', 0);
+            d3.select(this).selectAll('circle').transition(2000).style('r', 0);
         
             genes.transition(2000)
                 .style('opacity', 1)
@@ -185,10 +268,11 @@ var _init_processes = function(){
                 return (_.contains(p, n.id) === true) ? 1 : 0.2;
             }
         
-            _process_circles.attr('opacity', changeOpacity);
-            _p_annotations.style('opacity', changeOpacity);
-        
+            _process_circles.transition(3000).attr('opacity', changeOpacity);
+            _p_annotations.transition(2800).style('opacity', changeOpacity);
         });
+    
+        _process_circles.each(append_circles);
 };
 
 var _init_process_annotations = function(){
@@ -252,9 +336,9 @@ var _format_data = function(json){
             process: key, 
             genes : genes, 
             id: p_id,
-            down: (regulated_genes.down) ? getPercentage(regulated_genes.down.length, genes.length) : 0,
-            up: (regulated_genes.up) ?  getPercentage(regulated_genes.up.length, genes.length) : 0,
-            none: (regulated_genes.none) ?  getPercentage(regulated_genes.none.length, genes.length) : 0,
+            down: (reg_groups.down) ? getPercentage(reg_groups.down.length, genes.length) : 0,
+            up: (reg_groups.up) ?  getPercentage(reg_groups.up.length, genes.length) : 0,
+            none: (reg_groups.none) ?  getPercentage(reg_groups.none.length, genes.length) : 0,
             Log2fold_change: log,
             network: p_pos[p_id]
         };
@@ -344,8 +428,7 @@ var _format_data = function(json){
         return { source: source , target: target};
     }
     
-    _data.links = _.map(json.links, process_links);
-    
+    _data.links = _.filter( _.map(json.links, process_links), function(l){ return l.target.process !== l.source.process; });
     _data.p_links = _.values(process_links_dic);
     
     //init force
