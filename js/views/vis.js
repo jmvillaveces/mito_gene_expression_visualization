@@ -1,16 +1,36 @@
-var _url, _width, _fheight = 550, _pheight = 1200, _force, _gravity = -0.01, _damper = 0.1, _center, _offset = 150, _p_annotations, _radius_scale, _view, _data, _circles, _process_circles, _links;
+// Required scripts
+var _areaCalc = require('../circle.geo.js');
+var _processPositions = require('../data/process_positions.json');
 
-var p_pos = require('../data/process_positions.json');
-
-var _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']);
-var _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']);
-
-var _charge = function(d){ return -Math.pow(d.radius, 2.0) / 8; };
+var _url, // data location
+    _width, // vis width
+    _height = 550, //vis height
+    _processHeight = 1200, //process height
+    _force, // force layout
+    _gravity = -0.01, 
+    _damper = 0.1, 
+    _center, // svg center
+    _offset = 150, 
+    _processAnnotations, // div process annotations  
+    _radiusScale, 
+    _view, // current view (process, group, chart, network)
+    _data, // variable holding all vis data
+    _geneCircles, // gene circles
+    _processCircles, 
+    _links,
+    _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']),
+    _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']);
 
 // Initialize tooltip
 var _tipTemplate = require('../templates.js').tooltip;
 var _tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return _tipTemplate(d); });
 
+// Force charge
+var _charge = function(d){ 
+    return -Math.pow(d.radius, 2.0) / 8; 
+};
+
+// Move gens up or down according to expression
 var _buoyancy = function(alpha) {
     return function(d) {
         var val = d.y * 0.05 * alpha * alpha * alpha * 100;
@@ -18,19 +38,21 @@ var _buoyancy = function(alpha) {
     };
 };
 
-var _move_towards_center = function(alpha){
+var _moveTowardsCenter = function(alpha){
     return function(d) {
         d.x = d.x + (_center.x - d.x) * (_damper + 0.02) * alpha;
         d.y = d.y + (_center.y - d.y) * (_damper + 0.02) * alpha;
     };
 };
 
-var _display_by_process = function(){
-    _force.stop();
+// Group genes by process
+var _displayByProcess = function(){
+    _force.stop(); // stop force
     d3.selectAll('.axis').style('opacity', 0);
-    d3.select(_selector).transition().duration(2000).style('height', _pheight);
+    d3.select(_selector).transition().duration(2000).style('height', _processHeight);
     
-    _circles.transition().duration(2000)
+    // Transition genes to process positions
+    _geneCircles.transition().duration(2000)
         .attr('cx', function(d) {
             return d.parent.px + d.pack.x;
         })
@@ -38,22 +60,23 @@ var _display_by_process = function(){
             return d.parent.py + d.pack.y;
         });
     
-    _p_annotations.style('opacity', 1);
+    _processAnnotations.style('opacity', 1);
 };
 
-var _display_group_all = function() {
+// Move genes toward the center focal point of the visualization
+var _displayGroupAll = function() {
     
-    d3.select(_selector).transition().duration(2000).style('height', _fheight);
+    d3.select(_selector).transition().duration(2000).style('height', _height);
     
     d3.selectAll('.axis').style('opacity', 0);
-    _circles.attr('transform', null);
-    _p_annotations.style('opacity', 0);
+    _geneCircles.attr('transform', null);
+    _processAnnotations.style('opacity', 0);
     
     _force.gravity(_gravity)
         .charge(_charge)
         .friction(0.9)
         .on('tick', function(e) {
-            _circles.each(_move_towards_center(e.alpha)).each(_buoyancy(e.alpha))
+            _geneCircles.each(_moveTowardsCenter(e.alpha)).each(_buoyancy(e.alpha))
                 .attr('cx', function(d) {
                     return d.x;
                 })
@@ -64,16 +87,17 @@ var _display_group_all = function() {
         .start();
 };
 
-var _display_network = function(){
+// Display processes as a network
+var _displayNetwork = function(){
     
     d3.selectAll('.axis').style('opacity', 0);
-    _circles
+    _geneCircles
         .attr('transform', null)
-        .style('opacity', 0);
+        .attr('opacity', 0);
     
-    _p_annotations.style('opacity', 1);
+    _processAnnotations.style('opacity', 1);
     
-    _process_circles
+    _processCircles
         .attr('cx', function(d) {
             return d.network.x ;
         })
@@ -81,36 +105,39 @@ var _display_network = function(){
             return d.network.y ;
         });
     
-    _process_circles.transition().duration(3000).attr('opacity', 1);
+    _processCircles.transition().duration(3000).attr('opacity', 1);
     
 };
 
-var _display_chart = function() {
+// Move genes to chart positions
+var _displayChart = function() {
     _force.stop();
-    _p_annotations.style('opacity', 0);
+    _processAnnotations.style('opacity', 0);
     
-    _circles
+    _geneCircles
         .attr('cx', function(d){ return (_view === 'group') ? d.x : d.pack.x * 20; })
         .attr('cy', function(d){ return (_view === 'group') ? d.y : d.pack.y * 20; })
         .attr('transform', null);
     
-    _circles.transition().duration(2000)
+    _geneCircles.transition().duration(2000)
         .attr('cx', function(d){ return d.chart.x; })
         .attr('cy', function(d){ return d.chart.y; });
     
     d3.selectAll('.axis').transition().duration(2000).style('opacity', 1);
 };
 
-var _init_links = function(){
+// Initialize paths to display node relationships
+var _initLinks = function(){
     
-    var links = _.union(_data.p_links/*, _data.links*/);
+    // Join process and gene links
+    var links = _.union(_data.p_links, _data.links);
     
+    // Create link dictionary to prevent iteration over all links
     var l_dic = {};
     function get_node(n){
         if(_.isUndefined(l_dic[n.id])){
             l_dic[n.id] = [];
         }
-        
         return l_dic[n.id];
     }
     
@@ -119,6 +146,7 @@ var _init_links = function(){
         get_node(l.target).push(l);
     });
     
+    // Calculate higher number of links to be displayed
     var number = 0;
     _.each(l_dic, function(v, k){
         number = (number > v.length) ? number : v.length;
@@ -126,7 +154,9 @@ var _init_links = function(){
     
     var g = _vis.append('g').attr('id', '_links');
     
-    _links = g.selectAll('path').data(_.range(0, number))
+    // Data structure to store all variables related to links
+    _links = {};
+    _links.paths = g.selectAll('path').data(_.range(0, number)) // Append paths
         .enter()
         .append('path')
         .attr('class', 'link')
@@ -134,90 +164,40 @@ var _init_links = function(){
         .attr('fill', 'none')
         .attr('stroke', 'rgba(95, 96, 98, 0.4)');
     
-    var lScale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
+    _links.scale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
     
-    _handle_links = function(source){
-        
-        var node_links = l_dic[source.id];
-        
-        
-        _links.each(function(n, i){
-            
-            if(node_links.length > i){
-                
-                var l = node_links[i];
-                console.log(lScale(l.links));
-                
-                d3.select(this)
-                    .style('stroke-width', lScale(l.links))
-                    .attr('d', function (d) {
-                        var dx = l.target.network.x - l.source.network.x, dy = l.target.network.y - l.source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
-                        return "M" + l.source.network.x + "," + l.source.network.y + "A" + dr + "," + dr + " 0 0,1 " + l.target.network.x + "," + l.target.network.y;
-                    });
-            }
-            
-        });
-        
-        
-    };
-    _handle_links(_data.processes[5]);
-    
-    /*var lScale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
-    
-    var g = _vis.append('g').attr('id', '_links');
-    
-    _links = g.selectAll('path').data(links);
-    
-    _links.enter().append('path')
-        .attr('class', 'link')
-        .style('stroke-width', function(l){ return lScale(l.links); })
-        .attr('stroke', 'rgba(95, 96, 98, 0.4)')
-        .attr('opacity', 0)
-        .attr('fill', 'none')
-        .attr('d', function (d) {
-            var dx = d.target.network.x - d.source.network.x, dy = d.target.network.y - d.source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
-            return "M" + d.source.network.x + "," + d.source.network.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.network.x + "," + d.target.network.y;
-        });*/
-    
-    
-    
-    
+    _links.data = l_dic;
 };
 
-var _init_processes = function(){
+var _initProcesses = function(){
     
     var g = _vis.append('g').attr('id', '_processes');
     
-    _process_circles = g.selectAll('g').data(_data.processes);
+    _processCircles = g.selectAll('g').data(_data.processes);
     
-    function find_radius(a){
-        return Math.sqrt( a / Math.PI); 
-    }
-    
-    function find_area(r){
-        return r * r * Math.PI;
-    }
-    
+    // append concentric circles
     function append_circles(d){
         
         var g = d3.select(this),
             a = d.r * d.r * Math.PI,
             arr = [ 
-                { color: '#3690C0', r: find_radius(d.up * a/100) }, 
-                { color: '#BECCAE', r: find_radius(d.none * a/100) }, 
-                { color: '#D84B2A', r: find_radius(d.down * a/100) }
+                { color: _fill('up'), r: _areaCalc.getRadius(d.up * a/100) }, 
+                { color: _fill('none'), r: _areaCalc.getRadius(d.none * a/100) }, 
+                { color: _fill('down'), r: _areaCalc.getRadius(d.down * a/100) }
             ];
         
+        // Sort concentric circles by ascending radius
         arr = _.sortBy(arr, function(n){ return - n.r; });
         
         g.selectAll('circle').data(arr)
             .enter()
             .append('circle')
                 .attr('fill', function(n){ return n.color; })
-                .attr('r', function(n){ return n.r; });
+                .attr('r', function(n){ return n.r; })
+                .style('pointer-events', function(n, i){ return (i === 0) ? 'auto' : 'none'; }); // pointer events only for bigest circle
     }
     
-    _process_circles.enter().append('g')
+    _processCircles.enter().append('g')
         .attr('id', function(d) { return  d.id; })
         .attr('class', 'process')
         .attr('opacity', 0)
@@ -232,10 +212,10 @@ var _init_processes = function(){
                     return d.parent.network.y;
                 });
         
-            d3.select(this).selectAll('circle').transition(2000).style('r', 0);
+            d3.select(this).selectAll('circle').transition(2000).style('r', 0).attr('opacity', 0);
         
             genes.transition(2000)
-                .style('opacity', 1)
+                .attr('opacity', 1)
                 .attr('cx', function(d) {
                     return d.network.x;
                 })
@@ -244,38 +224,57 @@ var _init_processes = function(){
                 });
         
         })
-        .on('mouseout', function(d){ 
-            _links.attr('opacity', 0);
-            _process_circles.attr('opacity', 1);
-            _p_annotations.style('opacity', 1);
-        })
-        .on('mouseover', function(d){
-            
-            var p = [];
-        
-            _links.attr('opacity', function(l){
-                
-                if(l.target.id === d.id || l.source.id === d.id){
-                    p.push(l.target.id);
-                    p.push(l.source.id);
-                    return 1;
-                }
-                return 0;
-            });
-        
-            
-            function changeOpacity(n){
-                return (_.contains(p, n.id) === true) ? 1 : 0.2;
-            }
-        
-            _process_circles.transition(3000).attr('opacity', changeOpacity);
-            _p_annotations.transition(2800).style('opacity', changeOpacity);
-        });
+        .on('mouseout', _onMouseOut)
+        .on('mouseover', _onMouseOverNode);
     
-        _process_circles.each(append_circles);
+        _processCircles.each(append_circles);
 };
 
-var _init_process_annotations = function(){
+var _onMouseOut = function(node){
+    _links.paths.attr('opacity', 0);
+    _processCircles.attr('opacity', 1);
+    _processAnnotations.style('opacity', 1);
+};
+
+var _onMouseOverNode = function(node){
+    
+    var nodeLinks = _links.data[node.id], neighbors = [];
+            
+    _links.paths.each(function(n, i){
+        if(nodeLinks.length > i){
+            var l = nodeLinks[i],
+                source = l.source,
+                target = l.target,
+                s_opacity = d3.select('#' + source.id).attr('opacity'),
+                t_opacity = d3.select('#' + target.id).attr('opacity');
+            
+            console.log(source.id, target.id);
+            console.log(s_opacity, t_opacity);
+            if(s_opacity > 0.1 && t_opacity > 0.1){
+            
+                d3.select(this)
+                    .style('stroke-width', _links.scale(l.links))
+                    .attr('opacity', 1)
+                    .attr('d', function (d) {
+                        var dx = target.network.x - source.network.x, dy = target.network.y - source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
+                        return "M" + source.network.x + "," + source.network.y + "A" + dr + "," + dr + " 0 0,1 " + target.network.x + "," + target.network.y;
+                });
+
+                neighbors.push(source.id);
+                neighbors.push(target.id);
+            }
+        }
+    });
+                              
+    function changeOpacity(n){
+        return (_.contains(neighbors, n.id) === true) ? 1 : 0.2;
+    }
+        
+    _processCircles.transition(3000).attr('opacity', changeOpacity);
+    _processAnnotations.transition(2800).style('opacity', changeOpacity);
+};
+
+var _initProcessAnnotations = function(){
     
     var ann_scale = d3.scale.log().domain(d3.extent(_data.processes, function(d){ return d.r; })).range([10,20]);
     
@@ -283,17 +282,17 @@ var _init_process_annotations = function(){
         .append('div')
         .attr('class', 'node-label-container');
     
-    _p_annotations = div.selectAll('div').data(_data.processes);
+    _processAnnotations = div.selectAll('div').data(_data.processes);
     
-    _p_annotations.enter().append('div')
+    _processAnnotations.enter().append('div')
         .attr('class', 'node theme')
         .text(function(d){ return d.process; })
         .attr('style', function(d){ return 'font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; });
 };
 
-var _format_data = function(json){
+var _formatData = function(json){
     
-    _center = { x:_width/2, y: _fheight/2 };
+    _center = { x:_width/2, y: _height/2 };
     
     _data = {};
     _data.nodes = _.map(json.nodes, function(d){
@@ -306,7 +305,7 @@ var _format_data = function(json){
     // Calculate process centers
     var rows = 4, cols = 3;
     var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
-    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _pheight - _offset]);
+    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _processHeight - _offset]);
     function getPercentage(n, total){
         return n * 100 / total;
     }   
@@ -340,7 +339,7 @@ var _format_data = function(json){
             up: (reg_groups.up) ?  getPercentage(reg_groups.up.length, genes.length) : 0,
             none: (reg_groups.none) ?  getPercentage(reg_groups.none.length, genes.length) : 0,
             Log2fold_change: log,
-            network: p_pos[p_id]
+            network: _processPositions[p_id]
         };
     });
     
@@ -352,9 +351,9 @@ var _format_data = function(json){
         return Math.abs(d.Log2fold_change);
     });
     
-    _radius_scale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([2, 30]);
+    _radiusScale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([2, 30]);
     _.each(all_nodes, function(d){
-        d.radius = _radius_scale(Math.abs(d.Log2fold_change) + 1);
+        d.radius = _radiusScale(Math.abs(d.Log2fold_change) + 1);
     });
     
     _data.processes = _.map(_data.processes, function(p){
@@ -408,6 +407,14 @@ var _format_data = function(json){
         return process_links_dic[k];
     }
     
+    var nodeProcessDic = {};
+    function getPLink(n, p){
+        if(_.isUndefined(nodeProcessDic[n.id])){
+            nodeProcessDic[n.id] = { source: n, target: p, links: 0 };
+        }
+        return nodeProcessDic[n.id];
+    }
+    
     function process_links(l){
         
         var source = node_dic[l.source];
@@ -425,22 +432,29 @@ var _format_data = function(json){
             p_link.links ++;
         }
         
+        // Calculate process - node links
+        if(p1.id !== p2.id){
+            getPLink(source, p2).links ++; 
+            getPLink(target, p1).links ++;
+        }
+        
         return { source: source , target: target};
     }
     
     _data.links = _.filter( _.map(json.links, process_links), function(l){ return l.target.process !== l.source.process; });
+    _data.links = _.flatten([ _data.links, _.values(nodeProcessDic)]);
     _data.p_links = _.values(process_links_dic);
     
     //init force
-    _force = d3.layout.force().nodes(_data.nodes).size([_width, _fheight]);
+    _force = d3.layout.force().nodes(_data.nodes).size([_width, _height]);
 };
 
-var _init_chart = function(){
+var _initChart = function(){
     var margins = { top: 50, right: 50, bottom: 20, left: 50};
     var pvalExtent = d3.extent(_data.nodes, function(d){ return d.p_value;});
     var xRange = d3.scale.linear().range([margins.left, _width - margins.right]).domain(pvalExtent);
     var log2Extent = d3.extent(_data.nodes, function(d){ return d.Log2fold_change;});
-    var yRange = d3.scale.linear().range([_fheight - margins.top, margins.bottom]).domain(log2Extent);
+    var yRange = d3.scale.linear().range([_height - margins.top, margins.bottom]).domain(log2Extent);
     
     var xAxis = d3.svg.axis()
         .scale(xRange)
@@ -459,7 +473,7 @@ var _init_chart = function(){
     
     _vis.append('g')
         .attr('class', 'axis')
-        .attr('transform', 'translate(0,' + (_fheight - margins.bottom) + ')')
+        .attr('transform', 'translate(0,' + (_height - margins.bottom) + ')')
         .attr('opacity', 0)
         .call(xAxis)
         .append('text')
@@ -501,35 +515,41 @@ var _init_chart = function(){
     });
 };
 
-var _create_vis = function(){
+var _createVis = function(){
     
     _vis = d3.select(_selector).append('svg').attr('class', 'canvas').attr('width', _width).attr('id', 'svg_vis');
     
-    _circles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
+    _geneCircles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
     
-    _circles.enter().append('circle')
+    _geneCircles.enter().append('circle')
         .attr('r', 0)
         .attr('fill', function(d){ return _fill(d.regulated); })
         .attr('stroke-width', function(d){ return (d.Variant_sites.length) ? 1.2 : 1; })
         .attr('stroke', function(d){ return (d.Variant_sites.length) ? '#333333' : _stroke(d.regulated);})
-        .attr('id', function(d) { return 'bubble_' + d.id; })
+        .attr('id', function(d) { return d.id; })
         .attr('class', function(d){ return d.p_id; })
-        .on('mouseover', _tip.show)
-        .on('mouseout', _tip.hide)
+        .on('mouseover', function(d){ 
+            _tip.show(d);
+            _onMouseOverNode(d);
+        })
+        .on('mouseout', function(d){ 
+            _tip.hide(d);
+            _onMouseOut(d);
+        })
         .on('click', function(d){console.log(d);})
         .transition().duration(2000).attr('r', function(d) {
             return d.radius;
         })
         .call(_tip);
     
-    _init_chart();
-    _init_links();
-    _init_process_annotations();
-    _init_processes();
-    _create_legend();
+    _initChart();
+    _initLinks();
+    _initProcessAnnotations();
+    _initProcesses();
+    _createLegend();
 };
 
-var _create_legend = function(){
+var _createLegend = function(){
 
     var legend = d3.select('#color_scale')
         .append('ul')
@@ -618,27 +638,31 @@ Vis.width = function(_){
 };
 
 Vis.displayTowardProcess = function(){
-    _display_by_process();
+    _displayByProcess();
     _view = 'process';
 };
 
 Vis.displayGroupAll = function(){
-    _display_group_all();
+    _displayGroupAll();
     _view = 'group';
 };
 
 Vis.displayChart = function(){
-    _display_chart();
+    _displayChart();
     _view = 'chart';
+};
+
+Vis.displayNetwork = function(){
+    _displayNetwork();
+    _view = 'network';
 };
 
 Vis.init = function(){
     d3.json(_url, function(error, json) {
         if (error) return console.warn(error);
-        _format_data(json);
-        _create_vis();
-        //_display_group_all();
-        _display_network();
+        _formatData(json);
+        _createVis();
+        Vis.displayNetwork();
     });
 };
 
