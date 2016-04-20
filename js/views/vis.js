@@ -248,8 +248,6 @@ var _onMouseOverNode = function(node){
                 s_opacity = d3.select('#' + source.id).attr('opacity'),
                 t_opacity = d3.select('#' + target.id).attr('opacity');
             
-            console.log(source.id, target.id);
-            console.log(s_opacity, t_opacity);
             if(s_opacity > 0.1 && t_opacity > 0.1){
             
                 d3.select(this)
@@ -271,6 +269,7 @@ var _onMouseOverNode = function(node){
     }
         
     _processCircles.transition(3000).attr('opacity', changeOpacity);
+    //_geneCircles.transition(3000).attr('opacity', changeOpacity);
     _processAnnotations.transition(2800).style('opacity', changeOpacity);
 };
 
@@ -351,7 +350,7 @@ var _formatData = function(json){
         return Math.abs(d.Log2fold_change);
     });
     
-    _radiusScale = d3.scale.log().domain([1, max_abs_log2 + 1 ]).range([2, 30]);
+    _radiusScale = _areaCalc.areaScale([1, max_abs_log2 + 1 ], [2, 25]);
     _.each(all_nodes, function(d){
         d.radius = _radiusScale(Math.abs(d.Log2fold_change) + 1);
     });
