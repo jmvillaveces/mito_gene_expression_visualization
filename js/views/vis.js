@@ -519,6 +519,9 @@ var _createVis = function(){
     
     _vis = d3.select(_selector).append('svg').attr('class', 'canvas').attr('width', _width).attr('id', 'svg_vis');
     
+    // Render links before circles
+    _initLinks();
+    
     _geneCircles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
     
     _geneCircles.enter().append('circle')
@@ -543,7 +546,6 @@ var _createVis = function(){
         .call(_tip);
     
     _initChart();
-    _initLinks();
     _initProcessAnnotations();
     _initProcesses();
     _createLegend();
