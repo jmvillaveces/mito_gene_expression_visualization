@@ -181,9 +181,9 @@ var _initProcesses = function(){
         var g = d3.select(this),
             a = d.r * d.r * Math.PI,
             arr = [ 
-                { color: _fill('up'), r: _areaCalc.getRadius(d.up * a/100) }, 
-                { color: _fill('none'), r: _areaCalc.getRadius(d.none * a/100) }, 
-                { color: _fill('down'), r: _areaCalc.getRadius(d.down * a/100) }
+                { stroke: _stroke('up'), color: _fill('up'), r: _areaCalc.getRadius(d.up * a/100) }, 
+                { stroke: _stroke('none'), color: _fill('none'), r: _areaCalc.getRadius(d.none * a/100) }, 
+                { stroke: _stroke('down'), color: _fill('down'), r: _areaCalc.getRadius(d.down * a/100) }
             ];
         
         // Sort concentric circles by ascending radius
@@ -193,6 +193,8 @@ var _initProcesses = function(){
             .enter()
             .append('circle')
                 .attr('fill', function(n){ return n.color; })
+                .attr('stroke-width', 1)
+                .attr('stroke', function(d){ return d.stroke; })
                 .attr('r', function(n){ return n.r; })
                 .style('pointer-events', function(n, i){ return (i === 0) ? 'auto' : 'none'; }); // pointer events only for bigest circle
     }
