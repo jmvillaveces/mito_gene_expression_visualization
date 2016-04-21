@@ -20,8 +20,10 @@ module.exports = Backbone.View.extend({
             App.views.vis.displayGroupAll();
         }else if (val === 'chart'){
             App.views.vis.displayChart();
-        }else{
+        }else if (val === 'process'){
             App.views.vis.displayTowardProcess();
+        }else if (val === 'network'){
+            App.views.vis.displayNetwork();
         }
     },
     
