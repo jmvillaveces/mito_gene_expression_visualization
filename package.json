@@ -21,6 +21,7 @@
     "bootstrap": "^3.3.4",
     "d3": "^3.5.5",
     "d3-tip": "^0.6.7",
+    "feature-viewer": "^0.1.36",
     "handlebars": "^4.0.5",
     "jquery": "^2.1.1",
     "underscore": "^1.8.3"
