@@ -4,8 +4,16 @@ Handlebars = glob.Handlebars || require('handlebars');
 
 this["Templates"] = this["Templates"] || {};
 
+this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\n    <div>"
+    + container.escapeExpression(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"process","hash":{},"data":data}) : helper)))
+    + "</div>\n</div>";
+},"useData":true});
+
 this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\" checked=\"\"> All Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\n</ul>\n\n";
+    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\n</ul>\n\n";
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

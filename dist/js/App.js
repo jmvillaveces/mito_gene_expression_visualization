@@ -24,7 +24,7 @@ circle.areaScale = function(domain, range){
 module.exports = circle;
 },{}],2:[function(require,module,exports){
 module.exports={
-    "process_4" : { x:517.056, y:26.001 },
+    /*"process_4" : { x:517.056, y:26.001 },
     "process_3" : { x:149.49, y:446.76 },
     "process_9" : { x:663.605, y:336.487 },
     "process_10" : { x:784.829, y:350.888 },
@@ -40,7 +40,24 @@ module.exports={
     "process_11" : { x:669.363, y:466.372 },
     "process_13" : { x:511.439, y:164.009 },
     "process_8" : { x:677.081, y:119.435 },
-    "process_17" : { x:333.998, y:124.899 }
+    "process_17" : { x:333.998, y:124.899 }*/
+    "process_4" : { x:627.23, y:70.733 },
+    "process_3" : { x:122.599, y:430.647 },
+    "process_9" : { x:314.365, y:410.396 },
+    "process_10" : { x:314.365, y:100.871 },
+    "process_18" : { x:670.314, y:219.557 },
+    "process_6" : { x:162.603, y:302.437 },
+    "process_5" : { x:828.911, y:70.733 },
+    "process_16" : { x:454.119, y:310.67 },
+    "process_2" : { x:870.44, y:446.76 },
+    "process_14" : { x:861.177, y:240.033 },
+    "process_7" : { x:642.203, y:353.89 },
+    "process_12" : { x:448.327, y:454.165 },
+    "process_15" : { x:104.952, y:109.094 },
+    "process_11" : { x:287.65, y:262.641 },
+    "process_13" : { x:475.754, y:144.39 },
+    "process_8" : { x:736.422, y:446.76 },
+    "process_17" : { x:605.463, y:500.734 }
 }
 },{}],3:[function(require,module,exports){
 //Public members
@@ -73,8 +90,16 @@ Handlebars = glob.Handlebars || require('handlebars');
 
 this["Templates"] = this["Templates"] || {};
 
+this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\n    <div>"
+    + container.escapeExpression(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"process","hash":{},"data":data}) : helper)))
+    + "</div>\n</div>";
+},"useData":true});
+
 this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\" checked=\"\"> All Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\n</ul>\n\n";
+    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\n</ul>\n\n";
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
@@ -139,8 +164,10 @@ module.exports = Backbone.View.extend({
             App.views.vis.displayGroupAll();
         }else if (val === 'chart'){
             App.views.vis.displayChart();
-        }else{
+        }else if (val === 'process'){
             App.views.vis.displayTowardProcess();
+        }else if (val === 'network'){
+            App.views.vis.displayNetwork();
         }
     },
     
@@ -184,11 +211,15 @@ var _url, // data location
     _processCircles, 
     _links,
     _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']),
-    _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']);
+    _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']),
+    _templates = require('../templates.js');
 
 // Initialize tooltip
-var _tipTemplate = require('../templates.js').tooltip;
+var _tipTemplate = _templates.tooltip;
 var _tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return _tipTemplate(d); });
+
+// Annotations template
+var _annTemplate = _templates.annotation;
 
 // Force charge
 var _charge = function(d){ 
@@ -346,9 +377,9 @@ var _initProcesses = function(){
         var g = d3.select(this),
             a = d.r * d.r * Math.PI,
             arr = [ 
-                { color: _fill('up'), r: _areaCalc.getRadius(d.up * a/100) }, 
-                { color: _fill('none'), r: _areaCalc.getRadius(d.none * a/100) }, 
-                { color: _fill('down'), r: _areaCalc.getRadius(d.down * a/100) }
+                { stroke: _stroke('up'), color: _fill('up'), r: _areaCalc.getRadius(d.up * a/100) }, 
+                { stroke: _stroke('none'), color: _fill('none'), r: _areaCalc.getRadius(d.none * a/100) }, 
+                { stroke: _stroke('down'), color: _fill('down'), r: _areaCalc.getRadius(d.down * a/100) }
             ];
         
         // Sort concentric circles by ascending radius
@@ -358,6 +389,8 @@ var _initProcesses = function(){
             .enter()
             .append('circle')
                 .attr('fill', function(n){ return n.color; })
+                .attr('stroke-width', 1)
+                .attr('stroke', function(d){ return d.stroke; })
                 .attr('r', function(n){ return n.r; })
                 .style('pointer-events', function(n, i){ return (i === 0) ? 'auto' : 'none'; }); // pointer events only for bigest circle
     }
@@ -367,28 +400,7 @@ var _initProcesses = function(){
         .attr('class', 'process')
         .attr('opacity', 0)
         .attr('transform', function(d){ return 'translate(' + d.network.x + ',' + d.network.y + ')'; })
-        .on('click', function(p){
-        
-            var genes = d3.selectAll('.'+p.id)
-                .attr('cx', function(d) {
-                    return d.parent.network.x;
-                })
-                .attr('cy', function(d) {
-                    return d.parent.network.y;
-                });
-        
-            d3.select(this).selectAll('circle').transition(2000).style('r', 0).attr('opacity', 0);
-        
-            genes.transition(2000)
-                .attr('opacity', 1)
-                .attr('cx', function(d) {
-                    return d.network.x;
-                })
-                .attr('cy', function(d) {
-                    return d.network.y;
-                });
-        
-        })
+        //.on('click', function(p){})
         .on('mouseout', _onMouseOut)
         .on('mouseover', _onMouseOverNode);
     
@@ -440,7 +452,7 @@ var _onMouseOverNode = function(node){
 
 var _initProcessAnnotations = function(){
     
-    var ann_scale = d3.scale.log().domain(d3.extent(_data.processes, function(d){ return d.r; })).range([10,20]);
+    var ann_scale = d3.scale.log().domain(d3.extent(_data.processes, function(d){ return d.r; })).range([10,16]);
     
     var div = d3.select(_selector)
         .append('div')
@@ -449,9 +461,57 @@ var _initProcessAnnotations = function(){
     _processAnnotations = div.selectAll('div').data(_data.processes);
     
     _processAnnotations.enter().append('div')
-        .attr('class', 'node theme')
-        .text(function(d){ return d.process; })
-        .attr('style', function(d){ return 'font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; });
+        .html(_annTemplate)
+        .attr('style', function(d){ return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; })
+        .on('mouseover', function(d){
+            d3.select(this).select('span').transition(2000).style('opacity', 1);
+        })
+        .on('mouseout', function(d){ 
+            d3.select(this).select('span').transition(2000).style('opacity', 0);
+        })
+        .on('click', function(d){
+        
+            var span = d3.select(this).select('span'),
+                genes = d3.selectAll('.' + d.id),
+                pCircles = d3.select('#' + d.id).selectAll('circle');
+            
+            if(span.classed('glyphicon-plus-sign')){
+                
+                genes.attr('cx', function(d) {
+                    return d.parent.network.x;
+                })
+                .attr('cy', function(d) {
+                    return d.parent.network.y;
+                });
+                
+                pCircles.transition(2000).style('r', 0).attr('opacity', 0);
+
+                genes.transition(2000)
+                    .attr('opacity', 1)
+                    .attr('cx', function(d) {
+                        return d.network.x;
+                    })
+                    .attr('cy', function(d) {
+                        return d.network.y;
+                    });
+                
+                span.classed('glyphicon-plus-sign', false).classed('glyphicon-minus-sign', true);
+            }else{
+                
+                pCircles.transition(2000).style('r', function(d){ return d.r; }).attr('opacity', 1);
+
+                genes.transition(2000)
+                    .attr('opacity', 0)
+                    .attr('cx', function(d) {
+                        return d.parent.network.x;
+                    })
+                    .attr('cy', function(d) {
+                        return d.parent.network.y;
+                    });
+                
+                span.classed('glyphicon-minus-sign', false).classed('glyphicon-plus-sign', true);
+            }
+        });
 };
 
 var _formatData = function(json){
@@ -515,7 +575,7 @@ var _formatData = function(json){
         return Math.abs(d.Log2fold_change);
     });
     
-    _radiusScale = _areaCalc.areaScale([1, max_abs_log2 + 1 ], [2, 25]);
+    _radiusScale = _areaCalc.areaScale([1, max_abs_log2 + 1 ], [2, 20]);
     _.each(all_nodes, function(d){
         d.radius = _radiusScale(Math.abs(d.Log2fold_change) + 1);
     });
