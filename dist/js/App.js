@@ -93,27 +93,27 @@ this["Templates"] = this["Templates"] || {};
 this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper;
 
-  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\n    <div>"
+  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\r\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\r\n    <div>"
     + container.escapeExpression(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\n</div>";
+    + "</div>\r\n</div>";
 },"useData":true});
 
 this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\n</ul>\n\n";
+    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\r\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\r\n    </label>\r\n</div>\r\n<ul class=\"nav nav-pills pull-right\">\r\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\r\n</ul>\r\n\r\n";
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\n            </div>\n        </div>\n    </div>\n    <div id=\"vis\" class=\"vis\">\n    </div>\n</div>";
+    return "<div id=\"container\" class=\"container\">\r\n    <div id=\"navbar\" class=\"nav_bar\"></div>\r\n    <div class=\"legend\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\r\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\r\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\r\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div id=\"vis\" class=\"vis\">\r\n    </div>\r\n</div>";
 },"useData":true});
 
 this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "        <div class=\"tip-process\">\n            <strong>Variant Sites:</strong> "
+  return "        <div class=\"tip-process\">\r\n            <strong>Variant Sites:</strong> "
     + container.escapeExpression(((helper = (helper = helpers.Variant_sites || (depth0 != null ? depth0.Variant_sites : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"Variant_sites","hash":{},"data":data}) : helper)))
-    + "\n            <br>\n            "
+    + "\r\n            <br>\r\n            "
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Chromosome_number : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n        </div>\n";
+    + "\r\n        </div>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var helper;
 
@@ -122,19 +122,19 @@ this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div>\n    <div class=\"tip-name\"><strong>"
+  return "<div>\r\n    <div class=\"tip-name\"><strong>"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div class=\"tip-rule\"></div>\n    <div class=\"tip-process\">"
+    + "</strong></div>\r\n    <div class=\"tip-rule\"></div>\r\n    <div class=\"tip-process\">"
     + alias4(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-function\">"
+    + "</div>\r\n    <div class=\"tip-function\">"
     + alias4(((helper = (helper = helpers.gene_function || (depth0 != null ? depth0.gene_function : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gene_function","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
+    + "</div>\r\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
     + alias4(((helper = (helper = helpers.p_value || (depth0 != null ? depth0.p_value : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"p_value","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div><strong>Log2 fold change:</strong> \n        <span class=\"tip-"
+    + "</strong></div>\r\n    <div><strong>Log2 fold change:</strong> \r\n        <span class=\"tip-"
     + alias4(((helper = (helper = helpers.regulated || (depth0 != null ? depth0.regulated : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"regulated","hash":{},"data":data}) : helper)))
     + "\"><strong>"
     + alias4(((helper = (helper = helpers.Log2fold_change || (depth0 != null ? depth0.Log2fold_change : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Log2fold_change","hash":{},"data":data}) : helper)))
-    + "</strong></span>\n    </div>\n\n"
+    + "</strong></span>\r\n    </div>\r\n\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Variant_sites : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</div>";
 },"useData":true});
@@ -371,6 +371,52 @@ var _initProcesses = function(){
     
     _processCircles = g.selectAll('g').data(_data.processes);
     
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.Log2fold_change; });
+
+    var arc = d3.svg.arc();
+    
+    _processCircles.enter().append('g')
+        .attr('id', function(d) { return  d.id; })
+        .attr('class', 'process')
+        .attr('opacity', 0)
+        .attr('transform', function(d){ return 'translate(' + d.network.x + ',' + d.network.y + ')'; })
+        .on('mouseout', _onMouseOut)
+        .on('mouseover', _onMouseOverNode);
+    
+    function appendArch(d){
+        
+        var g = d3.select(this),
+            r = d.r * 0.8,
+            arr = [ 
+                { stroke: _stroke('up'), color: _fill('up'), Log2fold_change:d.up}, 
+                { stroke: _stroke('none'), color: _fill('none'), Log2fold_change:d.none }, 
+                { stroke: _stroke('down'), color: _fill('down'), Log2fold_change: d.down }
+            ];
+        
+        arc.innerRadius(r)
+            .outerRadius(d.r);
+        
+        // Create ring
+        g.selectAll('path').data(pie(arr))
+            .enter().append('path')
+            .attr('fill', function(d) { return d.data.color; })
+            .attr('stroke', function(d) { return d.data.stroke; })
+            .attr('stroke-width', 1)
+            .attr('d', arc);
+        
+        // Add white circle to hide links
+        g.selectAll('circle').data([d])
+            .enter().append('circle')
+            .attr('fill', '#ffffff')
+            .attr('r', r);
+        
+    }
+    
+    _processCircles.each(appendArch);
+    
+    /*
     // append concentric circles
     function append_circles(d){
         
@@ -404,7 +450,7 @@ var _initProcesses = function(){
         .on('mouseout', _onMouseOut)
         .on('mouseover', _onMouseOverNode);
     
-        _processCircles.each(append_circles);
+        _processCircles.each(append_circles);*/
 };
 
 var _onMouseOut = function(node){
@@ -432,7 +478,7 @@ var _onMouseOverNode = function(node){
                     .attr('opacity', 1)
                     .attr('d', function (d) {
                         var dx = target.network.x - source.network.x, dy = target.network.y - source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
-                        return "M" + source.network.x + "," + source.network.y + "A" + dr + "," + dr + " 0 0,1 " + target.network.x + "," + target.network.y;
+                        return 'M' + source.network.x + ',' + source.network.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.network.x + ',' + target.network.y;
                 });
 
                 neighbors.push(source.id);
@@ -473,7 +519,7 @@ var _initProcessAnnotations = function(){
         
             var span = d3.select(this).select('span'),
                 genes = d3.selectAll('.' + d.id),
-                pCircles = d3.select('#' + d.id).selectAll('circle');
+                process = d3.select('#' + d.id);
             
             if(span.classed('glyphicon-plus-sign')){
                 
@@ -484,7 +530,7 @@ var _initProcessAnnotations = function(){
                     return d.parent.network.y;
                 });
                 
-                pCircles.transition(2000).style('r', 0).attr('opacity', 0);
+                process.transition(2000).attr('opacity', 0);
 
                 genes.transition(2000)
                     .attr('opacity', 1)
@@ -498,7 +544,7 @@ var _initProcessAnnotations = function(){
                 span.classed('glyphicon-plus-sign', false).classed('glyphicon-minus-sign', true);
             }else{
                 
-                pCircles.transition(2000).style('r', function(d){ return d.r; }).attr('opacity', 1);
+                process.transition(2000).attr('opacity', 1);
 
                 genes.transition(2000)
                     .attr('opacity', 0)
@@ -1210,7 +1256,7 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,require('_process'),"/node_modules/amdefine/amdefine.js")
+}).call(this,require('_process'),"/node_modules\\amdefine\\amdefine.js")
 },{"_process":47,"path":46}],10:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.3
