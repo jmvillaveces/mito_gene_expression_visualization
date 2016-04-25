@@ -18,7 +18,7 @@
   "homepage": "https://github.com/jmvillaveces/mito_gene_expression_visualization",
   "dependencies": {
     "backbone": "^1.1.2",
-    "bootstrap": "^3.3.4",
+    "bootstrap": "^3.3.6",
     "d3": "^3.5.5",
     "d3-tip": "^0.6.7",
     "feature-viewer": "^0.1.36",
