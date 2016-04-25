@@ -20,7 +20,8 @@ var _url, // data location
     _links,
     _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']),
     _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']),
-    _templates = require('../templates.js');
+    _templates = require('../templates.js'),
+    _holdClick = false; // track click event
 
 // Initialize tooltip
 var _tipTemplate = _templates.tooltip;
@@ -97,6 +98,7 @@ var _displayNetwork = function(){
     d3.selectAll('.axis').style('opacity', 0);
     _geneCircles
         .attr('transform', null)
+        .style('display', 'none')
         .attr('opacity', 0);
     
     _processAnnotations.style('opacity', 1);
@@ -196,7 +198,7 @@ var _initProcesses = function(){
     function appendArch(d){
         
         var g = d3.select(this),
-            r = d.r * 0.8,
+            r = d.r * 0.7,
             arr = [ 
                 { stroke: _stroke('up'), color: _fill('up'), Log2fold_change:d.up}, 
                 { stroke: _stroke('none'), color: _fill('none'), Log2fold_change:d.none }, 
@@ -206,19 +208,33 @@ var _initProcesses = function(){
         arc.innerRadius(r)
             .outerRadius(d.r);
         
+        // Add background circle circle to hide links and listen for events
+        g.selectAll('circle').data([d])
+            .enter().append('circle')
+            .attr('fill', '#ffffff')
+            .attr('r', d.r)
+            .attr('stroke-width', 2)
+            .attr('stroke', function(d){ 
+                var p = _.pluck(d.genes, 'Variant_sites');
+                return (p.join('').length > 0) ? '#333333' : null;
+            });
+        
         // Create ring
         g.selectAll('path').data(pie(arr))
             .enter().append('path')
             .attr('fill', function(d) { return d.data.color; })
             .attr('stroke', function(d) { return d.data.stroke; })
             .attr('stroke-width', 1)
-            .attr('d', arc);
+            .attr('d', arc)
+            .style('pointer-events', 'none'); // only the backgound circle listens to events
         
-        // Add white circle to hide links
-        g.selectAll('circle').data([d])
-            .enter().append('circle')
-            .attr('fill', '#ffffff')
-            .attr('r', r);
+        // Add text
+        /*g.append('text')
+            .attr('dy', r * 0.2)
+            .attr('font-size', r * 0.5)
+            .attr('fonr-family', 'Montserrat')
+            .style('text-anchor', 'middle')
+            .text(function(d) { return '56%'; });*/
         
     }
     
@@ -261,13 +277,39 @@ var _initProcesses = function(){
         _processCircles.each(append_circles);*/
 };
 
+var _onClick = function(){
+    
+    var target = d3.event.target;
+    
+    if(_view === 'network'){
+        
+        switch( target.tagName.toLowerCase() ) {
+        
+            case 'circle':
+                _holdClick = true;
+                break;
+            
+            case 'svg':
+                _holdClick = false;
+                _onMouseOut();
+                break;
+        }
+    }
+};
+
 var _onMouseOut = function(node){
+    
+    if(_holdClick) return;
+    
     _links.paths.attr('opacity', 0);
     _processCircles.attr('opacity', 1);
+    _geneCircles.attr('opacity', 1);
     _processAnnotations.style('opacity', 1);
 };
 
 var _onMouseOverNode = function(node){
+    
+    if(_holdClick) return;
     
     var nodeLinks = _links.data[node.id], neighbors = [];
             
@@ -276,11 +318,11 @@ var _onMouseOverNode = function(node){
             var l = nodeLinks[i],
                 source = l.source,
                 target = l.target,
-                s_opacity = d3.select('#' + source.id).attr('opacity'),
-                t_opacity = d3.select('#' + target.id).attr('opacity');
+                s_display = d3.select('#' + source.id).style('display'),
+                t_display = d3.select('#' + target.id).style('display');
             
-            if(s_opacity > 0.1 && t_opacity > 0.1){
-            
+            if(s_display !== 'none' && t_display !== 'none'){
+                
                 d3.select(this)
                     .style('stroke-width', _links.scale(l.links))
                     .attr('opacity', 1)
@@ -295,13 +337,13 @@ var _onMouseOverNode = function(node){
         }
     });
                               
-    function changeOpacity(n){
-        return (_.contains(neighbors, n.id) === true) ? 1 : 0.2;
+    function notNeighboors(n){
+        return ! _.contains(neighbors, n.id);
     }
-        
-    _processCircles.transition(3000).attr('opacity', changeOpacity);
-    //_geneCircles.transition(3000).attr('opacity', changeOpacity);
-    _processAnnotations.transition(2800).style('opacity', changeOpacity);
+    
+    _geneCircles.filter(notNeighboors).attr('opacity', 0.2);
+    _processCircles.filter(notNeighboors).attr('opacity', 0.2);
+    _processAnnotations.filter(notNeighboors).style('opacity', 0.2);
 };
 
 var _initProcessAnnotations = function(){
@@ -318,6 +360,8 @@ var _initProcessAnnotations = function(){
         .html(_annTemplate)
         .attr('style', function(d){ return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; })
         .on('mouseover', function(d){
+            if(_holdClick) return;
+        
             d3.select(this).select('span').transition(2000).style('opacity', 1);
         })
         .on('mouseout', function(d){ 
@@ -325,9 +369,12 @@ var _initProcessAnnotations = function(){
         })
         .on('click', function(d){
         
+            if(_holdClick) return;
+        
             var span = d3.select(this).select('span'),
                 genes = d3.selectAll('.' + d.id),
                 process = d3.select('#' + d.id);
+            
             
             if(span.classed('glyphicon-plus-sign')){
                 
@@ -338,10 +385,15 @@ var _initProcessAnnotations = function(){
                     return d.parent.network.y;
                 });
                 
-                process.transition(2000).attr('opacity', 0);
+                process
+                    .attr('opacity', 1)
+                    .transition(2000)
+                    .attr('opacity', 0)
+                    .each('end', function(d){ process.style('display', 'none'); });
 
                 genes.transition(2000)
                     .attr('opacity', 1)
+                    .style('display', 'inline')
                     .attr('cx', function(d) {
                         return d.network.x;
                     })
@@ -351,8 +403,6 @@ var _initProcessAnnotations = function(){
                 
                 span.classed('glyphicon-plus-sign', false).classed('glyphicon-minus-sign', true);
             }else{
-                
-                process.transition(2000).attr('opacity', 1);
 
                 genes.transition(2000)
                     .attr('opacity', 0)
@@ -361,7 +411,13 @@ var _initProcessAnnotations = function(){
                     })
                     .attr('cy', function(d) {
                         return d.parent.network.y;
-                    });
+                    })
+                    .each('end', function(d){ d3.select(this).style('display', 'none'); });
+                
+                process.style('display', 'inline')
+                    .attr('opacity', 0)
+                    .transition(2000)
+                    .attr('opacity', 1);
                 
                 span.classed('glyphicon-minus-sign', false).classed('glyphicon-plus-sign', true);
             }
@@ -369,6 +425,10 @@ var _initProcessAnnotations = function(){
 };
 
 var _formatData = function(json){
+    
+    var duplicates = _.chain(json.nodes).groupBy('name').filter(function(v){return v.length > 1;}).flatten().value();
+    
+    console.log(duplicates);
     
     _center = { x:_width/2, y: _height/2 };
     
@@ -595,7 +655,12 @@ var _initChart = function(){
 
 var _createVis = function(){
     
-    _vis = d3.select(_selector).append('svg').attr('class', 'canvas').attr('width', _width).attr('id', 'svg_vis');
+    _vis = d3.select(_selector)
+        .append('svg')
+        .attr('class', 'canvas')
+        .attr('width', _width)
+        .attr('id', 'svg_vis')
+        .on('click', _onClick);
     
     // Render links before circles
     _initLinks();
@@ -607,7 +672,7 @@ var _createVis = function(){
         .attr('fill', function(d){ return _fill(d.regulated); })
         .attr('stroke-width', function(d){ return (d.Variant_sites.length) ? 1.2 : 1; })
         .attr('stroke', function(d){ return (d.Variant_sites.length) ? '#333333' : _stroke(d.regulated);})
-        .attr('id', function(d) { return d.id; })
+        .attr('id', function(d, i) { return d.id; })
         .attr('class', function(d){ return d.p_id; })
         .on('mouseover', function(d){ 
             _tip.show(d);
@@ -648,7 +713,7 @@ var _createLegend = function(){
     // Size
     var svg = d3.select('#size_scale').append('svg')
             .attr('width', 150)
-            .attr('height', 70).append('g').attr('transform', function(d) { return 'translate(' + 35 + ',' + 35 + ')'; });
+            .attr('height', 50).append('g').attr('transform', function(d) { return 'translate(' + 15 + ',' + 10 + ')'; });
     
     var min = _.min(_data.nodes, function(d){ return Math.abs(d.Log2fold_change); });
     var max = _.max(_data.nodes, function(d){ return Math.abs(d.Log2fold_change); });
@@ -685,9 +750,9 @@ var _createLegend = function(){
     // Border
     svg = d3.select('#border_scale').append('svg')
             .attr('width', 34)
-            .attr('height', 34).append('g').attr('transform', function(d) { return 'translate(' + 17 + ',' + 17 + ')'; });
+            .attr('height', 34).append('g').attr('transform', function(d) { return 'translate(' + 15 + ',' + 15 + ')'; });
     
-    svg.selectAll('circle').data([d[1]]).enter()
+    svg.selectAll('circle').data([d[2]]).enter()
         .append('circle')
             .attr('r', function(d){ return d; })
             .attr('class', 'border_circle');
