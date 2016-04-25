@@ -444,9 +444,16 @@ var _formatData = function(json){
     var rows = 4, cols = 3;
     var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
     var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _processHeight - _offset]);
+    
     function getPercentage(n, total){
         return n * 100 / total;
-    }   
+    }
+    
+    function countLog2(arr){
+        return _.reduce(arr, function(memo, d){
+            return memo + Math.abs(d.Log2fold_change);
+        }, 0);
+    }
     
     var i = 1;
     _data.processes = _.groupBy(_data.nodes, function(n){ return n.process; });
@@ -459,7 +466,7 @@ var _formatData = function(json){
         
         var reg_groups = _.groupBy(genes, function(n){
             regulated = (n.regulated === 'up' || n.regulated === 'down' || n.Chromosome_number.length > 0) ? regulated + 1 : regulated;
-            log += n.Log2fold_change;
+            log += Math.abs(n.Log2fold_change);
             
             n.p_id = p_id;
             
@@ -473,9 +480,9 @@ var _formatData = function(json){
             process: key, 
             genes : genes, 
             id: p_id,
-            down: (reg_groups.down) ? getPercentage(reg_groups.down.length, genes.length) : 0,
-            up: (reg_groups.up) ?  getPercentage(reg_groups.up.length, genes.length) : 0,
-            none: (reg_groups.none) ?  getPercentage(reg_groups.none.length, genes.length) : 0,
+            down: (reg_groups.down) ? getPercentage(countLog2(reg_groups.down), log) : 0,
+            up: (reg_groups.up) ?  getPercentage(countLog2(reg_groups.up), log) : 0,
+            none: (reg_groups.none) ?  getPercentage(countLog2(reg_groups.none), log) : 0,
             Log2fold_change: log,
             network: _processPositions[p_id]
         };
