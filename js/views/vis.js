@@ -179,6 +179,52 @@ var _initProcesses = function(){
     
     _processCircles = g.selectAll('g').data(_data.processes);
     
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.Log2fold_change; });
+
+    var arc = d3.svg.arc();
+    
+    _processCircles.enter().append('g')
+        .attr('id', function(d) { return  d.id; })
+        .attr('class', 'process')
+        .attr('opacity', 0)
+        .attr('transform', function(d){ return 'translate(' + d.network.x + ',' + d.network.y + ')'; })
+        .on('mouseout', _onMouseOut)
+        .on('mouseover', _onMouseOverNode);
+    
+    function appendArch(d){
+        
+        var g = d3.select(this),
+            r = d.r * 0.8,
+            arr = [ 
+                { stroke: _stroke('up'), color: _fill('up'), Log2fold_change:d.up}, 
+                { stroke: _stroke('none'), color: _fill('none'), Log2fold_change:d.none }, 
+                { stroke: _stroke('down'), color: _fill('down'), Log2fold_change: d.down }
+            ];
+        
+        arc.innerRadius(r)
+            .outerRadius(d.r);
+        
+        // Create ring
+        g.selectAll('path').data(pie(arr))
+            .enter().append('path')
+            .attr('fill', function(d) { return d.data.color; })
+            .attr('stroke', function(d) { return d.data.stroke; })
+            .attr('stroke-width', 1)
+            .attr('d', arc);
+        
+        // Add white circle to hide links
+        g.selectAll('circle').data([d])
+            .enter().append('circle')
+            .attr('fill', '#ffffff')
+            .attr('r', r);
+        
+    }
+    
+    _processCircles.each(appendArch);
+    
+    /*
     // append concentric circles
     function append_circles(d){
         
@@ -212,7 +258,7 @@ var _initProcesses = function(){
         .on('mouseout', _onMouseOut)
         .on('mouseover', _onMouseOverNode);
     
-        _processCircles.each(append_circles);
+        _processCircles.each(append_circles);*/
 };
 
 var _onMouseOut = function(node){
@@ -240,7 +286,7 @@ var _onMouseOverNode = function(node){
                     .attr('opacity', 1)
                     .attr('d', function (d) {
                         var dx = target.network.x - source.network.x, dy = target.network.y - source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
-                        return "M" + source.network.x + "," + source.network.y + "A" + dr + "," + dr + " 0 0,1 " + target.network.x + "," + target.network.y;
+                        return 'M' + source.network.x + ',' + source.network.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.network.x + ',' + target.network.y;
                 });
 
                 neighbors.push(source.id);
@@ -281,7 +327,7 @@ var _initProcessAnnotations = function(){
         
             var span = d3.select(this).select('span'),
                 genes = d3.selectAll('.' + d.id),
-                pCircles = d3.select('#' + d.id).selectAll('circle');
+                process = d3.select('#' + d.id);
             
             if(span.classed('glyphicon-plus-sign')){
                 
@@ -292,7 +338,7 @@ var _initProcessAnnotations = function(){
                     return d.parent.network.y;
                 });
                 
-                pCircles.transition(2000).style('r', 0).attr('opacity', 0);
+                process.transition(2000).attr('opacity', 0);
 
                 genes.transition(2000)
                     .attr('opacity', 1)
@@ -306,7 +352,7 @@ var _initProcessAnnotations = function(){
                 span.classed('glyphicon-plus-sign', false).classed('glyphicon-minus-sign', true);
             }else{
                 
-                pCircles.transition(2000).style('r', function(d){ return d.r; }).attr('opacity', 1);
+                process.transition(2000).attr('opacity', 1);
 
                 genes.transition(2000)
                     .attr('opacity', 0)
