@@ -4,7 +4,8 @@ module.exports = Backbone.View.extend({
     
     events: {
         'change input[name=vis_setting]' : 'onVisSettingChange',
-        'click #save' : 'onSaveClick'
+        'click #save' : 'onSaveClick',
+        'keyup input' : 'search'
     },
     
     template: templates.buttonGroup,
@@ -31,5 +32,9 @@ module.exports = Backbone.View.extend({
         d3.selectAll("#save")
             .attr("href", "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(d3.selectAll("#svg_vis")
                 .attr("version", "1.1").attr("xmlns", "http://www.w3.org/2000/svg").node().parentNode.innerHTML)))).attr("download",'image.svg');
+    },
+    
+    search : function(e){
+         App.views.vis.search($(e.target).val());
     }
 });
