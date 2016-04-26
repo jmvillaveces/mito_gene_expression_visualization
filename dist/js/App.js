@@ -148,7 +148,8 @@ module.exports = Backbone.View.extend({
     
     events: {
         'change input[name=vis_setting]' : 'onVisSettingChange',
-        'click #save' : 'onSaveClick'
+        'click #save' : 'onSaveClick',
+        'keyup input' : 'search'
     },
     
     template: templates.buttonGroup,
@@ -175,6 +176,10 @@ module.exports = Backbone.View.extend({
         d3.selectAll("#save")
             .attr("href", "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(d3.selectAll("#svg_vis")
                 .attr("version", "1.1").attr("xmlns", "http://www.w3.org/2000/svg").node().parentNode.innerHTML)))).attr("download",'image.svg');
+    },
+    
+    search : function(e){
+         App.views.vis.search($(e.target).val());
     }
 });
 },{"../templates":4}],6:[function(require,module,exports){
@@ -212,8 +217,9 @@ var _url, // data location
     _links,
     _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']),
     _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']),
+    _highlightColor = '#FFFBCC',
     _templates = require('../templates.js'),
-    _holdClick = false; // track click event
+    _clickEvent = {target: null, holdClick: false};
 
 // Initialize tooltip
 var _tipTemplate = _templates.tooltip;
@@ -404,6 +410,7 @@ var _initProcesses = function(){
         g.selectAll('circle').data([d])
             .enter().append('circle')
             .attr('fill', '#ffffff')
+            .attr('id', function(d) { return 'circle_' + d.id; })
             .attr('r', d.r)
             .attr('stroke-width', 2)
             .attr('stroke', function(d){ 
@@ -415,8 +422,8 @@ var _initProcesses = function(){
         g.selectAll('path').data(pie(arr))
             .enter().append('path')
             .attr('fill', function(d) { return d.data.color; })
-            .attr('stroke', function(d) { return d.data.stroke; })
-            .attr('stroke-width', 1)
+            //.attr('stroke', function(d) { return d.data.stroke; })
+            //.attr('stroke-width', 1)
             .attr('d', arc)
             .style('pointer-events', 'none'); // only the backgound circle listens to events
         
@@ -431,67 +438,31 @@ var _initProcesses = function(){
     }
     
     _processCircles.each(appendArch);
-    
-    /*
-    // append concentric circles
-    function append_circles(d){
-        
-        var g = d3.select(this),
-            a = d.r * d.r * Math.PI,
-            arr = [ 
-                { stroke: _stroke('up'), color: _fill('up'), r: _areaCalc.getRadius(d.up * a/100) }, 
-                { stroke: _stroke('none'), color: _fill('none'), r: _areaCalc.getRadius(d.none * a/100) }, 
-                { stroke: _stroke('down'), color: _fill('down'), r: _areaCalc.getRadius(d.down * a/100) }
-            ];
-        
-        // Sort concentric circles by ascending radius
-        arr = _.sortBy(arr, function(n){ return - n.r; });
-        
-        g.selectAll('circle').data(arr)
-            .enter()
-            .append('circle')
-                .attr('fill', function(n){ return n.color; })
-                .attr('stroke-width', 1)
-                .attr('stroke', function(d){ return d.stroke; })
-                .attr('r', function(n){ return n.r; })
-                .style('pointer-events', function(n, i){ return (i === 0) ? 'auto' : 'none'; }); // pointer events only for bigest circle
-    }
-    
-    _processCircles.enter().append('g')
-        .attr('id', function(d) { return  d.id; })
-        .attr('class', 'process')
-        .attr('opacity', 0)
-        .attr('transform', function(d){ return 'translate(' + d.network.x + ',' + d.network.y + ')'; })
-        //.on('click', function(p){})
-        .on('mouseout', _onMouseOut)
-        .on('mouseover', _onMouseOverNode);
-    
-        _processCircles.each(append_circles);*/
 };
 
 var _onClick = function(){
     
-    var target = d3.event.target;
+    var target = d3.event.target,
+        name = target.tagName.toLowerCase(),
+        id = target.id;
     
     if(_view === 'network'){
         
-        switch( target.tagName.toLowerCase() ) {
         
-            case 'circle':
-                _holdClick = true;
-                break;
-            
-            case 'svg':
-                _holdClick = false;
-                _onMouseOut();
-                break;
+        if( (name === 'circle' && _.isNull(_clickEvent.target)) || (name === 'circle' && id === _clickEvent.target.id) ){
+            _clickEvent.holdClick = true;
+            _clickEvent.target = target;
+        }else{
+            _clickEvent.target = null;
+            _clickEvent.holdClick = false;
+            _onMouseOut();
         }
     }
 };
 
 var _onMouseOut = function(node){
     
-    if(_holdClick) return;
+    if(_clickEvent.holdClick) return;
     
     _links.paths.attr('opacity', 0);
     _processCircles.attr('opacity', 1);
@@ -501,7 +472,7 @@ var _onMouseOut = function(node){
 
 var _onMouseOverNode = function(node){
     
-    if(_holdClick) return;
+    if(_clickEvent.holdClick) return;
     
     var nodeLinks = _links.data[node.id], neighbors = [];
             
@@ -552,7 +523,7 @@ var _initProcessAnnotations = function(){
         .html(_annTemplate)
         .attr('style', function(d){ return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; })
         .on('mouseover', function(d){
-            if(_holdClick) return;
+            if(_clickEvent.holdClick) return;
         
             d3.select(this).select('span').transition(2000).style('opacity', 1);
         })
@@ -561,7 +532,7 @@ var _initProcessAnnotations = function(){
         })
         .on('click', function(d){
         
-            if(_holdClick) return;
+            if(_clickEvent.holdClick) return;
         
             var span = d3.select(this).select('span'),
                 genes = d3.selectAll('.' + d.id),
@@ -636,9 +607,16 @@ var _formatData = function(json){
     var rows = 4, cols = 3;
     var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
     var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _processHeight - _offset]);
+    
     function getPercentage(n, total){
         return n * 100 / total;
-    }   
+    }
+    
+    function countLog2(arr){
+        return _.reduce(arr, function(memo, d){
+            return memo + Math.abs(d.Log2fold_change);
+        }, 0);
+    }
     
     var i = 1;
     _data.processes = _.groupBy(_data.nodes, function(n){ return n.process; });
@@ -651,7 +629,7 @@ var _formatData = function(json){
         
         var reg_groups = _.groupBy(genes, function(n){
             regulated = (n.regulated === 'up' || n.regulated === 'down' || n.Chromosome_number.length > 0) ? regulated + 1 : regulated;
-            log += n.Log2fold_change;
+            log += Math.abs(n.Log2fold_change);
             
             n.p_id = p_id;
             
@@ -665,9 +643,9 @@ var _formatData = function(json){
             process: key, 
             genes : genes, 
             id: p_id,
-            down: (reg_groups.down) ? getPercentage(reg_groups.down.length, genes.length) : 0,
-            up: (reg_groups.up) ?  getPercentage(reg_groups.up.length, genes.length) : 0,
-            none: (reg_groups.none) ?  getPercentage(reg_groups.none.length, genes.length) : 0,
+            down: (reg_groups.down) ? getPercentage(countLog2(reg_groups.down), log) : 0,
+            up: (reg_groups.up) ?  getPercentage(countLog2(reg_groups.up), log) : 0,
+            none: (reg_groups.none) ?  getPercentage(countLog2(reg_groups.none), log) : 0,
             Log2fold_change: log,
             network: _processPositions[p_id]
         };
@@ -950,6 +928,29 @@ var _createLegend = function(){
             .attr('class', 'border_circle');
 };
 
+// Search genes by name
+function _search(str){
+    
+    d3.selectAll('.search').classed('search', false);
+    
+    if(str.length < 3) return;
+    
+    str = str.toLowerCase();
+    
+    var matchingGenes = _geneCircles
+                        .filter(function(d){ return d.name.toLocaleLowerCase().match(str); })
+                        .classed('search', true);
+    
+    matchingGenes.each(function(d){
+    
+        if( d3.select(this).style('display') === 'none'){
+            // process is visible set class
+            d3.select('#' + d.parent.id).select('circle').classed('search', true);
+        } 
+    });
+    
+}
+
 //Public members
 var Vis = function(){};
     
@@ -971,6 +972,11 @@ Vis.width = function(_){
     if (!arguments.length)
         return _width;
     _width = _;
+    return Vis;
+};
+
+Vis.search = function(str){ 
+    _search(str);
     return Vis;
 };
 
