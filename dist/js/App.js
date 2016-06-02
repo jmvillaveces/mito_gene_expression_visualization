@@ -78,7 +78,7 @@ App.init = function(options){
     App.views.buttonGroup = new ButtonGroup();
     App.views.buttonGroup.setElement('#navbar').render();
     
-    App.views.vis.url(options.url).selector('#vis').width(970).init();
+    App.views.vis.url(options.url).selector('#vis').width(1170).init();
 };
 
 module.exports = App;
@@ -302,15 +302,26 @@ var _displayNetwork = function(){
     
     _processAnnotations.style('opacity', 1);
     
-    _processCircles
-        .attr('cx', function(d) {
-            return d.network.x ;
-        })
-        .attr('cy', function(d) {
-            return d.network.y ;
-        });
-    
     _processCircles.transition().duration(3000).attr('opacity', 1);
+    
+    _force = d3.layout.force()
+        .linkDistance(400)
+        .size([_width, _height])
+        .nodes(_data.processes)
+        .links(_data.p_links)
+        .charge(0)
+        .start();
+    
+    _force.on('tick', function() {
+        /*link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });*/
+
+        _processCircles.attr('transform', function(d){
+            return 'translate(' + d.x + ',' + d.y + ')';
+        });
+    });
     
 };
 
@@ -390,7 +401,7 @@ var _initProcesses = function(){
         .attr('id', function(d) { return  d.id; })
         .attr('class', 'process')
         .attr('opacity', 0)
-        .attr('transform', function(d){ return 'translate(' + d.network.x + ',' + d.network.y + ')'; })
+        .attr('transform', function(d){ return 'translate(0,0)'; })
         .on('mouseout', _onMouseOut)
         .on('mouseover', _onMouseOverNode);
     
@@ -491,8 +502,8 @@ var _onMouseOverNode = function(node){
                     .style('stroke-width', _links.scale(l.links))
                     .attr('opacity', 1)
                     .attr('d', function (d) {
-                        var dx = target.network.x - source.network.x, dy = target.network.y - source.network.y, dr = Math.sqrt(dx * dx + dy * dy);
-                        return 'M' + source.network.x + ',' + source.network.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.network.x + ',' + target.network.y;
+                        var dx = target.x - source.x, dy = target.y - source.y, dr = Math.sqrt(dx * dx + dy * dy);
+                        return 'M' + source.x + ',' + source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.x + ',' + target.y;
                 });
 
                 neighbors.push(source.id);
@@ -522,7 +533,7 @@ var _initProcessAnnotations = function(){
     
     _processAnnotations.enter().append('div')
         .html(_annTemplate)
-        .attr('style', function(d){ return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.network.x + 'px; top:' + (d.network.y + d.r) + 'px'; })
+        .attr('style', function(d){ return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.x + 'px; top:' + (d.y + d.r) + 'px'; })
         .on('mouseover', function(d){
             if(_clickEvent.holdClick) return;
         
@@ -543,10 +554,10 @@ var _initProcessAnnotations = function(){
             if(span.classed('glyphicon-plus-sign')){
                 
                 genes.attr('cx', function(d) {
-                    return d.parent.network.x;
+                    return d.parent.x;
                 })
                 .attr('cy', function(d) {
-                    return d.parent.network.y;
+                    return d.parent.y;
                 });
                 
                 process
@@ -559,10 +570,10 @@ var _initProcessAnnotations = function(){
                     .attr('opacity', 1)
                     .style('display', 'inline')
                     .attr('cx', function(d) {
-                        return d.network.x;
+                        return d.x;
                     })
                     .attr('cy', function(d) {
-                        return d.network.y;
+                        return d.y;
                     });
                 
                 span.classed('glyphicon-plus-sign', false).classed('glyphicon-minus-sign', true);
@@ -571,10 +582,10 @@ var _initProcessAnnotations = function(){
                 genes.transition(2000)
                     .attr('opacity', 0)
                     .attr('cx', function(d) {
-                        return d.parent.network.x;
+                        return d.parent.x;
                     })
                     .attr('cy', function(d) {
-                        return d.parent.network.y;
+                        return d.parent.y;
                     })
                     .each('end', function(d){ d3.select(this).style('display', 'none'); });
                 
@@ -696,7 +707,7 @@ var _formatData = function(json){
     
     _data.nodes = _.map(_data.nodes, function(d){
         d.pack = {x: d.x, y: d.y};
-        d.network = {x: d.parent.network.x + d.pack.x, y: d.parent.network.y + d.pack.y};
+        d.network = {x: d.parent.x + d.pack.x, y: d.parent.y + d.pack.y};
         return _.omit(d, ['x', 'y']);
     });
     

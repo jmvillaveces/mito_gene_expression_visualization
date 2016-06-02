@@ -16,7 +16,7 @@ App.init = function(options){
     App.views.buttonGroup = new ButtonGroup();
     App.views.buttonGroup.setElement('#navbar').render();
     
-    App.views.vis.url(options.url).selector('#vis').width(970).init();
+    App.views.vis.url(options.url).selector('#vis').width(1170).init();
 };
 
 module.exports = App;
