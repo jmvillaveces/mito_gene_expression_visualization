@@ -18,9 +18,10 @@ var _url, // data location
     _geneCircles, // gene circles
     _processCircles, 
     _links,
-    _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3690c0', '#BECCAE', '#D84B2A']),
+    _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3498db', '#BECCAE', '#e74c3c']),
     _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']),
     _highlightColor = '#FFFBCC',
+    _mutationColor = '#2c3e50',
     _templates = require('../templates.js'),
     _clickEvent = {target: null, holdClick: false};
 
@@ -169,7 +170,7 @@ var _initLinks = function(){
         .attr('class', 'link')
         .attr('opacity', 1)
         .attr('fill', 'none')
-        .attr('stroke', 'rgba(95, 96, 98, 0.4)');
+        .attr('stroke', 'rgba(44, 62, 80, 0.4)');
     
     _links.scale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
     
@@ -218,7 +219,7 @@ var _initProcesses = function(){
             .attr('stroke-width', 2)
             .attr('stroke', function(d){ 
                 var p = _.pluck(d.genes, 'Variant_sites');
-                return (p.join('').length > 0) ? '#333333' : null;
+                return (p.join('').length > 0) ? _mutationColor : null;
             });
         
         // Create ring
@@ -644,7 +645,7 @@ var _createVis = function(){
         .attr('r', 0)
         .attr('fill', function(d){ return _fill(d.regulated); })
         .attr('stroke-width', function(d){ return (d.Variant_sites.length) ? 1.2 : 1; })
-        .attr('stroke', function(d){ return (d.Variant_sites.length) ? '#333333' : _stroke(d.regulated);})
+        .attr('stroke', function(d){ return (d.Variant_sites.length) ? _mutationColor : _stroke(d.regulated);})
         .attr('id', function(d, i) { return d.id; })
         .attr('class', function(d){ return d.p_id; })
         .on('mouseover', function(d){ 
