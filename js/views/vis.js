@@ -1,5 +1,5 @@
 // Required scripts
-var _areaCalc = require('../circle.geo.js');
+var dataFormatter = require('../dataFormatter.js');
 var _processPositions = require('../data/process_positions.json');
 
 var _url, // data location
@@ -818,9 +818,12 @@ Vis.displayNetwork = function(){
 Vis.init = function(){
     d3.json(_url, function(error, json) {
         if (error) return console.warn(error);
-        _formatData(json);
-        _createVis();
-        Vis.displayNetwork();
+        //_formatData(json);
+        
+        console.log(dataFormatter(json));
+        
+        //_createVis();
+        //Vis.displayNetwork();
     });
 };
 
