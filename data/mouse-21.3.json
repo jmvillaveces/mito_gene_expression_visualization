@@ -1,0 +1,4898 @@
+[
+  {
+    "Name": "AARS2",
+    "Process": "Translation",
+    "Function": "AARS2: Involved in the specific attachment of alanine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.147392,
+    "p-value": 0.13535,
+    "mutation": ""
+  },
+  {
+    "Name": "ABCB7",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "ABCB7: Exports an sulphur product (X) from the mitochondrial iron sulphor cluster system to cytosol",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0182665,
+    "p-value": 0.85615,
+    "mutation": ""
+  },
+  {
+    "Name": "ACAA2",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACAA2: Medium chain 3-ketoacyl-CoA thiolase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.000577557,
+    "p-value": 0.99335,
+    "mutation": ""
+  },
+  {
+    "Name": "ACAD10",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACAD10: Involved in the catabolism of fatty acids with significant activity towards branched chains",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.060068,
+    "p-value": 0.61165,
+    "mutation": ""
+  },
+  {
+    "Name": "ACAD11",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACAD11: May be involved in the catabolism of long chain fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0329508,
+    "p-value": 0.732,
+    "mutation": ""
+  },
+  {
+    "Name": "ACAD8",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACAD8: Involved in the caatabolism of fatty acids and branched chain aminoacid valine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0555281,
+    "p-value": 0.5594,
+    "mutation": ""
+  },
+  {
+    "Name": "ACAD9",
+    "Process": "Electron transport chain",
+    "Function": "ACAD9: Role in the assembly of Complex I and might also be involved in the Fatty acid beta-oxidation",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.123157,
+    "p-value": 0.18075,
+    "mutation": "chr3 36066173 G>A missense_variant,chr3 36091489 G>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "ACADL",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACADL: Long chain hydroxyacyl-CoA dehydrogenase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0504635,
+    "p-value": 0.5606,
+    "mutation": "chr1 66831073 G>A 3_prime_UTR_variant,chr1 66831088 A>G 3_prime_UTR_variant,chr1 66831158 C>A 3_prime_UTR_variant,chr1 66831173 C>G 3_prime_UTR_variant,chr1 66831521 G>A synonymous_variant,chr1 66838299 A>G synonymous_variant,chr1 66838338 A>G synonymous_variant,chr1 66845225 G>A synonymous_variant,chr1 66853132 A>G synonymous_variant,chr1 66853174 C>T synonymous_variant,chr1 66857493 T>C missense_variant"
+  },
+  {
+    "Name": "ACADM",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACADM: Fatty acids are metabolized for 3 to 4 cycles by the medium chain acyl-CoA dehydrogenase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00720689,
+    "p-value": 0.9385,
+    "mutation": ""
+  },
+  {
+    "Name": "ACADS",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACADS: Short chain acyl-CoA dehydrogenase encoded by ACADS catalyzes the final 1 to 2 cycles",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0111581,
+    "p-value": 0.90465,
+    "mutation": ""
+  },
+  {
+    "Name": "ACADSB",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACADSB: Involved in the metabolism of short branched chain fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0158773,
+    "p-value": 0.8525,
+    "mutation": ""
+  },
+  {
+    "Name": "ACADVL",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACADVL: Very long chain acyl-CoAs are first catalyzed by long chain acyl-CoA dehydrogenase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0439038,
+    "p-value": 0.61105,
+    "mutation": ""
+  },
+  {
+    "Name": "ACO2",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "ACO2: Catalyzes the interconversion of citrate to isocitrate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0877466,
+    "p-value": 0.32645,
+    "mutation": ""
+  },
+  {
+    "Name": "ACSBG1",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACSBG1: Acyl-CoA synthetase activity for bubblegum family members",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 1.15672,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "ACSL1",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACSL1: Acyl-CoA synthetase activity for long chain free fatty acids are also involved in the activation of fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.263614,
+    "p-value": 0.0077,
+    "mutation": ""
+  },
+  {
+    "Name": "ACSL3",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACSL3: Acyl-CoA synthetase activity for long chain free fatty acids are also involved in the activation of fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.114158,
+    "p-value": 0.2123,
+    "mutation": ""
+  },
+  {
+    "Name": "ACSL4",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACSL4: Acyl-CoA synthetase activity for long chain free fatty acids are also involved in the activation of fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.12459,
+    "p-value": 0.15925,
+    "mutation": ""
+  },
+  {
+    "Name": "ACSL5",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACSL5: Acyl-CoA synthetase activity for long chain free fatty acids are also involved in the activation of fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0046388,
+    "p-value": 0.95845,
+    "mutation": ""
+  },
+  {
+    "Name": "ACSS2",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACSS2: Acyl-CoA synthetase activity for short chain fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.355337,
+    "p-value": 0.00015,
+    "mutation": "chr2 155522021 C>T synonymous_variant,chr2 155562469 A>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "ACSS3",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ACSS3: Acyl-CoA synthetase activity for short chain fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.905698,
+    "p-value": 0.00005,
+    "mutation": "chr10 107045221 G>A synonymous_variant"
+  },
+  {
+    "Name": "AFG3L2",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "AFG3L2: Involved in the mitochondrial fusion, known to maintain the OPA1 isoforms",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0625204,
+    "p-value": 0.48615,
+    "mutation": "chr18 67404824 T>C 3_prime_UTR_variant,chr18 67405000 C>A 3_prime_UTR_variant,chr18 67405133 T>G 3_prime_UTR_variant,chr18 67405200 A>G 3_prime_UTR_variant,chr18 67409500 G>A synonymous_variant,chr18 67409530 G>A synonymous_variant,chr18 67414123 A>G synonymous_variant,chr18 67421008 C>T synonymous_variant,chr18 67421011 C>T synonymous_variant,chr18 67425988 C>T synonymous_variant,chr18 67425994 C>T synonymous_variant,chr18 67431671 A>G synonymous_variant,chr18 67442842 T>C synonymous_variant"
+  },
+  {
+    "Name": "AIFM1",
+    "Process": "Apoptosis",
+    "Function": "AIFM1: Mitochondria associated apoptosis inducing factor translocates to nucleus and degrades DNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0772292,
+    "p-value": 0.38935,
+    "mutation": ""
+  },
+  {
+    "Name": "AK3",
+    "Process": "Replication & Transcription",
+    "Function": "AK3: Phosphorylates the deoxyribonucleoside mono phosphates specifically on dAMP",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0242723,
+    "p-value": 0.78495,
+    "mutation": ""
+  },
+  {
+    "Name": "AK4",
+    "Process": "Replication & Transcription",
+    "Function": "AK4: Phosphorylates the deoxyribonucleoside mono phosphates specifically on dAMP",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.668208,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "ALAD",
+    "Process": "Heme Biosynthesis",
+    "Function": "ALAD: ALA dehydratase catalyzes the reaction where two molecules of ALA condenses to form monopyrrole porphobilinogen (PBG)",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.488389,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "ALAS1",
+    "Process": "Heme Biosynthesis",
+    "Function": "ALAS1: Catalyzes the reaction amino acid glycine and succinyl CoA from TCA cycle condenses to form 5-aminolevulinate (ALA) and CO2",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00829442,
+    "p-value": 0.9313,
+    "mutation": ""
+  },
+  {
+    "Name": "ALDOA",
+    "Process": "Glycolysis",
+    "Function": "ALDOA: Catalyzes the reversible conversion of fructose-1,6-bisphosphate to glyceraldehyde 3-phosphate and dihydroxyacetone phosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.205154,
+    "p-value": 0.0169,
+    "mutation": ""
+  },
+  {
+    "Name": "ALDOC",
+    "Process": "Glycolysis",
+    "Function": "ALDOC: Catalyzes the reversible conversion of fructose-1,6-bisphosphate to glyceraldehyde 3-phosphate and dihydroxyacetone phosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.408408,
+    "p-value": 0.0001,
+    "mutation": ""
+  },
+  {
+    "Name": "AMBRA1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "AMBRA1: Involved in the mitophagy, translocates to the mitochondria and facilitate phagophore formation",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0307467,
+    "p-value": 0.7336,
+    "mutation": ""
+  },
+  {
+    "Name": "ANP32A",
+    "Process": "Apoptosis",
+    "Function": "ANP32A: Enhances APAF1 function",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.275644,
+    "p-value": 0.00145,
+    "mutation": ""
+  },
+  {
+    "Name": "APAF1",
+    "Process": "Apoptosis",
+    "Function": "APAF1: Binds CASP9 preprotein forming an apoptosome and activates it",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.123538,
+    "p-value": 0.16625,
+    "mutation": "chr10 90989580 G>T 3_prime_UTR_variant,chr10 90990108 T>C 3_prime_UTR_variant,chr10 90990642 A>G 3_prime_UTR_variant,chr10 90999679 T>G synonymous_variant,chr10 91039809 A>G synonymous_variant,chr10 91049397 A>G synonymous_variant,chr10 91059621 A>G synonymous_variant,chr10 91060255 C>T synonymous_variant,chr10 91082226 G>T 5_prime_UTR_variant"
+  },
+  {
+    "Name": "APEX1",
+    "Process": "Replication & Transcription",
+    "Function": "APEX1: Involved in the mitochondrial DNA base excision repair",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0941757,
+    "p-value": 0.64505,
+    "mutation": "chr14 50926631 T>A synonymous_variant,chr14 50930030 A>G downstream_gene_variant"
+  },
+  {
+    "Name": "APEX2",
+    "Process": "Replication & Transcription",
+    "Function": "APEX2: Involved in the mitochondrial DNA base excision repair",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.188364,
+    "p-value": 0.025,
+    "mutation": ""
+  },
+  {
+    "Name": "APOPT1",
+    "Process": "Apoptosis",
+    "Function": "APOPT1: Localizes to the mitochondria and stimulates the release of cytochrome c",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0662825,
+    "p-value": 0.5072,
+    "mutation": "chr12 111722605 G>A splice_region_variant&intron_variant,chr12 111722632 A>G synonymous_variant,chr12 111722673 G>A missense_variant,chr12 111722773 A>G synonymous_variant,chr12 111733784 T>C 3_prime_UTR_variant,chr12 111733785 T>C 3_prime_UTR_variant,chr12 111733875 T>A 3_prime_UTR_variant,chr12 111733888 C>T 3_prime_UTR_variant,chr12 111733937 T>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "ASL",
+    "Process": "Urea Cycle",
+    "Function": "ASL: Argininosuccinate lyase catalyzes the reaction where Argininosuccinate is cleaved of its nitrogen and carbon skeleton forming arginine and fumarate respectively",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.271989,
+    "p-value": 0.0054,
+    "mutation": ""
+  },
+  {
+    "Name": "ASS1",
+    "Process": "Urea Cycle",
+    "Function": "ASS1: Argininosuccinate synthetase catalyzes the step where Citruline combines with Aspartate to form Argininosuccinate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0939863,
+    "p-value": 0.79495,
+    "mutation": ""
+  },
+  {
+    "Name": "ATAD3A",
+    "Process": "Translation",
+    "Function": "ATAD3A: May interact with mitochondrial proteins and is required mitochondrial protein synthesis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.235554,
+    "p-value": 0.0116,
+    "mutation": "chr4 155746188 C>G intron_variant,chr4 155746208 A>G intron_variant,chr4 155746232 CT>C intron_variant,chr4 155750186 T>C missense_variant"
+  },
+  {
+    "Name": "ATP5A1",
+    "Process": "Electron transport chain",
+    "Function": "ATP5A1: ATP synthase H+ transporting mitochondrial F1 complex alpha subunit 1 cardiac muscle essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.117282,
+    "p-value": 0.1721,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5B",
+    "Process": "Electron transport chain",
+    "Function": "ATP5B: ATP synthase H+ transporting mitochondrial F1 complex beta polypeptide essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0345936,
+    "p-value": 0.68505,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5C1",
+    "Process": "Electron transport chain",
+    "Function": "ATP5C1: ATP synthase H+ transporting mitochondrial F1 complex gamma polypeptide 1 essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0408422,
+    "p-value": 0.6287,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5D",
+    "Process": "Electron transport chain",
+    "Function": "ATP5D: ATP synthase H+ transporting mitochondrial F1 complex delta subunit essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0799808,
+    "p-value": 0.84995,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5E",
+    "Process": "Electron transport chain",
+    "Function": "ATP5E: ATP synthase H+ transporting mitochondrial F1 complex epsilon subunit essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0774345,
+    "p-value": 0.40415,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5F1",
+    "Process": "Electron transport chain",
+    "Function": "ATP5F1: ATP synthase H+ transporting mitochondrial Fo complex subunit B1 essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0745965,
+    "p-value": 0.4389,
+    "mutation": "chr3 105959232 C>T 5_prime_UTR_variant"
+  },
+  {
+    "Name": "ATP5G1",
+    "Process": "Electron transport chain",
+    "Function": "ATP5G1: ATP synthase H+ transporting mitochondrial Fo complex subunit C1 (subunit 9) essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0909302,
+    "p-value": 0.30095,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5G2",
+    "Process": "Electron transport chain",
+    "Function": "ATP5G2: ATP synthase H+ transporting mitochondrial Fo complex subunit C2 (subunit 9) essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0890511,
+    "p-value": 0.2994,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5G3",
+    "Process": "Electron transport chain",
+    "Function": "ATP5G3: ATP synthase H+ transporting mitochondrial Fo complex subunit C3 (subunit 9) essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0732198,
+    "p-value": 0.38685,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5H",
+    "Process": "Electron transport chain",
+    "Function": "ATP5H: ATP synthase H+ transporting mitochondrial Fo complex subunit d essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0317665,
+    "p-value": 0.7166,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5J",
+    "Process": "Electron transport chain",
+    "Function": "ATP5J: ATP synthase H+ transporting mitochondrial Fo complex subunit F6 essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.683039,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5J2",
+    "Process": "Electron transport chain",
+    "Function": "ATP5J2: ATP synthase H+ transporting mitochondrial Fo complex subunit F2 essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0309003,
+    "p-value": 0.7174,
+    "mutation": "chr5 145179190 G>C downstream_gene_variant"
+  },
+  {
+    "Name": "ATP5L",
+    "Process": "Electron transport chain",
+    "Function": "ATP5L: ATP synthase H+ transporting mitochondrial Fo complex subunit G essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0557605,
+    "p-value": 0.51215,
+    "mutation": ""
+  },
+  {
+    "Name": "ATP5O",
+    "Process": "Electron transport chain",
+    "Function": "ATP5O: ATP synthase H+ transporting mitochondrial F1 complex O subunit essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.644098,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "ATPAF1",
+    "Process": "Electron transport chain",
+    "Function": "ATPAF1: Complex V assembly factor, essential for assembly of alpha + beta heterooligomer",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.174114,
+    "p-value": 0.0753,
+    "mutation": "chr4 115813791 G>C downstream_gene_variant"
+  },
+  {
+    "Name": "ATPAF2",
+    "Process": "Electron transport chain",
+    "Function": "ATPAF2: Complex V assembly factor, essential for assembly of alpha + beta heterooligome",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.107978,
+    "p-value": 0.2721,
+    "mutation": "chr11 60401349 AG>A 3_prime_UTR_variant,chr11 60401515 C>T synonymous_variant"
+  },
+  {
+    "Name": "ATPIF1",
+    "Process": "Electron transport chain",
+    "Function": "ATPIF1: ATPase inhibitory factor 1 essential component of complex V",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.139513,
+    "p-value": 0.1049,
+    "mutation": ""
+  },
+  {
+    "Name": "BAD",
+    "Process": "Apoptosis",
+    "Function": "BAD: Bcl-2 family member propagating apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.123573,
+    "p-value": 0.2903,
+    "mutation": ""
+  },
+  {
+    "Name": "BAK1",
+    "Process": "Apoptosis",
+    "Function": "BAK1: Bcl-2 family member propagating apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.129156,
+    "p-value": 0.1396,
+    "mutation": ""
+  },
+  {
+    "Name": "BAX",
+    "Process": "Apoptosis",
+    "Function": "BAX: Bcl-2 family member propagating apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00958902,
+    "p-value": 0.9096,
+    "mutation": ""
+  },
+  {
+    "Name": "BBC3",
+    "Process": "Apoptosis",
+    "Function": "BBC3: Puma Bcl-2 family member propagating apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.160969,
+    "p-value": 0.10145,
+    "mutation": "chr7 16312272 G>A synonymous_variant,chr7 16317489 T>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "BCKDHA",
+    "Process": "ROS defense",
+    "Function": "BCKDHA: Involved in the catabolism of aminoacids in mitochondria and may also be involved in the production of superoxides and hydrogen peroxide",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.013303,
+    "p-value": 0.887,
+    "mutation": ""
+  },
+  {
+    "Name": "BCKDHB",
+    "Process": "ROS defense",
+    "Function": "BCKDHB: Involved in the catabolism of aminoacids in mitochondria and may also be involved in the production of superoxides and hydrogen peroxide",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 1.28217,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "BCL2",
+    "Process": "Apoptosis",
+    "Function": "BCL2: Bcl-2 family member Anti-apoptotic proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0664212,
+    "p-value": 0.4944,
+    "mutation": ""
+  },
+  {
+    "Name": "BCL2L1",
+    "Process": "Apoptosis",
+    "Function": "BCL2L1: Bcl-2 family member Anti-apoptotic proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00163197,
+    "p-value": 0.9836,
+    "mutation": ""
+  },
+  {
+    "Name": "BCL2L11",
+    "Process": "Apoptosis",
+    "Function": "BCL2L11: Bim Bcl-2 family member propagating apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0197583,
+    "p-value": 0.83725,
+    "mutation": "chr2 128126164 G>C 5_prime_UTR_variant,chr2 128128632 A>G synonymous_variant,chr2 128128738 C>T synonymous_variant,chr2 128147152 G>A synonymous_variant,chr2 128158954 T>G 3_prime_UTR_variant,chr2 128159366 T>C 3_prime_UTR_variant,chr2 128159571 G>A 3_prime_UTR_variant,chr2 128159652 T>C 3_prime_UTR_variant,chr2 128159941 G>A 3_prime_UTR_variant,chr2 128161229 TAA>T 3_prime_UTR_variant,chr2 128161484 A>C 3_prime_UTR_variant,chr2 128161593 A>G 3_prime_UTR_variant,chr2 128161599 G>A 3_prime_UTR_variant,chr2 128161651 GA>G 3_prime_UTR_variant,chr2 128161717 AT>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "BCS1L",
+    "Process": "Electron transport chain",
+    "Function": "BCS1L: Involved in the assembly of complex III of the mitochondrial respiratory chain",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0285461,
+    "p-value": 0.72505,
+    "mutation": ""
+  },
+  {
+    "Name": "BECN1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "BECN1: Involved in the mitophagy, involved in the initiation of autophagy",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0230642,
+    "p-value": 0.7908,
+    "mutation": ""
+  },
+  {
+    "Name": "BID",
+    "Process": "Apoptosis",
+    "Function": "BID: Bcl-2 family member propagating apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.178892,
+    "p-value": 0.05315,
+    "mutation": ""
+  },
+  {
+    "Name": "BNIP3",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "BNIP3: Involved in the mitophagy, cause permeabilization of the mitochondrial membrane and also acts as a proapoptotic factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.19161,
+    "p-value": 0.0371,
+    "mutation": ""
+  },
+  {
+    "Name": "BNIP3L",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "BNIP3L: Involved in the mitophagy, cause permeabilization of the mitochondrial membrane and also regulate mitophagy",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0989169,
+    "p-value": 0.25375,
+    "mutation": "chr14 66986240 G>C 3_prime_UTR_variant,chr14 67008845 CACA>C 5_prime_UTR_variant"
+  },
+  {
+    "Name": "BOLA3",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "BOLA3: Rrole in the biogenesis of iron-sulfur clusters",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.313194,
+    "p-value": 0.0013,
+    "mutation": ""
+  },
+  {
+    "Name": "CARS2",
+    "Process": "Translation",
+    "Function": "CARS2: Involved in the specific attachment of cysteine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.066441,
+    "p-value": 0.40315,
+    "mutation": ""
+  },
+  {
+    "Name": "CASP3",
+    "Process": "Apoptosis",
+    "Function": "CASP3: Executioner caspases leading to apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.168201,
+    "p-value": 0.06625,
+    "mutation": ""
+  },
+  {
+    "Name": "CASP7",
+    "Process": "Apoptosis",
+    "Function": "CASP7: Executioner caspases leading to apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0910581,
+    "p-value": 0.24115,
+    "mutation": ""
+  },
+  {
+    "Name": "CASP9",
+    "Process": "Apoptosis",
+    "Function": "CASP9: Initiator caspase recruited by Apoptosome",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.080645,
+    "p-value": 0.3895,
+    "mutation": "chr4 141796692 C>G missense_variant,chr4 141796800 C>G synonymous_variant,chr4 141811624 C>A synonymous_variant,chr4 141813597 T>C missense_variant&splice_region_variant,chr4 141813614 C>A stop_gained,chr4 141814224 A>T 3_prime_UTR_variant,chr4 141814436 G>A 3_prime_UTR_variant,chr4 141814493 A>G 3_prime_UTR_variant,chr4 141814559 G>A 3_prime_UTR_variant,chr4 141814645 T>C 3_prime_UTR_variant,chr4 141814649 T>G 3_prime_UTR_variant,chr4 141814720 C>G 3_prime_UTR_variant,chr4 141814722 A>G 3_prime_UTR_variant,chr4 141815037 G>T 3_prime_UTR_variant,chr4 141815079 G>A 3_prime_UTR_variant,chr4 141815093 ACACTGGGCATTGAGTT>A 3_prime_UTR_variant,chr4 141815425 C>A 3_prime_UTR_variant,chr4 141815736 CTTTGT>C 3_prime_UTR_variant,chr4 141815776 G>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "CCDC109B",
+    "Process": "Calcium trafficking",
+    "Function": "CCDC109B: Forms a important component of mitochondrial calcium uniporter with MCU",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.498079,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "CCDC90A",
+    "Process": "Calcium trafficking",
+    "Function": "CCDC90A: Mitochondrial calcium uniporter regulator 1 required for the MCU dependent calcium uptake by the mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.707583,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "CDK1",
+    "Process": "Apoptosis",
+    "Function": "CDK1: Can Inhibit CASP9 activity and also involved in the phosphorylation of DNM1L to increase fission",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.237449,
+    "p-value": 0.0071,
+    "mutation": ""
+  },
+  {
+    "Name": "CDK5RAP1",
+    "Process": "Replication & Transcription",
+    "Function": "CDK5RAP1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.296385,
+    "p-value": 0.0003,
+    "mutation": ""
+  },
+  {
+    "Name": "CDKAL1",
+    "Process": "Replication & Transcription",
+    "Function": "CDKAL1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0714413,
+    "p-value": 0.34665,
+    "mutation": ""
+  },
+  {
+    "Name": "CDS1",
+    "Process": "Cardiolipin biosynthesis",
+    "Function": "CDS1: Converts phosphatidic acid to cytidine diphosphate diacylglycerol",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.957114,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "CHCHD4",
+    "Process": "Import & Sorting",
+    "Function": "CHCHD4: Intermembrane transport and assembly, acts as a receptor at the inter membrane space and recognizes incoming precursor proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.209429,
+    "p-value": 0.0159,
+    "mutation": ""
+  },
+  {
+    "Name": "CIAO1",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "CIAO1: Cytosolic Fe-S cluster biogenesis and maturation",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.103519,
+    "p-value": 0.2681,
+    "mutation": "chr2 127242261 G>T 3_prime_UTR_variant,chr2 127242397 C>G 3_prime_UTR_variant,chr2 127242657 C>T 3_prime_UTR_variant,chr2 127242854 A>G synonymous_variant,chr2 127245886 T>C synonymous_variant,chr2 127247638 A>G 5_prime_UTR_variant,chr2 127247693 T>C 5_prime_UTR_variant,chr2 127248249 C>T upstream_gene_variant"
+  },
+  {
+    "Name": "CIAPIN1",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "CIAPIN1: Facilitates NUBP1 and NUBP2 assembly",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.363979,
+    "p-value": 0.0002,
+    "mutation": ""
+  },
+  {
+    "Name": "CLPP",
+    "Process": "Translation",
+    "Function": "CLPP: Involved in the post translational quality control, has re-solublization activity of protein aggregates",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.037932,
+    "p-value": 0.6838,
+    "mutation": ""
+  },
+  {
+    "Name": "CLPX",
+    "Process": "Translation",
+    "Function": "CLPX: Quality control of inner membrane proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0984634,
+    "p-value": 0.28615,
+    "mutation": ""
+  },
+  {
+    "Name": "CMPK2",
+    "Process": "Replication & Transcription",
+    "Function": "CMPK2: Phosphorylates the deoxyribonucleoside mono phosphates specifically on dCMP",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.127155,
+    "p-value": 0.4107,
+    "mutation": ""
+  },
+  {
+    "Name": "COA5",
+    "Process": "Electron transport chain",
+    "Function": "COA5: Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0350392,
+    "p-value": 0.6826,
+    "mutation": "chr1 37417565 G>A 3_prime_UTR_variant,chr1 37418523 C>T 3_prime_UTR_variant,chr1 37428387 G>A synonymous_variant"
+  },
+  {
+    "Name": "COX10",
+    "Process": "Electron transport chain",
+    "Function": "COX10: Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.138723,
+    "p-value": 0.1632,
+    "mutation": "chr11 64079678 G>C upstream_gene_variant"
+  },
+  {
+    "Name": "COX11",
+    "Process": "Electron transport chain",
+    "Function": "COX11: Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0633569,
+    "p-value": 0.70315,
+    "mutation": "chr11 90638280 A>T missense_variant,chr11 90644513 A>G synonymous_variant"
+  },
+  {
+    "Name": "COX14",
+    "Process": "Electron transport chain",
+    "Function": "COX14: Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.177375,
+    "p-value": 0.0652,
+    "mutation": ""
+  },
+  {
+    "Name": "COX15",
+    "Process": "Electron transport chain",
+    "Function": "COX15: Complex IV assembly factor, may function in the regulation and assembly of the complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0725022,
+    "p-value": 0.50825,
+    "mutation": ""
+  },
+  {
+    "Name": "COX17",
+    "Process": "Electron transport chain",
+    "Function": "COX17: Complex IV assembly factor, may function in the regulation and assembly of the complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.195942,
+    "p-value": 0.0487,
+    "mutation": ""
+  },
+  {
+    "Name": "COX18",
+    "Process": "Electron transport chain",
+    "Function": "COX18: Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0257029,
+    "p-value": 0.78115,
+    "mutation": "chr5 90214813 T>C 3_prime_UTR_variant,chr5 90217582 A>G missense_variant,chr5 90219492 T>C missense_variant,chr5 90223876 C>T missense_variant"
+  },
+  {
+    "Name": "COX19",
+    "Process": "Electron transport chain",
+    "Function": "COX19: Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0099348,
+    "p-value": 0.9211,
+    "mutation": ""
+  },
+  {
+    "Name": "COX20",
+    "Process": "Electron transport chain",
+    "Function": "COX20: Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.384969,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "COX4I1",
+    "Process": "Electron transport chain",
+    "Function": "COX4I1: Cytochrome c oxidase subunit IV isoform 1 essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0359199,
+    "p-value": 0.67075,
+    "mutation": ""
+  },
+  {
+    "Name": "COX4I2",
+    "Process": "Electron transport chain",
+    "Function": "COX4I2: Cytochrome c oxidase subunit IV isoform 2 (lung) essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -1.02179,
+    "p-value": 0.04765,
+    "mutation": ""
+  },
+  {
+    "Name": "COX5A",
+    "Process": "Electron transport chain",
+    "Function": "COX5A: Cytochrome c oxidase subunit Va essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.130344,
+    "p-value": 0.1332,
+    "mutation": ""
+  },
+  {
+    "Name": "COX5B",
+    "Process": "Electron transport chain",
+    "Function": "COX5B: Cytochrome c oxidase subunit Vb essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0856763,
+    "p-value": 0.32515,
+    "mutation": "chr1 36698146 A>C downstream_gene_variant,chr1 36698352 A>G downstream_gene_variant"
+  },
+  {
+    "Name": "COX6A1",
+    "Process": "Electron transport chain",
+    "Function": "COX6A1: Cytochrome c oxidase subunit VIa polypeptide 1 essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0141174,
+    "p-value": 0.868,
+    "mutation": ""
+  },
+  {
+    "Name": "COX6A2",
+    "Process": "Electron transport chain",
+    "Function": "COX6A2: Cytochrome c oxidase subunit VIa polypeptide 2 essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.306108,
+    "p-value": 0.2029,
+    "mutation": ""
+  },
+  {
+    "Name": "COX6B1",
+    "Process": "Electron transport chain",
+    "Function": "COX6B1: Cytochrome c oxidase subunit VIb polypeptide 1 (ubiquitous) essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00116649,
+    "p-value": 0.98885,
+    "mutation": ""
+  },
+  {
+    "Name": "COX6B2",
+    "Process": "Electron transport chain",
+    "Function": "COX6B2: Cytochrome c oxidase subunit VIb polypeptide 2 (testis) essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.402229,
+    "p-value": 0.0319,
+    "mutation": ""
+  },
+  {
+    "Name": "COX6C",
+    "Process": "Electron transport chain",
+    "Function": "COX6C: Cytochrome c oxidase subunit VIc essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0223816,
+    "p-value": 0.7977,
+    "mutation": ""
+  },
+  {
+    "Name": "COX7A1",
+    "Process": "Electron transport chain",
+    "Function": "COX7A1: Cytochrome c oxidase subunit VIIa polypeptide 1 (muscle) essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0709901,
+    "p-value": 0.7647,
+    "mutation": ""
+  },
+  {
+    "Name": "COX7A2",
+    "Process": "Electron transport chain",
+    "Function": "COX7A2: Cytochrome c oxidase subunit VIIa polypeptide 2 (liver) essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0505163,
+    "p-value": 0.5636,
+    "mutation": ""
+  },
+  {
+    "Name": "COX7B",
+    "Process": "Electron transport chain",
+    "Function": "COX7B: Cytochrome c oxidase subunit VIIb essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0198172,
+    "p-value": 0.821,
+    "mutation": ""
+  },
+  {
+    "Name": "COX7C",
+    "Process": "Electron transport chain",
+    "Function": "COX7C: Cytochrome c oxidase subunit VIIc essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0244764,
+    "p-value": 0.77985,
+    "mutation": ""
+  },
+  {
+    "Name": "COX8A",
+    "Process": "Electron transport chain",
+    "Function": "COX8A: Cytochrome c oxidase subunit VIIIA (ubiquitous) essential component of complex IV",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0816291,
+    "p-value": 0.34295,
+    "mutation": ""
+  },
+  {
+    "Name": "CPOX",
+    "Process": "Heme Biosynthesis",
+    "Function": "CPOX: Coproporphyrinogen III is transported to mitochondria and in the presence of coproporphyrinogen III oxidase it is oxidatively decarboxylated",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.210934,
+    "p-value": 0.0189,
+    "mutation": ""
+  },
+  {
+    "Name": "CPT1A",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "CPT1A: Carnitiine palmitoyl transferase converts an acyl-CoA into an acylcarnitine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.261719,
+    "p-value": 0.0026,
+    "mutation": ""
+  },
+  {
+    "Name": "CPT1C",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "CPT1C: Carnitiine palmitoyl transferase converts an acyl-CoA into an acylcarnitine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00960762,
+    "p-value": 0.9111,
+    "mutation": ""
+  },
+  {
+    "Name": "CPT2",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "CPT2: Acylcarnitines are reconverted to their CoA esters by carnitine palmitoyltransferase 2",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0775578,
+    "p-value": 0.4006,
+    "mutation": ""
+  },
+  {
+    "Name": "CRAT",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "CRAT: Free carnitine in the mitochondria can be converted into acyl carnitine by the action of carnitine acetyl transferase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0454463,
+    "p-value": 0.6698,
+    "mutation": "chr2 30413129 A>G missense_variant"
+  },
+  {
+    "Name": "CREB1",
+    "Process": "Replication & Transcription",
+    "Function": "CREB1: Promotes the transcription of mitochondrial genes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.143394,
+    "p-value": 0.1159,
+    "mutation": "chr1 64598647 T>G 3_prime_UTR_variant,chr1 64598698 AT>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "CRLS1",
+    "Process": "Cardiolipin biosynthesis",
+    "Function": "CRLS1: Catalyzes the condensation of cytidine diphosphate diacylglycerol and phosphatidylglycerol forming a nascent cardiolipin",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0405037,
+    "p-value": 0.6769,
+    "mutation": "chr2 132866193 GTTTTT>G 3_prime_UTR_variant,chr2 132866633 T>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "CS",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "CS: Catalyzes the synthesis of citrate from oxaloacetate and acetyl coenzyme A",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0556271,
+    "p-value": 0.51125,
+    "mutation": ""
+  },
+  {
+    "Name": "CYC1",
+    "Process": "Electron transport chain",
+    "Function": "CYC1: Essential component of complex III transfers electrons from iron sulphur protein to cytochrome c",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.081608,
+    "p-value": 0.34795,
+    "mutation": ""
+  },
+  {
+    "Name": "CYCS",
+    "Process": "Apoptosis",
+    "Function": "CYCS: Binds to apoptosis inducing factor 1 (APAF1) forming a structure called apoptosome",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0961794,
+    "p-value": 0.26175,
+    "mutation": ""
+  },
+  {
+    "Name": "DAP3",
+    "Process": "Translation",
+    "Function": "DAP3: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0795002,
+    "p-value": 0.3737,
+    "mutation": ""
+  },
+  {
+    "Name": "DARS2",
+    "Process": "Translation",
+    "Function": "DARS2: Involved in the specific attachment of aspartic acid aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.240849,
+    "p-value": 0.01445,
+    "mutation": "chr1 161041649 T>C 3_prime_UTR_variant,chr1 161056500 A>G synonymous_variant,chr1 161070321 AG>A 5_prime_UTR_variant"
+  },
+  {
+    "Name": "DDX28",
+    "Process": "Translation",
+    "Function": "DDX28: May be involved in the biogenesis of mitochondrial ribosomes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0788726,
+    "p-value": 0.2936,
+    "mutation": ""
+  },
+  {
+    "Name": "DECR1",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "DECR1: 2,4 dienoyl CoA reductase 1 catalyzes the metabolism of Polyunsaturated fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.159771,
+    "p-value": 0.07765,
+    "mutation": ""
+  },
+  {
+    "Name": "DHX30",
+    "Process": "Translation",
+    "Function": "DHX30: May be involved in the biogenesis of mitochondrial ribosomes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0640444,
+    "p-value": 0.47975,
+    "mutation": ""
+  },
+  {
+    "Name": "DIABLO",
+    "Process": "Apoptosis",
+    "Function": "DIABLO: Acts as caspase activator by inhibiting the inhibitors of apoptotic proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0282061,
+    "p-value": 0.7637,
+    "mutation": "chr5 123520158 C>A missense_variant"
+  },
+  {
+    "Name": "DLAT",
+    "Process": "Formation of Acetyl CoA",
+    "Function": "DLAT: Catalyzes the conversion of pyruvate to acetyl coenzyme A",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0634407,
+    "p-value": 0.4718,
+    "mutation": "chr9 50635229 G>A 3_prime_UTR_variant,chr9 50657878 G>A synonymous_variant,chr9 50657959 A>T missense_variant,chr9 50658720 C>T missense_variant,chr9 50659338 G>A synonymous_variant,chr9 50659371 T>C synonymous_variant"
+  },
+  {
+    "Name": "DLD",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "DLD: Catalyzes the overall conversion of 2-oxoglutarate to succinyl-CoA and CO2",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0805287,
+    "p-value": 0.3484,
+    "mutation": ""
+  },
+  {
+    "Name": "DLST",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "DLST: Catalyzes the overall conversion of 2-oxoglutarate to succinyl-CoA and CO2",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0678934,
+    "p-value": 0.4271,
+    "mutation": ""
+  },
+  {
+    "Name": "DNAJC19",
+    "Process": "Import & Sorting",
+    "Function": "DNAJC19: Presequence translocase associated motor, could stimulate the ATPase activity of HSPA9",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0729387,
+    "p-value": 0.7363,
+    "mutation": "chr3 34057980 GCACACA>G inframe_deletion"
+  },
+  {
+    "Name": "DNM1",
+    "Process": "Apoptosis",
+    "Function": "DNM1: Recruited to mitochondria can induce cristae remodelling to release cytochrome c and subsequent apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.50108,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "DNM1L",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "DNM1L: Involved in the mitochondrial fission, mediates the division of mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0911565,
+    "p-value": 0.29185,
+    "mutation": ""
+  },
+  {
+    "Name": "DUS2L",
+    "Process": "Replication & Transcription",
+    "Function": "DUS2L: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.013579,
+    "p-value": 0.85575,
+    "mutation": ""
+  },
+  {
+    "Name": "DYNLL1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "DYNLL1: Involved in the mitochondrial movement, have role in the retrograde mitochondrial movement",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0367988,
+    "p-value": 0.6656,
+    "mutation": "chr5 115298168 G>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "EARS2",
+    "Process": "Translation",
+    "Function": "EARS2: Involved in the specific attachment of glutamic acid aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0405642,
+    "p-value": 0.6621,
+    "mutation": ""
+  },
+  {
+    "Name": "ECHS1",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "ECHS1: Enoyl-CoA hydratases, short chain, 1, mitochondrial",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0262787,
+    "p-value": 0.76055,
+    "mutation": ""
+  },
+  {
+    "Name": "ECSIT",
+    "Process": "Electron transport chain",
+    "Function": "ECSIT: Interactcs with NDUFAF1 and functions in Complex I assembly",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.085384,
+    "p-value": 0.81785,
+    "mutation": ""
+  },
+  {
+    "Name": "EFHA1",
+    "Process": "Calcium trafficking",
+    "Function": "EFHA1: Regulates the mitochodrial calcium uniporter by inhibiting and permitting the calcium depending upon the cytosolic calcium concentrations",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00695064,
+    "p-value": 0.93465,
+    "mutation": ""
+  },
+  {
+    "Name": "EFHA2",
+    "Process": "Calcium trafficking",
+    "Function": "EFHA2: Regulates the mitochodrial calcium uniporter by inhibiting and permitting the calcium depending upon the cytosolic calcium concentrations",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.249831,
+    "p-value": 0.0092,
+    "mutation": ""
+  },
+  {
+    "Name": "EIF3M",
+    "Process": "Apoptosis",
+    "Function": "EIF3M: PCI domain containing protein 1 can negatively regulate CASP9 activity",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0682212,
+    "p-value": 0.426,
+    "mutation": ""
+  },
+  {
+    "Name": "ELAC2",
+    "Process": "Replication & Transcription",
+    "Function": "ELAC2: Endolytic processing the 3' end of tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0329826,
+    "p-value": 0.76895,
+    "mutation": ""
+  },
+  {
+    "Name": "ENDOG",
+    "Process": "Replication & Transcription",
+    "Function": "ENDOG: Nuclease which processes the RNA primers for heavy strand replication also has a role in apopptosis where after release from the mitochondria induces nucleosomal DNA fragmentation",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.119246,
+    "p-value": 0.68045,
+    "mutation": ""
+  },
+  {
+    "Name": "ENO2",
+    "Process": "Glycolysis",
+    "Function": "ENO2: Catalyzes the dehydration of 2-phosphoglycerate to phosphoenolpyruate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.272705,
+    "p-value": 0.0038,
+    "mutation": ""
+  },
+  {
+    "Name": "ENO3",
+    "Process": "Glycolysis",
+    "Function": "ENO3: Catalyzes the dehydration of 2-phosphoglycerate to phosphoenolpyruate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.911801,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "FABP3",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "FABP3: Fatty acid binding proteins are also involved in the import and export of fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.237172,
+    "p-value": 0.0695,
+    "mutation": ""
+  },
+  {
+    "Name": "FABP4",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "FABP4: Fatty acid binding proteins are also involved in the import and export of fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.110738,
+    "p-value": 0.4542,
+    "mutation": ""
+  },
+  {
+    "Name": "FABP5",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "FABP5: Fatty acid binding proteins are also involved in the import and export of fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.125024,
+    "p-value": 0.1469,
+    "mutation": "chr3 10014110 T>C intron_variant,chr3 10014729 G>A intron_variant,chr3 10014749 C>T intron_variant"
+  },
+  {
+    "Name": "FAM96A",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "FAM96A: Components of the cytosolic Fe/S protein assembly (CIA) machinery",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0271591,
+    "p-value": 0.76625,
+    "mutation": ""
+  },
+  {
+    "Name": "FAM96B",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "FAM96B: Components of the cytosolic Fe/S protein assembly (CIA) machinery",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0744212,
+    "p-value": 0.4547,
+    "mutation": ""
+  },
+  {
+    "Name": "FARS2",
+    "Process": "Translation",
+    "Function": "FARS2: Involved in the specific attachment of phenylalanine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0416544,
+    "p-value": 0.67565,
+    "mutation": ""
+  },
+  {
+    "Name": "FDX1",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "FDX1: Small iron-sulfur protein, transfers electrons from NADPH to mitochondrial cytochrome P450",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.182203,
+    "p-value": 0.02085,
+    "mutation": ""
+  },
+  {
+    "Name": "FDX1L",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "FDX1L: Transfers electrons from NADPH to mitochondrial cytochrome P450",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.160973,
+    "p-value": 0.38275,
+    "mutation": ""
+  },
+  {
+    "Name": "FDXR",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "FDXR: Provide reducing equivalents in an electron transfer chain contribute to iron-sulfur cluster biogenesis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0682037,
+    "p-value": 0.40715,
+    "mutation": ""
+  },
+  {
+    "Name": "FECH",
+    "Process": "Heme Biosynthesis",
+    "Function": "FECH: Ferrochelatase catalyzes the step involving the addition of Ferrous iron into the protoprphyrin IX to form the protoheme IX",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.037848,
+    "p-value": 0.6634,
+    "mutation": "chr18 64457132 C>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "FIS1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "FIS1: Involved in the mitochondrial fission, facilitates binding and assembly of DNM1L",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0291425,
+    "p-value": 0.741,
+    "mutation": "chr5 136966086 T>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "FOXRED1",
+    "Process": "Electron transport chain",
+    "Function": "FOXRED1: Complex I assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0469099,
+    "p-value": 0.6361,
+    "mutation": "chr9 35214535 T>C upstream_gene_variant"
+  },
+  {
+    "Name": "FXN",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "FXN: Functions in regulating mitochondrial iron transport and respiration",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.286835,
+    "p-value": 0.004,
+    "mutation": ""
+  },
+  {
+    "Name": "GABARAP",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "GABARAP: Involved in the mitophagy, interacts with BNIP3 and BNIP3L to remove mitochondria via autophagy",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.013166,
+    "p-value": 0.8806,
+    "mutation": ""
+  },
+  {
+    "Name": "GAPDH",
+    "Process": "Glycolysis",
+    "Function": "GAPDH: Catalyzes the reversible oxidative phosphorylation of glyceraldehyde-3-phosphate and may also inhibit Caspase independent cell death in apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.147113,
+    "p-value": 0.09335,
+    "mutation": ""
+  },
+  {
+    "Name": "GARS",
+    "Process": "Translation",
+    "Function": "GARS: Involved in the specific attachment of glycine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0477185,
+    "p-value": 0.57245,
+    "mutation": "chr6 55065626 A>G intron_variant,chr6 55075806 T>G intron_variant,chr6 55079236 A>G missense_variant"
+  },
+  {
+    "Name": "GATC",
+    "Process": "Translation",
+    "Function": "GATC: Involved in the biosynthesis of glutamyl-tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.105209,
+    "p-value": 0.28615,
+    "mutation": "chr5 115333613 CTGAA>C 3_prime_UTR_variant,chr5 115334059 GAGAA>G 3_prime_UTR_variant,chr5 115334423 TTCGGA>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "GCLC",
+    "Process": "ROS defense",
+    "Function": "GCLC: Catalyzes the first step reaction which combines cystein and glutamate to form glutamylcysteine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.171466,
+    "p-value": 0.0642,
+    "mutation": ""
+  },
+  {
+    "Name": "GCLM",
+    "Process": "ROS defense",
+    "Function": "GCLM: Catalyzes the first step reaction which combines cystein and glutamate to form glutamylcysteine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0670681,
+    "p-value": 0.479,
+    "mutation": ""
+  },
+  {
+    "Name": "GFER",
+    "Process": "Import & Sorting",
+    "Function": "GFER: Intermembrane transport and assembly, it is know to oxidize CHCHD4 and then the oxidized CHCHD4 acts as a receptor for the pre proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0830046,
+    "p-value": 0.378,
+    "mutation": ""
+  },
+  {
+    "Name": "GFM1",
+    "Process": "Translation",
+    "Function": "GFM1: Involved in the elongation and termination phases of the translation process",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0107092,
+    "p-value": 0.9289,
+    "mutation": ""
+  },
+  {
+    "Name": "GFM2",
+    "Process": "Translation",
+    "Function": "GFM2: Involved in the elongation and termination phases of the translation process may also be involved in the ribosome recycling",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.144607,
+    "p-value": 0.46035,
+    "mutation": ""
+  },
+  {
+    "Name": "GLRX2",
+    "Process": "ROS defense",
+    "Function": "GLRX2: Involved in the control of mitochndrial protein gluthathionylation",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.116315,
+    "p-value": 0.24605,
+    "mutation": ""
+  },
+  {
+    "Name": "GLRX5",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "GLRX5: Fe-S cluster transfer protein directly to the apoprotein",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.11034,
+    "p-value": 0.22805,
+    "mutation": ""
+  },
+  {
+    "Name": "GOT2",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "GOT2: Plasma membrane fatty acid binding protein",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.162615,
+    "p-value": 0.058,
+    "mutation": ""
+  },
+  {
+    "Name": "GPX1",
+    "Process": "ROS defense",
+    "Function": "GPX1: Reduces hydrogen peroxide to water by using reducing equivalents from gluthathione",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.134557,
+    "p-value": 0.11545,
+    "mutation": ""
+  },
+  {
+    "Name": "GPX4",
+    "Process": "ROS defense",
+    "Function": "GPX4: Involved in the reduction of the lipid peroxides to their hydroxides",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0237914,
+    "p-value": 0.94375,
+    "mutation": ""
+  },
+  {
+    "Name": "GRPEL1",
+    "Process": "Import & Sorting",
+    "Function": "GRPEL1: Presequence translocase associated motor, acts as a nucleotide exchange factor releasing the ADP from HSPA9",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0128545,
+    "p-value": 0.90985,
+    "mutation": ""
+  },
+  {
+    "Name": "GRPEL2",
+    "Process": "Import & Sorting",
+    "Function": "GRPEL2: Presequence translocase associated motor, acts as a nucleotide exchange factor releasing the ADP from HSPA9",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.236974,
+    "p-value": 0.01575,
+    "mutation": ""
+  },
+  {
+    "Name": "GSR",
+    "Process": "ROS defense",
+    "Function": "GSR: Reduces oxidized gluthathione to gluthathione which can be re utilized by GPX1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.165766,
+    "p-value": 0.07175,
+    "mutation": ""
+  },
+  {
+    "Name": "GSS",
+    "Process": "ROS defense",
+    "Function": "GSS: Catalyzes the formation of gluthathione from glutamylcysteine by combining it with the glycine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.229208,
+    "p-value": 0.01355,
+    "mutation": "chr2 155563477 C>T 3_prime_UTR_variant,chr2 155563593 T>C 3_prime_UTR_variant,chr2 155564930 C>T synonymous_variant,chr2 155567747 A>G synonymous_variant,chr2 155567765 C>T synonymous_variant,chr2 155578739 C>T synonymous_variant,chr2 155581998 T>C synonymous_variant,chr2 155582025 C>T synonymous_variant,chr2 155587498 T>G synonymous_variant,chr2 155587526 G>C synonymous_variant"
+  },
+  {
+    "Name": "GSTA4",
+    "Process": "ROS defense",
+    "Function": "GSTA4: Mitochondrial gluthathione-S-transferases through gluthothione conjugation or proxide reduction detoxify harmful byproducts",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 1.45105,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "GSTP1",
+    "Process": "ROS defense",
+    "Function": "GSTP1: Mitochondrial gluthathione-S-transferases through gluthothione conjugation or proxide reduction detoxify harmful byproducts",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.220576,
+    "p-value": 0.0109,
+    "mutation": ""
+  },
+  {
+    "Name": "GTPBP3",
+    "Process": "Replication & Transcription",
+    "Function": "GTPBP3: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0312474,
+    "p-value": 0.75445,
+    "mutation": ""
+  },
+  {
+    "Name": "HADH",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "HADH: Medium and short chain hydroxyacyl-CoA dehydrogenase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.094246,
+    "p-value": 0.28465,
+    "mutation": ""
+  },
+  {
+    "Name": "HADHA",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "HADHA: Mitochondrial trifunctional protein catalyzes the Very long and long chain fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0267471,
+    "p-value": 0.7583,
+    "mutation": ""
+  },
+  {
+    "Name": "HADHB",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "HADHB: Mitochondrial trifunctional protein catalyzes the Very long and long chain fatty acids",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0838225,
+    "p-value": 0.3424,
+    "mutation": ""
+  },
+  {
+    "Name": "HARS2",
+    "Process": "Translation",
+    "Function": "HARS2: Involved in the specific attachment of histidine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00894628,
+    "p-value": 0.9274,
+    "mutation": ""
+  },
+  {
+    "Name": "HCCS",
+    "Process": "Electron transport chain",
+    "Function": "HCCS: Complex III assembly factor, covalently links a heme group to the apoprotein of cytochrome c",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.17244,
+    "p-value": 0.06465,
+    "mutation": ""
+  },
+  {
+    "Name": "HK1",
+    "Process": "Glycolysis",
+    "Function": "HK1: Hexokinases phosphorylate glucose to produce glucose-6-phosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.234832,
+    "p-value": 0.0059,
+    "mutation": ""
+  },
+  {
+    "Name": "HK2",
+    "Process": "Glycolysis",
+    "Function": "HK2: Hexokinases phosphorylate glucose to produce glucose-6-phosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.48458,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "HMBS",
+    "Process": "Heme Biosynthesis",
+    "Function": "HMBS: Hydroxymethylbilane synthase catalyzes head to tail condensation of four PBG and subsequent deamination to form a linear tetrapyrrole, Hydroxymethylbilane",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0258083,
+    "p-value": 0.7841,
+    "mutation": ""
+  },
+  {
+    "Name": "HSCB",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "HSCB: Mitochondrial iron-sulfur cluster co-chaperone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.297235,
+    "p-value": 0.0006,
+    "mutation": "chr5 110836052 A>C synonymous_variant"
+  },
+  {
+    "Name": "HSD17B10",
+    "Process": "Replication & Transcription",
+    "Function": "HSD17B10: Human mitochondrial tRNA processing enzyme",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0517374,
+    "p-value": 0.5577,
+    "mutation": ""
+  },
+  {
+    "Name": "HSPA9",
+    "Process": "Import & Sorting",
+    "Function": "HSPA9: Presequence translocase associated motor, binds to the preprotein and drives it into the matrix in association with other chaperones and also involved in the mediation of the interaction between VDAC1 and Inositol-1,4,5-triphosphate receptors",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0569465,
+    "p-value": 0.5136,
+    "mutation": "chr18 34937876 C>T 3_prime_UTR_variant,chr18 34937954 C>T 3_prime_UTR_variant,chr18 34938676 C>G missense_variant,chr18 34938694 T>C missense_variant,chr18 34942190 T>G intron_variant,chr18 34947447 T>C intron_variant,chr18 34953824 T>C intron_variant"
+  },
+  {
+    "Name": "HTRA2",
+    "Process": "Apoptosis",
+    "Function": "HTRA2: Mitochondrial serene protease induces cell death by inhibiting Inhibitors of apoptotic proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.114609,
+    "p-value": 0.5427,
+    "mutation": ""
+  },
+  {
+    "Name": "IARS2",
+    "Process": "Translation",
+    "Function": "IARS2: Involved in the specific attachment of isoleucine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0767746,
+    "p-value": 0.51415,
+    "mutation": "chr1 185303374 G>A synonymous_variant,chr1 185329095 G>A synonymous_variant"
+  },
+  {
+    "Name": "IBA57",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "IBA57: Involved in the maturation of mitochondrial iron-sulfur proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.226128,
+    "p-value": 0.11835,
+    "mutation": "chr11 59158586 A>G synonymous_variant"
+  },
+  {
+    "Name": "IDH1",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "IDH1: Catalyze the oxidative decarboxylation of isocitrate to 2-oxoglutarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.000717561,
+    "p-value": 0.99335,
+    "mutation": ""
+  },
+  {
+    "Name": "IDH2",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "IDH2: Catalyze the oxidative decarboxylation of isocitrate to 2-oxoglutarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0201956,
+    "p-value": 0.8101,
+    "mutation": "chr7 80098332 CCCAGGG>C intron_variant"
+  },
+  {
+    "Name": "IDH3A",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "IDH3A: Catalyze the oxidative decarboxylation of isocitrate to 2-oxoglutarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0810642,
+    "p-value": 0.3564,
+    "mutation": ""
+  },
+  {
+    "Name": "IDH3B",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "IDH3B: Catalyze the oxidative decarboxylation of isocitrate to 2-oxoglutarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0296061,
+    "p-value": 0.81405,
+    "mutation": "chr2 130279493 T>G 3_prime_UTR_variant"
+  },
+  {
+    "Name": "IDH3G",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "IDH3G: Catalyze the oxidative decarboxylation of isocitrate to 2-oxoglutarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0468129,
+    "p-value": 0.60465,
+    "mutation": ""
+  },
+  {
+    "Name": "IMMP1L",
+    "Process": "Import & Sorting",
+    "Function": "IMMP1L: Inner membrane peptidase that cleaves hydrophobic sorting signal",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0653385,
+    "p-value": 0.4488,
+    "mutation": "chr2 105965787 C>A downstream_gene_variant"
+  },
+  {
+    "Name": "IMMP2L",
+    "Process": "Import & Sorting",
+    "Function": "IMMP2L: Inner membrane peptidase that cleaves hydrophobic sorting signal",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.184578,
+    "p-value": 0.4794,
+    "mutation": "chr12 41955030 CAG>C frameshift_variant"
+  },
+  {
+    "Name": "ISCA1",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "ISCA1: Involved in the biogenesis and assembly of iron-sulfur clusters",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0634687,
+    "p-value": 0.46385,
+    "mutation": ""
+  },
+  {
+    "Name": "ISCA2",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "ISCA2: Involved in the maturation of mitochondrial iron-sulfur proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.232179,
+    "p-value": 0.00225,
+    "mutation": ""
+  },
+  {
+    "Name": "ISCU",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "ISCU: Iron sulphur cluster assembly enzyme, Fe-S cluster intermediate is formed on it",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.106646,
+    "p-value": 0.24875,
+    "mutation": ""
+  },
+  {
+    "Name": "ITPR1",
+    "Process": "Calcium trafficking",
+    "Function": "ITPR1: Component of the Inositol-1,4,5-triphosphate receptors channels used for the fluxes of Ca2+ from ER to mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.112282,
+    "p-value": 0.22,
+    "mutation": ""
+  },
+  {
+    "Name": "ITPR2",
+    "Process": "Calcium trafficking",
+    "Function": "ITPR2: Component of the Inositol-1,4,5-triphosphate receptors channels used for the fluxes of Ca2+ from ER to mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.506731,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "ITPR3",
+    "Process": "Calcium trafficking",
+    "Function": "ITPR3: Component of the Inositol-1,4,5-triphosphate receptors channels used for the fluxes of Ca2+ from ER to mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.477139,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "KARS",
+    "Process": "Translation",
+    "Function": "KARS: Involved in the specific attachment of lysine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00151731,
+    "p-value": 0.9854,
+    "mutation": ""
+  },
+  {
+    "Name": "KIF1B",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "KIF1B: Involved in the mitochondrial movement, have role in the mitochondrial distribution in neurons",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0286789,
+    "p-value": 0.7459,
+    "mutation": "chr4 149177610 TA>T 3_prime_UTR_variant,chr4 149234004 C>T 3_prime_UTR_variant,chr4 149234217 C>T 3_prime_UTR_variant,chr4 149235009 A>C 3_prime_UTR_variant,chr4 149235126 A>G 3_prime_UTR_variant,chr4 149235270 TAC>T 3_prime_UTR_variant,chr4 149236099 A>G 3_prime_UTR_variant,chr4 149236454 CA>C 3_prime_UTR_variant,chr4 149236531 C>T 3_prime_UTR_variant,chr4 149236570 T>A 3_prime_UTR_variant,chr4 149236573 A>G 3_prime_UTR_variant,chr4 149236682 TA>T 3_prime_UTR_variant,chr4 149251750 A>T synonymous_variant"
+  },
+  {
+    "Name": "KIF5B",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "KIF5B: Involved in the mitochondrial movement, have role in the mitochondrial distribution in neurons",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.214549,
+    "p-value": 0.0129,
+    "mutation": "chr18 6203595 G>C 3_prime_UTR_variant,chr18 6208286 C>T synonymous_variant,chr18 6208322 A>G synonymous_variant,chr18 6208328 C>A synonymous_variant,chr18 6209031 G>A synonymous_variant,chr18 6209058 C>T synonymous_variant,chr18 6209208 G>A synonymous_variant,chr18 6210643 A>T intron_variant,chr18 6210693 C>G splice_region_variant&intron_variant,chr18 6212525 G>A synonymous_variant,chr18 6213222 C>A synonymous_variant,chr18 6213237 A>G synonymous_variant,chr18 6214016 C>T synonymous_variant,chr18 6214584 T>C synonymous_variant,chr18 6220814 T>C synonymous_variant,chr18 6220920 A>G missense_variant,chr18 6222774 T>C synonymous_variant,chr18 6222819 C>T synonymous_variant,chr18 6225417 A>G synonymous_variant,chr18 6241228 T>C 5_prime_UTR_variant"
+  },
+  {
+    "Name": "LARS2",
+    "Process": "Translation",
+    "Function": "LARS2: Involved in the specific attachment of leucine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0830687,
+    "p-value": 0.39485,
+    "mutation": ""
+  },
+  {
+    "Name": "LDHA",
+    "Process": "Glycolysis",
+    "Function": "LDHA: Catalyzes the interconversion of pyruvate to lactate and back",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.174593,
+    "p-value": 0.04325,
+    "mutation": ""
+  },
+  {
+    "Name": "LDHB",
+    "Process": "Glycolysis",
+    "Function": "LDHB: Catalyzes the interconversion of pyruvate to lactate and back",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00748183,
+    "p-value": 0.9364,
+    "mutation": ""
+  },
+  {
+    "Name": "LETM1",
+    "Process": "Calcium trafficking",
+    "Function": "LETM1: Might act as calcium ion and hydrogen ion antiporter exchanging hydrogen for calcium",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.117499,
+    "p-value": 0.1917,
+    "mutation": ""
+  },
+  {
+    "Name": "LIG3",
+    "Process": "Replication & Transcription",
+    "Function": "LIG3: involved in the mitochondrial DNA replication and repair",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0160373,
+    "p-value": 0.86845,
+    "mutation": ""
+  },
+  {
+    "Name": "LONP1",
+    "Process": "Translation",
+    "Function": "LONP1: Involved in the post translational quality control, has re-solublization activity of protein aggregates",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.26867,
+    "p-value": 0.0024,
+    "mutation": ""
+  },
+  {
+    "Name": "LRPPRC",
+    "Process": "Translation",
+    "Function": "LRPPRC: Might play a role in the translation and stability of COX subunits",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0637436,
+    "p-value": 0.46335,
+    "mutation": "chr17 84722786 G>A synonymous_variant"
+  },
+  {
+    "Name": "LYRM4",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "LYRM4: Assembles with NFS1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.377701,
+    "p-value": 0.00035,
+    "mutation": ""
+  },
+  {
+    "Name": "MAP1LC3A",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "MAP1LC3A: Involved in the mitophagy, interacts with BNIP3 and BNIP3L to remove mitochondria via autophagy",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0450058,
+    "p-value": 0.62425,
+    "mutation": ""
+  },
+  {
+    "Name": "MAPK1",
+    "Process": "Apoptosis",
+    "Function": "MAPK1: Inhibitors of CASP9 activity",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0152626,
+    "p-value": 0.87455,
+    "mutation": ""
+  },
+  {
+    "Name": "MAPK3",
+    "Process": "Apoptosis",
+    "Function": "MAPK3: Inhibitors of CASP9 activity",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.140104,
+    "p-value": 0.1021,
+    "mutation": ""
+  },
+  {
+    "Name": "MARCH5",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "MARCH5: Involved in the mitochondrial fusion and fission, control of mitochondrial morphology by regulating MFN2 and DNM1L",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0273253,
+    "p-value": 0.79715,
+    "mutation": ""
+  },
+  {
+    "Name": "MARS2",
+    "Process": "Translation",
+    "Function": "MARS2: Involved in the specific attachment of methionine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.187509,
+    "p-value": 0.0751,
+    "mutation": ""
+  },
+  {
+    "Name": "MCL1",
+    "Process": "Apoptosis",
+    "Function": "MCL1: Bcl-2 family member Anti-apoptotic proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0357327,
+    "p-value": 0.67365,
+    "mutation": ""
+  },
+  {
+    "Name": "MCU",
+    "Process": "Calcium trafficking",
+    "Function": "MCU: Involved in the accumulation of calcium ions in the matrix through ion impermeable inner mitochondrial membrane",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.172194,
+    "p-value": 0.0616,
+    "mutation": ""
+  },
+  {
+    "Name": "MDH2",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "MDH2: Catalyzes the reversible oxidation of malate to oxaloacetate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.112011,
+    "p-value": 0.19565,
+    "mutation": ""
+  },
+  {
+    "Name": "MFF",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "MFF: Involved in the mitochondrial fission, suggested to have roles in recruiting DNM1L",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0373431,
+    "p-value": 0.67285,
+    "mutation": ""
+  },
+  {
+    "Name": "MFN1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "MFN1: Involved in the mitochondrial fusion, mitofusins dimerize resulting in the tethering of the outer membranes of the fusing mitochondria also involved in the tethering of Endoplasmic reticulum with mitochondria for mitochondrial calcium uptake",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.103207,
+    "p-value": 0.24345,
+    "mutation": "chr3 32531937 T>C synonymous_variant,chr3 32534248 G>A synonymous_variant,chr3 32569625 C>T synonymous_variant,chr3 32577073 G>A missense_variant,chr3 32577215 G>A 3_prime_UTR_variant,chr3 32577835 TGTGGA>T 3_prime_UTR_variant,chr3 32578516 A>G 3_prime_UTR_variant"
+  },
+  {
+    "Name": "MFN2",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "MFN2: Involved in the mitochondrial fusion, mitofusins dimerize resulting in the tethering of the outer membranes of the fusing mitochondria also involved in the tethering of Endoplasmic reticulum with mitochondria for mitochondrial calcium uptake",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.158748,
+    "p-value": 0.06465,
+    "mutation": "chr4 147873779 T>C 3_prime_UTR_variant,chr4 147874128 C>T 3_prime_UTR_variant,chr4 147874398 T>G 3_prime_UTR_variant,chr4 147874451 A>G 3_prime_UTR_variant,chr4 147875134 T>C 3_prime_UTR_variant,chr4 147875174 G>T 3_prime_UTR_variant,chr4 147875204 T>C 3_prime_UTR_variant,chr4 147875237 A>G 3_prime_UTR_variant,chr4 147875279 T>C 3_prime_UTR_variant,chr4 147875364 C>G 3_prime_UTR_variant,chr4 147878782 T>G missense_variant,chr4 147878836 T>C synonymous_variant,chr4 147883744 G>A synonymous_variant,chr4 147885688 T>C missense_variant,chr4 147886386 C>G synonymous_variant,chr4 147903424 G>A 5_prime_UTR_variant"
+  },
+  {
+    "Name": "MICU1",
+    "Process": "Calcium trafficking",
+    "Function": "MICU1: Regulates the mitochodrial calcium uniporter by inhibiting and permitting the calcium depending upon the cytosolic calcium concentrations",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0876008,
+    "p-value": 0.30655,
+    "mutation": ""
+  },
+  {
+    "Name": "MIPEP",
+    "Process": "Import & Sorting",
+    "Function": "MIPEP: Secondary cleavage of the pre proteins processed by the mitochondrial processing peptidase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0825852,
+    "p-value": 0.42255,
+    "mutation": ""
+  },
+  {
+    "Name": "MMS19",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "MMS19: Cytosolic Fe/S protein assembly targeting factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0535412,
+    "p-value": 0.61275,
+    "mutation": "chr19 41940085 T>C downstream_gene_variant,chr19 41957923 T>C missense_variant,chr19 41964338 A>G synonymous_variant,chr19 41966272 T>C synonymous_variant"
+  },
+  {
+    "Name": "MNF1",
+    "Process": "Electron transport chain",
+    "Function": "MNF1: Complex III assembly factor, ubiquinol-cytochrome c reductase complex assembly factor 2",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.010529,
+    "p-value": 0.9041,
+    "mutation": ""
+  },
+  {
+    "Name": "MPV17",
+    "Process": "ROS defense",
+    "Function": "MPV17: May have a role in the metabolism of reactive oxygen species",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.156739,
+    "p-value": 0.0768,
+    "mutation": ""
+  },
+  {
+    "Name": "MPV17L",
+    "Process": "ROS defense",
+    "Function": "MPV17L: May have a role in the metabolism of reactive oxygen species",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0219344,
+    "p-value": 0.8527,
+    "mutation": ""
+  },
+  {
+    "Name": "MPV17L2",
+    "Process": "Translation",
+    "Function": "MPV17L2: May be involved in the biogenesis of mitochondrial ribosomes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.122028,
+    "p-value": 0.3071,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL1",
+    "Process": "Translation",
+    "Function": "MRPL1: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0349285,
+    "p-value": 0.7745,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL10",
+    "Process": "Translation",
+    "Function": "MRPL10: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00279477,
+    "p-value": 0.97545,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL11",
+    "Process": "Translation",
+    "Function": "MRPL11: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0419265,
+    "p-value": 0.6586,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL12",
+    "Process": "Translation",
+    "Function": "MRPL12: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0111408,
+    "p-value": 0.8981,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL13",
+    "Process": "Translation",
+    "Function": "MRPL13: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0312025,
+    "p-value": 0.7282,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL14",
+    "Process": "Translation",
+    "Function": "MRPL14: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0045772,
+    "p-value": 0.96355,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL15",
+    "Process": "Translation",
+    "Function": "MRPL15: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.206463,
+    "p-value": 0.04215,
+    "mutation": "chr1 4782730 G>A synonymous_variant,chr1 4785703 A>T 5_prime_UTR_variant"
+  },
+  {
+    "Name": "MRPL16",
+    "Process": "Translation",
+    "Function": "MRPL16: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.033687,
+    "p-value": 0.7391,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL17",
+    "Process": "Translation",
+    "Function": "MRPL17: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.020294,
+    "p-value": 0.8161,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL18",
+    "Process": "Translation",
+    "Function": "MRPL18: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0400128,
+    "p-value": 0.66695,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL19",
+    "Process": "Translation",
+    "Function": "MRPL19: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0749572,
+    "p-value": 0.4678,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL2",
+    "Process": "Translation",
+    "Function": "MRPL2: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0182559,
+    "p-value": 0.84715,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL20",
+    "Process": "Translation",
+    "Function": "MRPL20: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.189673,
+    "p-value": 0.0362,
+    "mutation": "chr4 155803917 A>C synonymous_variant,chr4 155808706 C>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "MRPL21",
+    "Process": "Translation",
+    "Function": "MRPL21: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0463929,
+    "p-value": 0.63305,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL22",
+    "Process": "Translation",
+    "Function": "MRPL22: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0175952,
+    "p-value": 0.857,
+    "mutation": "chr11 58171695 G>A missense_variant"
+  },
+  {
+    "Name": "MRPL23",
+    "Process": "Translation",
+    "Function": "MRPL23: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0145452,
+    "p-value": 0.88095,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL24",
+    "Process": "Translation",
+    "Function": "MRPL24: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0624878,
+    "p-value": 0.56015,
+    "mutation": "chr3 87919629 T>A 5_prime_UTR_variant,chr3 87923004 C>G synonymous_variant,chr3 87924585 C>G downstream_gene_variant"
+  },
+  {
+    "Name": "MRPL27",
+    "Process": "Translation",
+    "Function": "MRPL27: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0947487,
+    "p-value": 0.3123,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL28",
+    "Process": "Translation",
+    "Function": "MRPL28: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0175007,
+    "p-value": 0.84845,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL3",
+    "Process": "Translation",
+    "Function": "MRPL3: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.113223,
+    "p-value": 0.2131,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL30",
+    "Process": "Translation",
+    "Function": "MRPL30: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0992286,
+    "p-value": 0.26615,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL32",
+    "Process": "Translation",
+    "Function": "MRPL32: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.119174,
+    "p-value": 0.2031,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL33",
+    "Process": "Translation",
+    "Function": "MRPL33: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0108623,
+    "p-value": 0.90925,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL34",
+    "Process": "Translation",
+    "Function": "MRPL34: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.115993,
+    "p-value": 0.23735,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL35",
+    "Process": "Translation",
+    "Function": "MRPL35: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.110528,
+    "p-value": 0.25455,
+    "mutation": "chr6 71816024 C>T 3_prime_UTR_variant,chr6 71817644 G>A synonymous_variant,chr6 71817701 T>C synonymous_variant,chr6 71818710 A>G synonymous_variant,chr6 71818836 G>C synonymous_variant,chr6 71818851 A>G synonymous_variant"
+  },
+  {
+    "Name": "MRPL36",
+    "Process": "Translation",
+    "Function": "MRPL36: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0652358,
+    "p-value": 0.4973,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL37",
+    "Process": "Translation",
+    "Function": "MRPL37: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.044059,
+    "p-value": 0.63285,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL38",
+    "Process": "Translation",
+    "Function": "MRPL38: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.180762,
+    "p-value": 0.054,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL39",
+    "Process": "Translation",
+    "Function": "MRPL39: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.615757,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL4",
+    "Process": "Translation",
+    "Function": "MRPL4: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0429078,
+    "p-value": 0.6408,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL40",
+    "Process": "Translation",
+    "Function": "MRPL40: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0771903,
+    "p-value": 0.41855,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL41",
+    "Process": "Translation",
+    "Function": "MRPL41: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0698978,
+    "p-value": 0.5618,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL42",
+    "Process": "Translation",
+    "Function": "MRPL42: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0881724,
+    "p-value": 0.34155,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL43",
+    "Process": "Translation",
+    "Function": "MRPL43: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.077148,
+    "p-value": 0.40885,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL44",
+    "Process": "Translation",
+    "Function": "MRPL44: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0563936,
+    "p-value": 0.55605,
+    "mutation": "chr1 79776180 A>C synonymous_variant,chr1 79776265 C>T synonymous_variant,chr1 79776303 A>G synonymous_variant,chr1 79778056 C>T synonymous_variant,chr1 79778269 G>A synonymous_variant,chr1 79779598 T>C synonymous_variant,chr1 79781245 G>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "MRPL45",
+    "Process": "Translation",
+    "Function": "MRPL45: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0071364,
+    "p-value": 0.93725,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL46",
+    "Process": "Translation",
+    "Function": "MRPL46: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0157904,
+    "p-value": 0.8744,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL47",
+    "Process": "Translation",
+    "Function": "MRPL47: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.064944,
+    "p-value": 0.4738,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL48",
+    "Process": "Translation",
+    "Function": "MRPL48: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0171596,
+    "p-value": 0.93925,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL49",
+    "Process": "Translation",
+    "Function": "MRPL49: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0604248,
+    "p-value": 0.69765,
+    "mutation": "chr19 6053774 C>T 3_prime_UTR_variant,chr19 6053843 A>C 3_prime_UTR_variant,chr19 6054096 T>C 3_prime_UTR_variant,chr19 6054675 C>T 3_prime_UTR_variant,chr19 6057719 C>G missense_variant"
+  },
+  {
+    "Name": "MRPL50",
+    "Process": "Translation",
+    "Function": "MRPL50: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0375883,
+    "p-value": 0.6896,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL51",
+    "Process": "Translation",
+    "Function": "MRPL51: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0371858,
+    "p-value": 0.6744,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL52",
+    "Process": "Translation",
+    "Function": "MRPL52: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.116363,
+    "p-value": 0.20165,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL53",
+    "Process": "Translation",
+    "Function": "MRPL53: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0430923,
+    "p-value": 0.68,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL54",
+    "Process": "Translation",
+    "Function": "MRPL54: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0381282,
+    "p-value": 0.67515,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPL55",
+    "Process": "Translation",
+    "Function": "MRPL55: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0823298,
+    "p-value": 0.3405,
+    "mutation": "chr11 59204589 A>T missense_variant,chr11 59205750 A>G synonymous_variant"
+  },
+  {
+    "Name": "MRPL9",
+    "Process": "Translation",
+    "Function": "MRPL9: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.199334,
+    "p-value": 0.0283,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS10",
+    "Process": "Translation",
+    "Function": "MRPS10: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0827443,
+    "p-value": 0.38565,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS11",
+    "Process": "Translation",
+    "Function": "MRPS11: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0603632,
+    "p-value": 0.5302,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS12",
+    "Process": "Translation",
+    "Function": "MRPS12: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.016442,
+    "p-value": 0.86445,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS14",
+    "Process": "Translation",
+    "Function": "MRPS14: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0258373,
+    "p-value": 0.7792,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS15",
+    "Process": "Translation",
+    "Function": "MRPS15: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0883139,
+    "p-value": 0.3333,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS16",
+    "Process": "Translation",
+    "Function": "MRPS16: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0753121,
+    "p-value": 0.42515,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS17",
+    "Process": "Translation",
+    "Function": "MRPS17: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0167632,
+    "p-value": 0.8561,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS18A",
+    "Process": "Translation",
+    "Function": "MRPS18A: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.145618,
+    "p-value": 0.12015,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS18B",
+    "Process": "Translation",
+    "Function": "MRPS18B: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.177423,
+    "p-value": 0.0563,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS18C",
+    "Process": "Translation",
+    "Function": "MRPS18C: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.122547,
+    "p-value": 0.2091,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS2",
+    "Process": "Translation",
+    "Function": "MRPS2: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0731807,
+    "p-value": 0.43545,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS21",
+    "Process": "Translation",
+    "Function": "MRPS21: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0974863,
+    "p-value": 0.311,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS22",
+    "Process": "Translation",
+    "Function": "MRPS22: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0633881,
+    "p-value": 0.5161,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS23",
+    "Process": "Translation",
+    "Function": "MRPS23: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.064818,
+    "p-value": 0.4858,
+    "mutation": "chr11 88204557 T>C 5_prime_UTR_variant,chr11 88205303 C>T synonymous_variant,chr11 88210149 T>C synonymous_variant,chr11 88210785 G>A 3_prime_UTR_variant,chr11 88211201 TGCAGTAAGA>T 3_prime_UTR_variant,chr11 88211301 A>T 3_prime_UTR_variant,chr11 88211352 C>T 3_prime_UTR_variant,chr11 88211408 AG>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "MRPS24",
+    "Process": "Translation",
+    "Function": "MRPS24: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.130943,
+    "p-value": 0.17345,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS25",
+    "Process": "Translation",
+    "Function": "MRPS25: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.042766,
+    "p-value": 0.6915,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS26",
+    "Process": "Translation",
+    "Function": "MRPS26: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.235629,
+    "p-value": 0.0119,
+    "mutation": "chr2 130565239 A>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "MRPS27",
+    "Process": "Translation",
+    "Function": "MRPS27: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.12164,
+    "p-value": 0.2073,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS28",
+    "Process": "Translation",
+    "Function": "MRPS28: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0250902,
+    "p-value": 0.79215,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS30",
+    "Process": "Translation",
+    "Function": "MRPS30: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0151924,
+    "p-value": 0.86955,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS31",
+    "Process": "Translation",
+    "Function": "MRPS31: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.145642,
+    "p-value": 0.13365,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS33",
+    "Process": "Translation",
+    "Function": "MRPS33: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0300533,
+    "p-value": 0.7406,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS34",
+    "Process": "Translation",
+    "Function": "MRPS34: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.244199,
+    "p-value": 0.0101,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS35",
+    "Process": "Translation",
+    "Function": "MRPS35: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0645037,
+    "p-value": 0.511,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS36",
+    "Process": "Translation",
+    "Function": "MRPS36: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.130261,
+    "p-value": 0.17655,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS5",
+    "Process": "Translation",
+    "Function": "MRPS5: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0916108,
+    "p-value": 0.31995,
+    "mutation": "chr2 127590714 A>G synonymous_variant"
+  },
+  {
+    "Name": "MRPS6",
+    "Process": "Translation",
+    "Function": "MRPS6: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 1.01179,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS7",
+    "Process": "Translation",
+    "Function": "MRPS7: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00426521,
+    "p-value": 0.96245,
+    "mutation": ""
+  },
+  {
+    "Name": "MRPS9",
+    "Process": "Translation",
+    "Function": "MRPS9: Mitoribosome which forms a part of mitochondrial translation machinary",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.018336,
+    "p-value": 0.836,
+    "mutation": ""
+  },
+  {
+    "Name": "MRRF",
+    "Process": "Translation",
+    "Function": "MRRF: Acts as a mitochondrial ribosome recycling factor during translation process",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.110986,
+    "p-value": 0.48975,
+    "mutation": "chr2 36189269 G>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "MSTO1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "MSTO1: Involved in the regulation of mitochondrial distribution and morphology",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0643719,
+    "p-value": 0.60825,
+    "mutation": "chr3 88912751 A>T missense_variant"
+  },
+  {
+    "Name": "MTFMT",
+    "Process": "Translation",
+    "Function": "MTFMT: Involved in the specific attachment of methionine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.176327,
+    "p-value": 0.02235,
+    "mutation": ""
+  },
+  {
+    "Name": "MTFP1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "MTFP1: Involved in the mitochondrial fission, role in mitochondrial fragmentation and is dependent on DNM1L expression",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0854646,
+    "p-value": 0.69,
+    "mutation": ""
+  },
+  {
+    "Name": "MTIF2",
+    "Process": "Translation",
+    "Function": "MTIF2: Translation initiation factor could assist the tRNA to bind to rRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.105803,
+    "p-value": 0.26905,
+    "mutation": "chr11 29529943 A>G missense_variant,chr11 29530040 T>C synonymous_variant,chr11 29530072 A>G missense_variant,chr11 29540161 T>C synonymous_variant,chr11 29545002 G>T missense_variant"
+  },
+  {
+    "Name": "MTIF3",
+    "Process": "Translation",
+    "Function": "MTIF3: Translation initiation factor could assist the mRNA to bind to rRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.101627,
+    "p-value": 0.452,
+    "mutation": "chr5 146955311 A>T 3_prime_UTR_variant,chr5 146955331 T>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "MTO1",
+    "Process": "Replication & Transcription",
+    "Function": "MTO1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.1158,
+    "p-value": 0.1453,
+    "mutation": ""
+  },
+  {
+    "Name": "MTPAP",
+    "Process": "Replication & Transcription",
+    "Function": "MTPAP: Involved in the polyadenylation of mitochondrial tRNAs, rRNAs and mRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00372982,
+    "p-value": 0.9688,
+    "mutation": ""
+  },
+  {
+    "Name": "MTRF1",
+    "Process": "Translation",
+    "Function": "MTRF1: Involved in the mitochondrial translation termination, may act as a release factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.1052,
+    "p-value": 0.301,
+    "mutation": ""
+  },
+  {
+    "Name": "MTRF1L",
+    "Process": "Translation",
+    "Function": "MTRF1L: Involved in the mitochondrial translation termination, act as a release factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0402381,
+    "p-value": 0.6683,
+    "mutation": "chr10 5817581 G>A synonymous_variant"
+  },
+  {
+    "Name": "MUTYH",
+    "Process": "Replication & Transcription",
+    "Function": "MUTYH: Involved in the mitochondrial DNA base excision repair",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.117712,
+    "p-value": 0.4784,
+    "mutation": ""
+  },
+  {
+    "Name": "NARF",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "NARF: Cytosolic Fe-S protein maturation",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0641107,
+    "p-value": 0.48935,
+    "mutation": ""
+  },
+  {
+    "Name": "NARS2",
+    "Process": "Translation",
+    "Function": "NARS2: Involved in the specific attachment of asparagine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0725193,
+    "p-value": 0.3995,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA1",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA1: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.18865,
+    "p-value": 0.04505,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA10",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA10: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00297292,
+    "p-value": 0.9731,
+    "mutation": "chr1 92439707 AT>A downstream_gene_variant"
+  },
+  {
+    "Name": "NDUFA11",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA11: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0437245,
+    "p-value": 0.6342,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA12",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA12: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.140309,
+    "p-value": 0.1115,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA13",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA13: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0431648,
+    "p-value": 0.62605,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA2",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA2: Essential component of complex I may be involved in regulating complex I activity or its assembly via assistance in redox processes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0296582,
+    "p-value": 0.7493,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA3",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA3: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.267984,
+    "p-value": 0.0044,
+    "mutation": "chr7 3617393 A>C 5_prime_UTR_variant"
+  },
+  {
+    "Name": "NDUFA4",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA4: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0738271,
+    "p-value": 0.3897,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA5",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA5: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0453756,
+    "p-value": 0.6254,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA6",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA6: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.201329,
+    "p-value": 0.02615,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA7",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA7: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.157647,
+    "p-value": 0.0834,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA8",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA8: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.052549,
+    "p-value": 0.561,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFA9",
+    "Process": "Electron transport chain",
+    "Function": "NDUFA9: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.112052,
+    "p-value": 0.19575,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFAB1",
+    "Process": "Electron transport chain",
+    "Function": "NDUFAB1: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.236045,
+    "p-value": 0.01,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFAF1",
+    "Process": "Electron transport chain",
+    "Function": "NDUFAF1: Required in the assembly of Complex I",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0517993,
+    "p-value": 0.5991,
+    "mutation": "chr2 119658370 T>C synonymous_variant,chr2 119658391 C>T synonymous_variant,chr2 119660238 A>G synonymous_variant,chr2 119660489 C>T missense_variant,chr2 119660491 A>G synonymous_variant"
+  },
+  {
+    "Name": "NDUFAF2",
+    "Process": "Electron transport chain",
+    "Function": "NDUFAF2: Required in the assembly of Complex I",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.23981,
+    "p-value": 0.0143,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFAF3",
+    "Process": "Electron transport chain",
+    "Function": "NDUFAF3: Required in the assembly of Complex I",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.209731,
+    "p-value": 0.021,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFAF4",
+    "Process": "Electron transport chain",
+    "Function": "NDUFAF4: Complex I assembly factor required in the assembly of Complex I",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0425056,
+    "p-value": 0.6666,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB10",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB10: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.221562,
+    "p-value": 0.013,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB11",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB11: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0640252,
+    "p-value": 0.60385,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB2",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB2: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0674232,
+    "p-value": 0.49775,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB3",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB3: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.2499,
+    "p-value": 0.0078,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB4",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB4: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0846585,
+    "p-value": 0.3456,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB5",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB5: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.100997,
+    "p-value": 0.2589,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB6",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB6: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00435464,
+    "p-value": 0.96485,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB7",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB7: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0226712,
+    "p-value": 0.8036,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFB8",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB8: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0537784,
+    "p-value": 0.53605,
+    "mutation": "chr19 44550301 A>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "NDUFB9",
+    "Process": "Electron transport chain",
+    "Function": "NDUFB9: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0152968,
+    "p-value": 0.86195,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFC1",
+    "Process": "Electron transport chain",
+    "Function": "NDUFC1: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0212001,
+    "p-value": 0.82685,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFC2",
+    "Process": "Electron transport chain",
+    "Function": "NDUFC2: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.095545,
+    "p-value": 0.29145,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFS1",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS1: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0278617,
+    "p-value": 0.75005,
+    "mutation": "chr1 63151632 A>G missense_variant"
+  },
+  {
+    "Name": "NDUFS2",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS2: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0684942,
+    "p-value": 0.4286,
+    "mutation": "chr1 171234963 A>G 3_prime_UTR_variant,chr1 171236686 G>A synonymous_variant,chr1 171237971 G>A synonymous_variant,chr1 171239293 A>G synonymous_variant,chr1 171239383 G>A synonymous_variant,chr1 171241019 C>T synonymous_variant,chr1 171246149 C>G synonymous_variant,chr1 171246194 A>G synonymous_variant"
+  },
+  {
+    "Name": "NDUFS3",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS3: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0243059,
+    "p-value": 0.7832,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFS4",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS4: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0579522,
+    "p-value": 0.5211,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFS5",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS5: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.252775,
+    "p-value": 0.16155,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFS6",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS6: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0879028,
+    "p-value": 0.33405,
+    "mutation": "chr13 73328436 A>G missense_variant"
+  },
+  {
+    "Name": "NDUFS7",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS7: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00170204,
+    "p-value": 0.9987,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFS8",
+    "Process": "Electron transport chain",
+    "Function": "NDUFS8: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0841241,
+    "p-value": 0.35675,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFV1",
+    "Process": "Electron transport chain",
+    "Function": "NDUFV1: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0868629,
+    "p-value": 0.321,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFV2",
+    "Process": "Electron transport chain",
+    "Function": "NDUFV2: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.195742,
+    "p-value": 0.0247,
+    "mutation": ""
+  },
+  {
+    "Name": "NDUFV3",
+    "Process": "Electron transport chain",
+    "Function": "NDUFV3: Essential component of complex I transfers electrons from NADH to ubiquinone",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.224859,
+    "p-value": 0.03745,
+    "mutation": ""
+  },
+  {
+    "Name": "NFE2L2",
+    "Process": "Replication & Transcription",
+    "Function": "NFE2L2: Regulates the expression of TFB1M and TFB2M which are two mitochondrial transcription factors",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.277644,
+    "p-value": 0.0013,
+    "mutation": "chr2 75676732 C>T synonymous_variant,chr2 75679202 G>A synonymous_variant,chr2 75679262 A>G synonymous_variant,chr2 75704497 G>C 5_prime_UTR_variant"
+  },
+  {
+    "Name": "NFS1",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "NFS1: The sulfide for Fe-S clusters originates from cysteine via the action of NFS1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0064845,
+    "p-value": 0.9597,
+    "mutation": "chr2 156123759 C>A 3_prime_UTR_variant,chr2 156124099 A>G 3_prime_UTR_variant,chr2 156124158 C>G 3_prime_UTR_variant,chr2 156126369 A>G synonymous_variant,chr2 156126387 T>C synonymous_variant,chr2 156127712 A>G synonymous_variant,chr2 156127724 G>C missense_variant,chr2 156132646 T>C synonymous_variant,chr2 156134514 T>G synonymous_variant,chr2 156148629 C>A upstream_gene_variant"
+  },
+  {
+    "Name": "NFU1",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "NFU1: Protein assembles and transfers 4Fe-4S clusters to target apoproteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.166514,
+    "p-value": 0.0678,
+    "mutation": ""
+  },
+  {
+    "Name": "NME3",
+    "Process": "Replication & Transcription",
+    "Function": "NME3: Shows mitochondrial nucleoside diphosphate kinase activity",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0681533,
+    "p-value": 0.8537,
+    "mutation": ""
+  },
+  {
+    "Name": "NME4",
+    "Process": "Replication & Transcription",
+    "Function": "NME4: Shows mitochondrial nucleoside diphosphate kinase activity",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0429022,
+    "p-value": 0.6546,
+    "mutation": ""
+  },
+  {
+    "Name": "NME6",
+    "Process": "Replication & Transcription",
+    "Function": "NME6: Shows mitochondrial nucleoside diphosphate kinase activity",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.113368,
+    "p-value": 0.18025,
+    "mutation": "chr9 109835357 T>C synonymous_variant"
+  },
+  {
+    "Name": "NRF1",
+    "Process": "Replication & Transcription",
+    "Function": "NRF1: Regulates the expression of TFB1M and TFB2M which are two mitochondrial transcription factors",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0477087,
+    "p-value": 0.6305,
+    "mutation": "chr6 30089998 G>A synonymous_variant,chr6 30119074 G>A synonymous_variant,chr6 30152367 A>G 3_prime_UTR_variant,chr6 30152369 A>G 3_prime_UTR_variant,chr6 30152993 A>G 3_prime_UTR_variant"
+  },
+  {
+    "Name": "NSUN2",
+    "Process": "Replication & Transcription",
+    "Function": "NSUN2: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.304488,
+    "p-value": 0.0003,
+    "mutation": ""
+  },
+  {
+    "Name": "NTHL1",
+    "Process": "Replication & Transcription",
+    "Function": "NTHL1: Involved in the repair of mispairs in DNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0347192,
+    "p-value": 0.70825,
+    "mutation": ""
+  },
+  {
+    "Name": "NUBP1",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "NUBP1: Essential for both cytosolic iron-sulfur protein assembly and iron homeostasis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00437921,
+    "p-value": 0.96875,
+    "mutation": ""
+  },
+  {
+    "Name": "NUBP2",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "NUBP2: Required for the assembly of cyotosolic iron-sulfur proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.029199,
+    "p-value": 0.762,
+    "mutation": ""
+  },
+  {
+    "Name": "NUBPL",
+    "Process": "Electron transport chain",
+    "Function": "NUBPL: Possible role in the delivery of one or more Fe/S clusters to complex I subunits",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0348107,
+    "p-value": 0.65915,
+    "mutation": ""
+  },
+  {
+    "Name": "OGDH",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "OGDH: Catalyzes the overall conversion of 2-oxoglutarate to succinyl-CoA and CO2",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00917347,
+    "p-value": 0.91335,
+    "mutation": "chr11 6347124 T>C synonymous_variant,chr11 6347241 T>C synonymous_variant,chr11 6355011 T>C synonymous_variant,chr11 6355885 C>T 3_prime_UTR_variant,chr11 6356173 T>G 3_prime_UTR_variant,chr11 6356323 G>C 3_prime_UTR_variant,chr11 6356353 C>A 3_prime_UTR_variant,chr11 6356485 G>C 3_prime_UTR_variant,chr11 6356546 T>C 3_prime_UTR_variant,chr11 6356561 TA>T 3_prime_UTR_variant,chr11 6356929 C>A 3_prime_UTR_variant,chr11 6357105 C>T 3_prime_UTR_variant,chr11 6357205 G>A 3_prime_UTR_variant,chr11 6357411 A>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "OGG1",
+    "Process": "Replication & Transcription",
+    "Function": "OGG1: responsible for the excision of 8-oxoguanine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0488121,
+    "p-value": 0.83095,
+    "mutation": ""
+  },
+  {
+    "Name": "OMA1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "OMA1: Involved in the mitochondrial fusion, know to induce proteolytic inactivation of OPA1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0781553,
+    "p-value": 0.31705,
+    "mutation": ""
+  },
+  {
+    "Name": "OPA1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "OPA1: Involved in the mitochondrial fusion, initiates inner membrane fusion",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0392154,
+    "p-value": 0.6604,
+    "mutation": ""
+  },
+  {
+    "Name": "OPA3",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "OPA3: Involved in the mitochondrial fusion, Involved in mitochondrial fragmentation, interacts with MFN1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0172114,
+    "p-value": 0.85835,
+    "mutation": "chr7 19228532 T>C synonymous_variant,chr7 19244821 A>G synonymous_variant,chr7 19244890 C>T synonymous_variant,chr7 19245161 A>T 3_prime_UTR_variant,chr7 19245200 A>G 3_prime_UTR_variant,chr7 19245390 C>G 3_prime_UTR_variant,chr7 19245510 C>T 3_prime_UTR_variant,chr7 19245585 T>C 3_prime_UTR_variant,chr7 19245643 A>G 3_prime_UTR_variant,chr7 19245653 T>C 3_prime_UTR_variant,chr7 19245696 C>T 3_prime_UTR_variant,chr7 19245698 G>A 3_prime_UTR_variant,chr7 19246290 A>G 3_prime_UTR_variant,chr7 19246324 C>T 3_prime_UTR_variant,chr7 19247200 C>G downstream_gene_variant,chr7 19247492 C>T downstream_gene_variant"
+  },
+  {
+    "Name": "OSGEPL1",
+    "Process": "Replication & Transcription",
+    "Function": "OSGEPL1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00236194,
+    "p-value": 0.98685,
+    "mutation": ""
+  },
+  {
+    "Name": "OXA1L",
+    "Process": "Translation",
+    "Function": "OXA1L: May have a role in the insertion of proteins into inner membrane and also a complex V assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.121274,
+    "p-value": 0.19225,
+    "mutation": "chr14 54360907 C>T missense_variant,chr14 54361382 G>A missense_variant,chr14 54361401 G>A missense_variant,chr14 54363300 A>G missense_variant,chr14 54363382 C>T missense_variant,chr14 54363401 G>C synonymous_variant,chr14 54363452 A>T synonymous_variant,chr14 54368340 G>A synonymous_variant,chr14 54368615 A>G 3_prime_UTR_variant,chr14 54368739 A>G 3_prime_UTR_variant,chr14 54368818 T>C 3_prime_UTR_variant,chr14 54368865 C>G 3_prime_UTR_variant,chr14 54368939 C>A 3_prime_UTR_variant,chr14 54369334 T>C 3_prime_UTR_variant,chr14 54369412 G>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "PACS2",
+    "Process": "Calcium trafficking",
+    "Function": "PACS2: Involved in the control of ER mitochondria appositions",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.000579163,
+    "p-value": 0.9962,
+    "mutation": "chr12 113045514 T>C synonymous_variant,chr12 113056890 T>C synonymous_variant,chr12 113060085 T>C splice_region_variant&synonymous_variant,chr12 113060140 G>A missense_variant,chr12 113060742 G>A synonymous_variant,chr12 113061896 G>A synonymous_variant,chr12 113071551 C>T synonymous_variant,chr12 113071857 G>A 3_prime_UTR_variant,chr12 113072135 T>C 3_prime_UTR_variant,chr12 113072247 T>C 3_prime_UTR_variant,chr12 113072260 TG>T 3_prime_UTR_variant,chr12 113072317 C>T 3_prime_UTR_variant,chr12 113072639 C>T 3_prime_UTR_variant,chr12 113072869 T>C 3_prime_UTR_variant,chr12 113072954 C>T 3_prime_UTR_variant,chr12 113073217 T>C 3_prime_UTR_variant,chr12 113073542 C>A 3_prime_UTR_variant,chr12 113073732 C>A 3_prime_UTR_variant,chr12 113073778 C>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "PAM16",
+    "Process": "Import & Sorting",
+    "Function": "PAM16: Presequence translocase associated motor, controls the activity of DNAJC19",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.134142,
+    "p-value": 0.17745,
+    "mutation": ""
+  },
+  {
+    "Name": "PARL",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "PARL: Involved in the mitochondrial fusion, regulates the clevage of OPA1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0807951,
+    "p-value": 0.3767,
+    "mutation": ""
+  },
+  {
+    "Name": "PARS2",
+    "Process": "Translation",
+    "Function": "PARS2: Involved in the specific attachment of proline aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0434948,
+    "p-value": 0.7165,
+    "mutation": "chr4 106654070 A>G missense_variant,chr4 106654319 A>G missense_variant"
+  },
+  {
+    "Name": "PDHA1",
+    "Process": "Formation of Acetyl CoA",
+    "Function": "PDHA1: Catalyzes the overall conversion of pyruvate to acetyl-CoA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0702736,
+    "p-value": 0.41335,
+    "mutation": ""
+  },
+  {
+    "Name": "PDHB",
+    "Process": "Formation of Acetyl CoA",
+    "Function": "PDHB: Catalyzes the overall conversion of pyruvate to acetyl-CoA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00524479,
+    "p-value": 0.9515,
+    "mutation": "chr14 8171770 A>G intron_variant"
+  },
+  {
+    "Name": "PDHX",
+    "Process": "Formation of Acetyl CoA",
+    "Function": "PDHX: Catalyzes the conversion of pyruvate to acetyl coenzyme A",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.145347,
+    "p-value": 0.13975,
+    "mutation": ""
+  },
+  {
+    "Name": "PET112",
+    "Process": "Translation",
+    "Function": "PET112: Involved in the biosynthesis of glutamyl-tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0362272,
+    "p-value": 0.6442,
+    "mutation": ""
+  },
+  {
+    "Name": "PFKL",
+    "Process": "Glycolysis",
+    "Function": "PFKL: Catalyzes the conversion of fructose 6-phosphate to fructose 1,6-bisphosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.185192,
+    "p-value": 0.03415,
+    "mutation": ""
+  },
+  {
+    "Name": "PFKM",
+    "Process": "Glycolysis",
+    "Function": "PFKM: Catalyzes the phosphorylation of fructose-6-phosphate to fructose-1,6-bisphosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.163471,
+    "p-value": 0.15315,
+    "mutation": ""
+  },
+  {
+    "Name": "PFKP",
+    "Process": "Glycolysis",
+    "Function": "PFKP: Catalyzes the irreversible conversion of fructose-6-phosphate to fructose-1,6-bisphosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.10845,
+    "p-value": 0.60395,
+    "mutation": ""
+  },
+  {
+    "Name": "PGAM1",
+    "Process": "Glycolysis",
+    "Function": "PGAM1: Catalyzes the reversible reaction of 3-phosphoglycerate to 2-phosphoglycerate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.163855,
+    "p-value": 0.0561,
+    "mutation": ""
+  },
+  {
+    "Name": "PGAM2",
+    "Process": "Glycolysis",
+    "Function": "PGAM2: Catalyzes the reversible reaction of 3-phosphoglycerate to 2-phosphoglycerate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0869992,
+    "p-value": 0.8294,
+    "mutation": ""
+  },
+  {
+    "Name": "PGK1",
+    "Process": "Glycolysis",
+    "Function": "PGK1: Catalyzes the conversion of 1,3-diphosphoglycerate to 3-phosphoglycerate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.24347,
+    "p-value": 0.00465,
+    "mutation": ""
+  },
+  {
+    "Name": "PGS1",
+    "Process": "Cardiolipin biosynthesis",
+    "Function": "PGS1: Phosphatidylglycerol synthase converts cytidine diphosphate diacylglycerol to phosphatidylglycerol phosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.142325,
+    "p-value": 0.12195,
+    "mutation": ""
+  },
+  {
+    "Name": "PHB",
+    "Process": "Translation",
+    "Function": "PHB: Involved in the post translational quality control, stabilizes mitochondrially synthesized proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.128387,
+    "p-value": 0.1319,
+    "mutation": "chr11 95680446 G>A 3_prime_UTR_variant,chr11 95680550 G>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "PHB2",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "PHB2: Involved in the mitochondrial fusion, scaffold proteins PHB2 and STOML2 coordinate stability of the OPA1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0396483,
+    "p-value": 0.64895,
+    "mutation": ""
+  },
+  {
+    "Name": "PINK1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "PINK1: Involved in the mitochondrial fusion, PINK1 phosphorylates PARK2 and inturn PARK2 induced ubiquitination of mitofusins may target mitochondria for mitophagy",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.182221,
+    "p-value": 0.0481,
+    "mutation": "chr4 138310336 G>A downstream_gene_variant,chr4 138314187 A>G synonymous_variant,chr4 138315555 G>A missense_variant,chr4 138315629 G>A synonymous_variant,chr4 138315709 T>C missense_variant,chr4 138318009 G>A synonymous_variant,chr4 138320016 G>T missense_variant,chr4 138320814 A>G missense_variant,chr4 138320839 T>G missense_variant,chr4 138320906 G>A synonymous_variant"
+  },
+  {
+    "Name": "PKIA",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "PKIA: Involved in the mitochondrial fission, is known to inhibit GTPase activity of DNM1L",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0922768,
+    "p-value": 0.2629,
+    "mutation": "chr3 7442174 A>T 3_prime_UTR_variant,chr3 7442328 T>C 3_prime_UTR_variant,chr3 7442593 T>C 3_prime_UTR_variant,chr3 7443202 T>G 3_prime_UTR_variant,chr3 7443912 C>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "PMAIP1",
+    "Process": "Apoptosis",
+    "Function": "PMAIP1: Noxa Bcl-2 family member propagating apoptosis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.872679,
+    "p-value": 0.00005,
+    "mutation": "chr18 66463475 C>T 3_prime_UTR_variant,chr18 66463846 G>T 3_prime_UTR_variant,chr18 66464477 T>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "PML",
+    "Process": "Calcium trafficking",
+    "Function": "PML: Regulates Inositol-1,4,5-triphosphate receptor mediated Ca2+ release from the ER",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0491052,
+    "p-value": 0.5757,
+    "mutation": ""
+  },
+  {
+    "Name": "PMPCA",
+    "Process": "Import & Sorting",
+    "Function": "PMPCA: Presequence of preproteins are removed by proteolytic enzyme mitochondrial processing peptidase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0168443,
+    "p-value": 0.87685,
+    "mutation": ""
+  },
+  {
+    "Name": "PMPCB",
+    "Process": "Import & Sorting",
+    "Function": "PMPCB: Presequence of preproteins are removed by proteolytic enzyme mitochondrial processing peptidase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0349639,
+    "p-value": 0.69095,
+    "mutation": "chr5 21748772 A>G synonymous_variant"
+  },
+  {
+    "Name": "POLG",
+    "Process": "Replication & Transcription",
+    "Function": "POLG: Mitochondrial DNA polymerasein addition it also shows 3' to 5' exonuclease activity and ensure faithful replication",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0541696,
+    "p-value": 0.6027,
+    "mutation": ""
+  },
+  {
+    "Name": "POLG2",
+    "Process": "Replication & Transcription",
+    "Function": "POLG2: Acts as catalytic subunit of mitochondrial DNA polymerase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0965601,
+    "p-value": 0.5273,
+    "mutation": ""
+  },
+  {
+    "Name": "POLRMT",
+    "Process": "Replication & Transcription",
+    "Function": "POLRMT: provides primers for the initiation of replication of the mitochondria genome",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0451416,
+    "p-value": 0.96665,
+    "mutation": ""
+  },
+  {
+    "Name": "PPIA",
+    "Process": "Apoptosis",
+    "Function": "PPIA: Cyclophilin A might work with ENDOG in a DNA degradation complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0553122,
+    "p-value": 0.53035,
+    "mutation": "chr11 6416365 A>G intron_variant,chr11 6417330 A>T intron_variant"
+  },
+  {
+    "Name": "PPIF",
+    "Process": "Apoptosis",
+    "Function": "PPIF: Cyclophilin D forms part of permeability transition pore",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.301159,
+    "p-value": 0.0009,
+    "mutation": ""
+  },
+  {
+    "Name": "PPOX",
+    "Process": "Heme Biosynthesis",
+    "Function": "PPOX: Enzyme protoporphyrinogen oxidase coverts Protoporphyrinogen IX to Protoporphyrin IX",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.196753,
+    "p-value": 0.01345,
+    "mutation": "chr1 171277486 C>T synonymous_variant,chr1 171279932 C>T synonymous_variant,chr1 171280157 A>G synonymous_variant,chr1 171281010 T>A 5_prime_UTR_variant,chr1 171281061 A>T 5_prime_UTR_variant"
+  },
+  {
+    "Name": "PRDX3",
+    "Process": "ROS defense",
+    "Function": "PRDX3: Mitochondrial peroxiredoxin reduces hydrogen peroxide to water",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0703417,
+    "p-value": 0.42355,
+    "mutation": "chr19 60864420 C>A 3_prime_UTR_variant,chr19 60864448 T>C 3_prime_UTR_variant,chr19 60864467 A>G 3_prime_UTR_variant,chr19 60865217 C>T synonymous_variant"
+  },
+  {
+    "Name": "PTCD2",
+    "Process": "Electron transport chain",
+    "Function": "PTCD2: Complex III assembly factor, maturation and stabilization of cytochrome b mRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00574371,
+    "p-value": 0.9507,
+    "mutation": ""
+  },
+  {
+    "Name": "PTCD3",
+    "Process": "Translation",
+    "Function": "PTCD3: Associates with mitochondrial small ribosomal subunit and regulates translation",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0895452,
+    "p-value": 0.32175,
+    "mutation": "chr6 71881152 C>T 3_prime_UTR_variant,chr6 71881208 T>A missense_variant,chr6 71882199 C>A missense_variant,chr6 71882202 G>A synonymous_variant,chr6 71883456 C>G missense_variant,chr6 71883535 T>C missense_variant,chr6 71885020 A>T intron_variant,chr6 71885341 T>C missense_variant,chr6 71888002 T>G intron_variant,chr6 71888018 C>T intron_variant,chr6 71889675 T>C missense_variant,chr6 71889678 C>T missense_variant,chr6 71892542 G>A intron_variant,chr6 71892557 C>A intron_variant,chr6 71901296 C>T synonymous_variant,chr6 71905120 G>C missense_variant,chr6 71908708 C>G synonymous_variant,chr6 71908721 G>A missense_variant"
+  },
+  {
+    "Name": "PTPMT1",
+    "Process": "Cardiolipin biosynthesis",
+    "Function": "PTPMT1: Phosphatidylglycerophosphatase activity removes phospate from phosphatidylglycerol phosphate to form phosphatidylglycerol",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00111844,
+    "p-value": 0.98805,
+    "mutation": ""
+  },
+  {
+    "Name": "PUS1",
+    "Process": "Replication & Transcription",
+    "Function": "PUS1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.143432,
+    "p-value": 0.14085,
+    "mutation": "chr5 110780396 T>C 5_prime_UTR_variant"
+  },
+  {
+    "Name": "PUS3",
+    "Process": "Replication & Transcription",
+    "Function": "PUS3: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00425756,
+    "p-value": 0.97805,
+    "mutation": ""
+  },
+  {
+    "Name": "QRSL1",
+    "Process": "Translation",
+    "Function": "QRSL1: Involved in the biosynthesis of glutamyl-tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0212048,
+    "p-value": 0.81665,
+    "mutation": ""
+  },
+  {
+    "Name": "QTRT1",
+    "Process": "Replication & Transcription",
+    "Function": "QTRT1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.20861,
+    "p-value": 0.03485,
+    "mutation": ""
+  },
+  {
+    "Name": "QTRTD1",
+    "Process": "Replication & Transcription",
+    "Function": "QTRTD1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00264325,
+    "p-value": 0.9799,
+    "mutation": ""
+  },
+  {
+    "Name": "RARS2",
+    "Process": "Translation",
+    "Function": "RARS2: Involved in the specific attachment of arginine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00221195,
+    "p-value": 0.9834,
+    "mutation": "chr4 34645804 G>A synonymous_variant"
+  },
+  {
+    "Name": "RHOT1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "RHOT1: Involved in the mitophagy, tethers mitochondria to the tubulin network but phosphorylation by PINK1 results in the disattachment of mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.147765,
+    "p-value": 0.10495,
+    "mutation": ""
+  },
+  {
+    "Name": "RHOT2",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "RHOT2: Involved in the mitophagy, tethers mitochondria to the tubulin network but phosphorylation by PINK1 results in the disattachment of mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0865109,
+    "p-value": 0.46475,
+    "mutation": ""
+  },
+  {
+    "Name": "RMRP",
+    "Process": "Replication & Transcription",
+    "Function": "RMRP: RNA component of mitochondrial RNA processing endoribonuclease: cleaves mitochondrial RNA at the priming site of mitochondrial DNA replication",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.100715,
+    "p-value": 0.75025,
+    "mutation": ""
+  },
+  {
+    "Name": "RNASEH1",
+    "Process": "Replication & Transcription",
+    "Function": "RNASEH1: May have role in the removal of RNA primers at the origin of replication on heavy and light strands",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0926966,
+    "p-value": 0.31015,
+    "mutation": ""
+  },
+  {
+    "Name": "RNASEL",
+    "Process": "Translation",
+    "Function": "RNASEL: Modulate the stability of mitochondrial mRNAsby interacting with MTIF2",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0612492,
+    "p-value": 0.5446,
+    "mutation": ""
+  },
+  {
+    "Name": "RPUSD2",
+    "Process": "Replication & Transcription",
+    "Function": "RPUSD2: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0438627,
+    "p-value": 0.6878,
+    "mutation": "chr2 119036982 A>G missense_variant,chr2 119038087 G>A synonymous_variant,chr2 119038175 G>A missense_variant,chr2 119039035 A>G 3_prime_UTR_variant,chr2 119040110 A>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "RPUSD4",
+    "Process": "Replication & Transcription",
+    "Function": "RPUSD4: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0972024,
+    "p-value": 0.1988,
+    "mutation": ""
+  },
+  {
+    "Name": "RRM2B",
+    "Process": "Replication & Transcription",
+    "Function": "RRM2B: Required for the de novo deoxyribonucloetide synthesis in nonproliferating cells supplying dNTPs to mtDNA synthesis",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0442046,
+    "p-value": 0.6656,
+    "mutation": ""
+  },
+  {
+    "Name": "SAMM50",
+    "Process": "Import & Sorting",
+    "Function": "SAMM50: Outermembrane sorting and assembly machinary, central component of SAMM complex and inserts beta barrel proteins into the outer membrane",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0285836,
+    "p-value": 0.73775,
+    "mutation": ""
+  },
+  {
+    "Name": "SARS2",
+    "Process": "Translation",
+    "Function": "SARS2: Involved in the specific attachment of serine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0620939,
+    "p-value": 0.45845,
+    "mutation": ""
+  },
+  {
+    "Name": "SCO1",
+    "Process": "Electron transport chain",
+    "Function": "SCO1: Complex IV assembly factor, Incorporation of copper atoms in the catalytic sites of the nascent complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00333256,
+    "p-value": 0.96995,
+    "mutation": ""
+  },
+  {
+    "Name": "SCO2",
+    "Process": "Electron transport chain",
+    "Function": "SCO2: Complex IV assembly factor, involved in the biogenesis of cytochrome c oxidase subunit II",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.074448,
+    "p-value": 0.7383,
+    "mutation": ""
+  },
+  {
+    "Name": "SDHA",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "SDHA: Part of Succinate dehydrogenase complex in oxidative phosporylation in TCA cycle it catalyzes the oxidation of succinate to fumarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.144922,
+    "p-value": 0.09165,
+    "mutation": ""
+  },
+  {
+    "Name": "SDHAF1",
+    "Process": "Electron transport chain",
+    "Function": "SDHAF1: Essential for complex II assembly",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.128765,
+    "p-value": 0.11045,
+    "mutation": ""
+  },
+  {
+    "Name": "SDHAF2",
+    "Process": "Electron transport chain",
+    "Function": "SDHAF2: Required for flavination of a succinate dehydrogenase complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0359719,
+    "p-value": 0.6872,
+    "mutation": ""
+  },
+  {
+    "Name": "SDHB",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "SDHB: Part of Succinate dehydrogenase complex in oxidative phosporylation in TCA cycle it catalyzes the oxidation of succinate to fumarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0181184,
+    "p-value": 0.8342,
+    "mutation": ""
+  },
+  {
+    "Name": "SDHC",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "SDHC: Part of Succinate dehydrogenase complex in oxidative phosporylation in TCA cycle it catalyzes the oxidation of succinate to fumarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0222373,
+    "p-value": 0.79675,
+    "mutation": "chr1 171129207 A>T 3_prime_UTR_variant,chr1 171129332 C>T 3_prime_UTR_variant,chr1 171129417 C>T 3_prime_UTR_variant,chr1 171129419 C>A 3_prime_UTR_variant,chr1 171129629 T>G 3_prime_UTR_variant,chr1 171129715 A>T 3_prime_UTR_variant,chr1 171136053 C>A synonymous_variant,chr1 171136104 T>C synonymous_variant,chr1 171145805 T>C missense_variant"
+  },
+  {
+    "Name": "SDHD",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "SDHD: Part of Succinate dehydrogenase complex in oxidative phosporylation in TCA cycle it catalyzes the oxidation of succinate to fumarate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0688322,
+    "p-value": 0.42705,
+    "mutation": ""
+  },
+  {
+    "Name": "SELRC1",
+    "Process": "Electron transport chain",
+    "Function": "SELRC1: COA7 Complex IV assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.035953,
+    "p-value": 0.6651,
+    "mutation": ""
+  },
+  {
+    "Name": "SH3GLB1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "SH3GLB1: Involved in the mitochondrial fission, proposed to be involved in the lipid remodeling of the outer membrane during fission",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0461614,
+    "p-value": 0.5867,
+    "mutation": ""
+  },
+  {
+    "Name": "SHC1",
+    "Process": "ROS defense",
+    "Function": "SHC1: Could be involved in the generation of the hydrogen peroxide independent of superoxides in mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0589388,
+    "p-value": 0.49435,
+    "mutation": ""
+  },
+  {
+    "Name": "SIGMAR1",
+    "Process": "Calcium trafficking",
+    "Function": "SIGMAR1: Stabilises the Inositol-1,4,5-triphosphate receptors and ensures proper Ca2+ fluxes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.206626,
+    "p-value": 0.017,
+    "mutation": "chr4 41738778 CGGG>C 3_prime_UTR_variant"
+  },
+  {
+    "Name": "SLC24A6",
+    "Process": "Calcium trafficking",
+    "Function": "SLC24A6: Involved in the calcium homeostasis by counteracting the calcium accumaltion in the mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.253723,
+    "p-value": 0.0053,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC25A1",
+    "Process": "ROS defense",
+    "Function": "SLC25A1: May be involved in the transport of gluthathione into the mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.023031,
+    "p-value": 0.78775,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC25A19",
+    "Process": "Replication & Transcription",
+    "Function": "SLC25A19: Transports thiamine pyrophosphates into mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0911299,
+    "p-value": 0.28795,
+    "mutation": "chr11 115616617 C>G missense_variant,chr11 115621024 A>G synonymous_variant,chr11 115621029 A>G synonymous_variant,chr11 115628080 C>G 5_prime_UTR_variant"
+  },
+  {
+    "Name": "SLC25A20",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "SLC25A20: Carnitine acylcarnitine translocase mediates acylcarnitine entry into mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.139438,
+    "p-value": 0.1501,
+    "mutation": "chr9 108662184 C>T 5_prime_UTR_variant,chr9 108662226 G>C 5_prime_UTR_variant"
+  },
+  {
+    "Name": "SLC25A28",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "SLC25A28: Mitochondrial iron transporter",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0171387,
+    "p-value": 0.82505,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC25A3",
+    "Process": "Replication & Transcription",
+    "Function": "SLC25A3: Involved in the transport of phosphate into the mitochondrial matrix",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00459298,
+    "p-value": 0.95535,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC25A33",
+    "Process": "Replication & Transcription",
+    "Function": "SLC25A33: Mitochondrial pyrimidine nucleotide carrier",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0736925,
+    "p-value": 0.4228,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC25A37",
+    "Process": "Fe-S cluster biosynthesis",
+    "Function": "SLC25A37: Functions as an essential iron importer",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.460618,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC25A4",
+    "Process": "Apoptosis",
+    "Function": "SLC25A4: Adenine nucleotide translocator forms part of permeability transition pore",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.028958,
+    "p-value": 0.726,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC25A5",
+    "Process": "Apoptosis",
+    "Function": "SLC25A5: Adenine nucleotide translocator forms part of permeability transition pore",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0420992,
+    "p-value": 0.6248,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC27A1",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "SLC27A1: Readily converts the transported very long chain fatty acids to acyl-CoAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.553825,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC27A3",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "SLC27A3: Readily converts the transported very long chain fatty acids to acyl-CoAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0914146,
+    "p-value": 0.34735,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC27A4",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "SLC27A4: Readily converts the transported very long chain fatty acids to acyl-CoAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.121718,
+    "p-value": 0.18475,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC27A6",
+    "Process": "Fatty acid beta-oxidation",
+    "Function": "SLC27A6: Readily converts the transported very long chain fatty acids to acyl-CoAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.372751,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC29A1",
+    "Process": "Replication & Transcription",
+    "Function": "SLC29A1: Equilibrative nucleoside transporter 1 imports recycled deoxyribonucleosides from cytoplasm into mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.245121,
+    "p-value": 0.0114,
+    "mutation": ""
+  },
+  {
+    "Name": "SLC2A1",
+    "Process": "Glycolysis",
+    "Function": "SLC2A1: A major glucose transporter in the mammalian blood-brain barrier",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.285448,
+    "p-value": 0.00115,
+    "mutation": "chr4 119133422 G>A synonymous_variant"
+  },
+  {
+    "Name": "SLC2A3",
+    "Process": "Glycolysis",
+    "Function": "SLC2A3: Solute carrier family 2 (facilitated glucose transporter), member 3",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.582307,
+    "p-value": 0.0001,
+    "mutation": ""
+  },
+  {
+    "Name": "SOD1",
+    "Process": "ROS defense",
+    "Function": "SOD1: May be involved in the removal of superoxides in the inter membrane space of mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.506209,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "SOD2",
+    "Process": "ROS defense",
+    "Function": "SOD2: Dismutates the super oxide generated in the mitochondiral matrix to hydrogen peroxide",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.036687,
+    "p-value": 0.68845,
+    "mutation": ""
+  },
+  {
+    "Name": "SPG7",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "SPG7: Involved in the mitochondrial fusion, known to maintain the OPA1 isoforms",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0373173,
+    "p-value": 0.67375,
+    "mutation": "chr8 123097554 C>T missense_variant"
+  },
+  {
+    "Name": "SQSTM1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "SQSTM1: Involved  in the mitophagy, recruited to mitochondria and binds mitochondrial substrates on the autophagosomes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.265762,
+    "p-value": 0.00185,
+    "mutation": ""
+  },
+  {
+    "Name": "SSBP1",
+    "Process": "Replication & Transcription",
+    "Function": "SSBP1: Promotes helical destabilization for the DNA helicases and Polymerase gama (POLG) to support mtDNA replication",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0152805,
+    "p-value": 0.88255,
+    "mutation": ""
+  },
+  {
+    "Name": "STOML2",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "STOML2:  Involved in the mitochondrial fusion, scaffold proteins PHB2 and STOML2 coordinate stability of the OPA1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0350229,
+    "p-value": 0.69345,
+    "mutation": ""
+  },
+  {
+    "Name": "SUCLA2",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "SUCLA2: convert succinate to succinyl-CoA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.128544,
+    "p-value": 0.13905,
+    "mutation": "chr14 73552891 C>T synonymous_variant,chr14 73581684 A>G synonymous_variant"
+  },
+  {
+    "Name": "SUCLG1",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "SUCLG1: Catalyzes the conversion of succinyl CoA to succinate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0657129,
+    "p-value": 0.45245,
+    "mutation": "chr6 73260489 T>C synonymous_variant"
+  },
+  {
+    "Name": "SUCLG2",
+    "Process": "Tricarboxylic acid cycle",
+    "Function": "SUCLG2: Catalyzes the conversion of succinyl CoA to succinate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.139762,
+    "p-value": 0.10805,
+    "mutation": ""
+  },
+  {
+    "Name": "SURF1",
+    "Process": "Electron transport chain",
+    "Function": "SURF1: Complex IV assembly factor, involved in the biogenesis of the cytochrome c oxidase complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00536607,
+    "p-value": 0.98935,
+    "mutation": ""
+  },
+  {
+    "Name": "SYBU",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "SYBU: Involved in the mitochondrial movement, have a role in linking the mitochondria to KIF5B",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.240904,
+    "p-value": 0.2359,
+    "mutation": ""
+  },
+  {
+    "Name": "TACO1",
+    "Process": "Translation",
+    "Function": "TACO1: Translation activator of complex IV subunit",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0177253,
+    "p-value": 0.8196,
+    "mutation": ""
+  },
+  {
+    "Name": "TARS2",
+    "Process": "Translation",
+    "Function": "TARS2: Involved in the specific attachment of threonine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0700267,
+    "p-value": 0.46975,
+    "mutation": ""
+  },
+  {
+    "Name": "TAZ",
+    "Process": "Cardiolipin biosynthesis",
+    "Function": "TAZ: Converts the nascent cardiolipin to mature cardiolipin",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.140554,
+    "p-value": 0.16785,
+    "mutation": "chrX 74289448 C>T 3_prime_UTR_variant"
+  },
+  {
+    "Name": "TCHP",
+    "Process": "Calcium trafficking",
+    "Function": "TCHP: Involved in the regulation of ER mitochondria juxtaposition",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0604049,
+    "p-value": 0.46585,
+    "mutation": "chr5 114709446 G>A missense_variant,chr5 114721142 G>A 3_prime_UTR_variant,chr5 114721341 A>G 3_prime_UTR_variant,chr5 114721369 C>G 3_prime_UTR_variant"
+  },
+  {
+    "Name": "TERT",
+    "Process": "Replication & Transcription",
+    "Function": "TERT: Role in the protection of mitochondrial integrity with a suggested role in mt-DNA replication and/or repair",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00271034,
+    "p-value": 0.98555,
+    "mutation": ""
+  },
+  {
+    "Name": "TFAM",
+    "Process": "Replication & Transcription",
+    "Function": "TFAM: A key activator of mitochondrial transcription and also functions in replication and repair",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.000571692,
+    "p-value": 0.99775,
+    "mutation": ""
+  },
+  {
+    "Name": "TFB1M",
+    "Process": "Replication & Transcription",
+    "Function": "TFB1M: Regulates the stability of small subunit of mitochondrial ribosome by its methylation activity. It also plays a very important role in transcription",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.603101,
+    "p-value": 0.0138,
+    "mutation": ""
+  },
+  {
+    "Name": "TFB2M",
+    "Process": "Replication & Transcription",
+    "Function": "TFB2M: Essential transcription faactor involved in the transcription of mitochondrial genes",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0327281,
+    "p-value": 0.7299,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM10",
+    "Process": "Import & Sorting",
+    "Function": "TIMM10: Innermembrane carrier pathway, forms complex with TIMM9 and performs chaperone like activity in the intermembrane space",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.214789,
+    "p-value": 0.01105,
+    "mutation": "chr2 84827135 G>T 5_prime_UTR_variant,chr2 84827612 G>A 5_prime_UTR_variant,chr2 84829811 G>C synonymous_variant,chr2 84829923 T>C synonymous_variant,chr2 84830071 C>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "TIMM13",
+    "Process": "Import & Sorting",
+    "Function": "TIMM13: Innermembrane carrier pathway, forms complex with TIMM8 and performs the transfer of inner membrane proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0816758,
+    "p-value": 0.36605,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM17A",
+    "Process": "Import & Sorting",
+    "Function": "TIMM17A: Inner membrane translocation, might influence the channel activity formed by the TIMM23",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.097662,
+    "p-value": 0.27975,
+    "mutation": "chr1 135301819 T>C 3_prime_UTR_variant,chr1 135309807 G>A synonymous_variant,chr1 135309813 A>G synonymous_variant,chr1 135309843 G>A synonymous_variant"
+  },
+  {
+    "Name": "TIMM17B",
+    "Process": "Import & Sorting",
+    "Function": "TIMM17B: Inner membrane translocation, might influence the channel activity formed by the TIMM23",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.00299613,
+    "p-value": 0.97455,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM21",
+    "Process": "Import & Sorting",
+    "Function": "TIMM21: Inner membrane translocation, connects TOMM and TIMM complex and may assist in the release of preprotein from the TOMM complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.150535,
+    "p-value": 0.123,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM22",
+    "Process": "Import & Sorting",
+    "Function": "TIMM22: Innermembrane carrier pathway, forms the core channel and inserts proteins into inner membrane",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.194265,
+    "p-value": 0.03565,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM23",
+    "Process": "Import & Sorting",
+    "Function": "TIMM23: Inner membrane translocation, forms the main channel of TIMM23 complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0535661,
+    "p-value": 0.5374,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM44",
+    "Process": "Import & Sorting",
+    "Function": "TIMM44: Presequence translocase associated motor, gets asssociated with the HSPA9 to drive proteins into the matrix",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0741247,
+    "p-value": 0.4136,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM50",
+    "Process": "Import & Sorting",
+    "Function": "TIMM50: Inner membrane translocation, guides the preproteins to the import channel formed by TIMM23",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0386539,
+    "p-value": 0.6752,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM8B",
+    "Process": "Import & Sorting",
+    "Function": "TIMM8B: Innermembrane carrier pathway, forms complex with TIMM13 and also performs the transfer of inner membrane proteins",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.134083,
+    "p-value": 0.2575,
+    "mutation": ""
+  },
+  {
+    "Name": "TIMM9",
+    "Process": "Import & Sorting",
+    "Function": "TIMM9: Innermembrane carrier pathway, forms complex with TIMM10 and performs chaperone like activity in the intermembrane space",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0960417,
+    "p-value": 0.29775,
+    "mutation": ""
+  },
+  {
+    "Name": "TK2",
+    "Process": "Replication & Transcription",
+    "Function": "TK2: Involved in the phosphorylation of recycled deoxyribonucleosides in mitochondria specific for thymidine, cytidine and uridine",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.156282,
+    "p-value": 0.11855,
+    "mutation": ""
+  },
+  {
+    "Name": "TMEM126B",
+    "Process": "Electron transport chain",
+    "Function": "TMEM126B: Component of the mitochondrial complex I assembly complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0995127,
+    "p-value": 0.19385,
+    "mutation": ""
+  },
+  {
+    "Name": "TMEM70",
+    "Process": "Electron transport chain",
+    "Function": "TMEM70: Complex V assembly factor, may play a role in biogenesis of mitochondrial ATP synthase",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.286365,
+    "p-value": 0.00255,
+    "mutation": "chr1 16665285 G>C 5_prime_UTR_variant,chr1 16665448 C>G synonymous_variant,chr1 16667687 A>G missense_variant"
+  },
+  {
+    "Name": "TOMM20",
+    "Process": "Import & Sorting",
+    "Function": "TOMM20: Outer membrane translocation, recognize presequences on the mitochondrial outer membrane",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0772921,
+    "p-value": 0.36655,
+    "mutation": ""
+  },
+  {
+    "Name": "TOMM22",
+    "Process": "Import & Sorting",
+    "Function": "TOMM22: Outer membrane translocation, recognize presequences on the mitochondrial outer membrane",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.426427,
+    "p-value": 0.00005,
+    "mutation": ""
+  },
+  {
+    "Name": "TOMM40",
+    "Process": "Import & Sorting",
+    "Function": "TOMM40: Outer membrane translocation, forms the outer membrane channel forming protein",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.14944,
+    "p-value": 0.0928,
+    "mutation": "chr7 19710713 CACTG>C intron_variant,chr7 19715045 T>G missense_variant"
+  },
+  {
+    "Name": "TOMM40L",
+    "Process": "Import & Sorting",
+    "Function": "TOMM40L: Outer membrane translocation, forms the outer membrane channel forming protein",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.046024,
+    "p-value": 0.6339,
+    "mutation": "chr1 171218099 G>A 3_prime_UTR_variant,chr1 171218261 A>G 3_prime_UTR_variant,chr1 171219351 C>G 3_prime_UTR_variant,chr1 171219493 T>G 3_prime_UTR_variant,chr1 171222110 G>A 5_prime_UTR_premature_start_codon_gain_variant"
+  },
+  {
+    "Name": "TOMM5",
+    "Process": "Import & Sorting",
+    "Function": "TOMM5: Outer membrane translocation, transports preprotein to the import pore formed by TOMM40",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.208885,
+    "p-value": 0.02545,
+    "mutation": ""
+  },
+  {
+    "Name": "TOMM6",
+    "Process": "Import & Sorting",
+    "Function": "TOMM6: Outer membrane translocation, required for the assembly and stability of the TOM complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.134756,
+    "p-value": 0.18225,
+    "mutation": ""
+  },
+  {
+    "Name": "TOMM7",
+    "Process": "Import & Sorting",
+    "Function": "TOMM7: Outer membrane translocation, required for the assembly and stability of the TOM complex",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.1052,
+    "p-value": 0.4813,
+    "mutation": ""
+  },
+  {
+    "Name": "TOMM70A",
+    "Process": "Import & Sorting",
+    "Function": "TOMM70A: Outer membrane translocation, recognizes proteins with internal targeting signals",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00133884,
+    "p-value": 0.9889,
+    "mutation": ""
+  },
+  {
+    "Name": "TOP1MT",
+    "Process": "Replication & Transcription",
+    "Function": "TOP1MT: Suggested to have a role in the removal of positive supercoils created by helicase activity",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.281191,
+    "p-value": 0.00415,
+    "mutation": ""
+  },
+  {
+    "Name": "TOP3A",
+    "Process": "Replication & Transcription",
+    "Function": "TOP3A: May also be present in mitochondrial with the role in the removal of positive supercoils during replication",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0592838,
+    "p-value": 0.43645,
+    "mutation": "chr11 60738627 C>A downstream_gene_variant,chr11 60739173 G>A downstream_gene_variant,chr11 60740359 A>G 3_prime_UTR_variant,chr11 60742539 A>T synonymous_variant,chr11 60742577 G>A missense_variant,chr11 60742580 T>C missense_variant,chr11 60742706 G>T missense_variant,chr11 60742878 C>T synonymous_variant,chr11 60742927 T>C missense_variant,chr11 60742986 C>T synonymous_variant,chr11 60756633 A>G synonymous_variant,chr11 60759346 A>G synonymous_variant"
+  },
+  {
+    "Name": "TPI1",
+    "Process": "Glycolysis",
+    "Function": "TPI1: Catalyzes the isomerization of glyceraldehydes 3-phosphate and dihydroxy-acetone phosphate",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.14944,
+    "p-value": 0.08225,
+    "mutation": ""
+  },
+  {
+    "Name": "TRAK1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "TRAK1: Involved in the mitochondrial movement, acts as a adapter linking kinesin-1 to mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0629603,
+    "p-value": 0.4817,
+    "mutation": ""
+  },
+  {
+    "Name": "TRAK2",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "TRAK2: Involved in the mitochondrial movement, acts as a adapter linking kinesin-1 to mitochondria",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0818923,
+    "p-value": 0.3518,
+    "mutation": ""
+  },
+  {
+    "Name": "TRAP1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "TRAP1: Involved in the mitochonrial fission, known to regulate fission proteins DNM1L and MFF",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0413144,
+    "p-value": 0.635,
+    "mutation": ""
+  },
+  {
+    "Name": "TRIT1",
+    "Process": "Replication & Transcription",
+    "Function": "TRIT1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0632842,
+    "p-value": 0.423,
+    "mutation": ""
+  },
+  {
+    "Name": "TRMT1",
+    "Process": "Replication & Transcription",
+    "Function": "TRMT1: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.11977,
+    "p-value": 0.18815,
+    "mutation": ""
+  },
+  {
+    "Name": "TRMT10C",
+    "Process": "Replication & Transcription",
+    "Function": "RG9MTD1: Cleaves the 5' terminus of mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0295061,
+    "p-value": 0.7604,
+    "mutation": ""
+  },
+  {
+    "Name": "TRMT11",
+    "Process": "Replication & Transcription",
+    "Function": "TRMT11: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0171916,
+    "p-value": 0.8526,
+    "mutation": ""
+  },
+  {
+    "Name": "TRMT112",
+    "Process": "Replication & Transcription",
+    "Function": "TRMT112: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0308046,
+    "p-value": 0.7906,
+    "mutation": ""
+  },
+  {
+    "Name": "TRMT2B",
+    "Process": "Replication & Transcription",
+    "Function": "TRMT2B: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0869253,
+    "p-value": 0.52185,
+    "mutation": "chrX 134238207 T>C missense_variant,chrX 134238510 C>A missense_variant,chrX 134240163 C>G missense_variant"
+  },
+  {
+    "Name": "TRMT5",
+    "Process": "Replication & Transcription",
+    "Function": "TRMT5: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0361115,
+    "p-value": 0.6222,
+    "mutation": ""
+  },
+  {
+    "Name": "TRMT6",
+    "Process": "Replication & Transcription",
+    "Function": "TRMT6: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.000459403,
+    "p-value": 0.99715,
+    "mutation": "chr2 132804977 T>C 3_prime_UTR_variant,chr2 132805583 T>C synonymous_variant,chr2 132808682 T>C synonymous_variant,chr2 132808839 C>T missense_variant,chr2 132810276 C>T missense_variant,chr2 132810455 T>C synonymous_variant"
+  },
+  {
+    "Name": "TRMT61B",
+    "Process": "Replication & Transcription",
+    "Function": "TRMT61B: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.13828,
+    "p-value": 0.49355,
+    "mutation": "chr17 71598091 T>G intron_variant,chr17 71598181 C>T non_coding_exon_variant,chr17 71598406 T>C upstream_gene_variant"
+  },
+  {
+    "Name": "TRMU",
+    "Process": "Replication & Transcription",
+    "Function": "TRMU: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.404998,
+    "p-value": 0.0002,
+    "mutation": ""
+  },
+  {
+    "Name": "TRNT1",
+    "Process": "Replication & Transcription",
+    "Function": "TRNT1: Mitochondrial CCA adding enzyme, adds CCA sequence to the 3' end of tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0580923,
+    "p-value": 0.6838,
+    "mutation": ""
+  },
+  {
+    "Name": "TRUB2",
+    "Process": "Replication & Transcription",
+    "Function": "TRUB2: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0345155,
+    "p-value": 0.7236,
+    "mutation": ""
+  },
+  {
+    "Name": "TSFM",
+    "Process": "Translation",
+    "Function": "TSFM: Involved in the elongation and termination phases of the translation process",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.206732,
+    "p-value": 0.0332,
+    "mutation": ""
+  },
+  {
+    "Name": "TTC19",
+    "Process": "Electron transport chain",
+    "Function": "TTC19: Complex III assembly factor",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.00619818,
+    "p-value": 0.9775,
+    "mutation": ""
+  },
+  {
+    "Name": "TUFM",
+    "Process": "Translation",
+    "Function": "TUFM: Involved in the elongation and termination phases of the translation process",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.178504,
+    "p-value": 0.04095,
+    "mutation": ""
+  },
+  {
+    "Name": "TXN2",
+    "Process": "ROS defense",
+    "Function": "TXN2: Mitochondrial thioredoxin reduces peroxiredoxin to their super oxide scavenging state",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.257284,
+    "p-value": 0.0025,
+    "mutation": ""
+  },
+  {
+    "Name": "TXNRD2",
+    "Process": "ROS defense",
+    "Function": "TXNRD2: Maintains thioredoxins in their reduced state using NAPDH reducing equivalents",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.104293,
+    "p-value": 0.771,
+    "mutation": ""
+  },
+  {
+    "Name": "UNG",
+    "Process": "Replication & Transcription",
+    "Function": "UNG: prevent mutagenesis by eliminating uracil from DNA molecules",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.239497,
+    "p-value": 0.07555,
+    "mutation": "chr5 114138920 G>A 3_prime_UTR_variant,chr5 114139123 G>A 3_prime_UTR_variant"
+  },
+  {
+    "Name": "UQCC",
+    "Process": "Electron transport chain",
+    "Function": "UQCC: Complex III assembly factor, ubiquinol-cytochrome c reductase complex assembly factor 1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.141744,
+    "p-value": 0.1353,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCR10",
+    "Process": "Electron transport chain",
+    "Function": "UQCR10: Ubiquinol-cytochrome c reductase essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.188759,
+    "p-value": 0.0358,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCR11",
+    "Process": "Electron transport chain",
+    "Function": "UQCR11: Ubiquinol-cytochrome c reductase essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.088336,
+    "p-value": 0.3196,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCRB",
+    "Process": "Electron transport chain",
+    "Function": "UQCRB: Ubiquinol-cytochrome c reductase binding protein essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.083947,
+    "p-value": 0.3333,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCRC1",
+    "Process": "Electron transport chain",
+    "Function": "UQCRC1: Ubiquinol-cytochrome c reductase core protein I essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0464648,
+    "p-value": 0.5893,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCRC2",
+    "Process": "Electron transport chain",
+    "Function": "UQCRC2: Ubiquinol-cytochrome c reductase core protein II essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0156998,
+    "p-value": 0.85705,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCRFS1",
+    "Process": "Electron transport chain",
+    "Function": "UQCRFS1: Ubiquinol-cytochrome c reductase Rieske iron-sulfur polypeptide 1 essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0315686,
+    "p-value": 0.7206,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCRH",
+    "Process": "Electron transport chain",
+    "Function": "UQCRH: Ubiquinol-cytochrome c reductase hinge protein essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.131849,
+    "p-value": 0.1267,
+    "mutation": ""
+  },
+  {
+    "Name": "UQCRQ",
+    "Process": "Electron transport chain",
+    "Function": "UQCRQ: Ubiquinol-cytochrome c reductase essential component of complex III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0729525,
+    "p-value": 0.40145,
+    "mutation": ""
+  },
+  {
+    "Name": "UROD",
+    "Process": "Heme Biosynthesis",
+    "Function": "UROD: Uroporphyrinogen III decarboxylase catalyzes stepwise decarboxylation of the Uroporphyrinogen III",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0834858,
+    "p-value": 0.36275,
+    "mutation": "chr4 116991717 G>A synonymous_variant"
+  },
+  {
+    "Name": "UROS",
+    "Process": "Heme Biosynthesis",
+    "Function": "UROS: Enzyme uroporphyrinogen III syntase catalyzes the liner tetrapyrrole molecule is cyclized or rearranged",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0763966,
+    "p-value": 0.3203,
+    "mutation": ""
+  },
+  {
+    "Name": "VARS2",
+    "Process": "Translation",
+    "Function": "VARS2: Involved in the specific attachment of valine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0736699,
+    "p-value": 0.44585,
+    "mutation": ""
+  },
+  {
+    "Name": "VDAC1",
+    "Process": "Apoptosis",
+    "Function": "VDAC1: Voltage dependent anion channel forms part of permeability transition pore and also involved in the takeup of calcium ions from the Endoplasmic reticulum",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.028052,
+    "p-value": 0.7462,
+    "mutation": ""
+  },
+  {
+    "Name": "VDAC2",
+    "Process": "Apoptosis",
+    "Function": "VDAC2: Voltage dependent anion channel forms part of permeability transition pore and also involved in the takeup of calcium ions from the Endoplasmic reticulum",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.151923,
+    "p-value": 0.0818,
+    "mutation": ""
+  },
+  {
+    "Name": "VDAC3",
+    "Process": "Apoptosis",
+    "Function": "VDAC3: Voltage dependent anion channel forms part of permeability transition pore and also involved in the takeup of calcium ions from the Endoplasmic reticulum",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0799773,
+    "p-value": 0.35375,
+    "mutation": ""
+  },
+  {
+    "Name": "WARS2",
+    "Process": "Translation",
+    "Function": "WARS2: Involved in the specific attachment of tryptophan aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.0304752,
+    "p-value": 0.7629,
+    "mutation": ""
+  },
+  {
+    "Name": "XIAP",
+    "Process": "Apoptosis",
+    "Function": "XIAP: X-linked inhibitor of apoptosis protein inhibits caspase activity by directly binding to CASP9, 3 and 7",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.127788,
+    "p-value": 0.1418,
+    "mutation": ""
+  },
+  {
+    "Name": "YARS2",
+    "Process": "Translation",
+    "Function": "YARS2: Involved in the specific attachment of tyrosine aminoacid to its cognate tRNA",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.042518,
+    "p-value": 0.6582,
+    "mutation": ""
+  },
+  {
+    "Name": "YME1L1",
+    "Process": "Mitochondrial Dynamics",
+    "Function": "YME1L1: Involved in the mitochondrial fusion, known to cleave OPA1",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": -0.0424094,
+    "p-value": 0.61665,
+    "mutation": ""
+  },
+  {
+    "Name": "YRDC",
+    "Process": "Replication & Transcription",
+    "Function": "YRDC: Shows posttranscriptional modifications activity in the human mitochondrial tRNAs",
+    "Sample": "mouse-21.3",
+    "Log2FoldChange": 0.122712,
+    "p-value": 0.211,
+    "mutation": "chr4 124851098 C>T synonymous_variant,chr4 124854612 C>T 3_prime_UTR_variant,chr4 124854703 C>T 3_prime_UTR_variant"
+  }
+]
