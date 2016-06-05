@@ -1,6 +1,5 @@
 // Required scripts
 var dataFormatter = require('../dataFormatter.js');
-var _processPositions = require('../data/process_positions.json');
 
 var _url, // data location
     _width, // vis width
@@ -815,16 +814,8 @@ Vis.displayNetwork = function(){
     _view = 'network';
 };
 
-Vis.init = function(){
-    d3.json(_url, function(error, json) {
-        if (error) return console.warn(error);
-        //_formatData(json);
-        
-        console.log(dataFormatter(json));
-        
-        //_createVis();
-        //Vis.displayNetwork();
-    });
+Vis.init = function(nodes, links){
+    console.log(dataFormatter(nodes, links));
 };
 
 module.exports = Vis;
