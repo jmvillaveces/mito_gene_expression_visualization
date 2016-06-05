@@ -23,94 +23,154 @@ circle.areaScale = function(domain, range){
 
 module.exports = circle;
 },{}],2:[function(require,module,exports){
-module.exports={
-    /*"process_4" : { x:517.056, y:26.001 },
-    "process_3" : { x:149.49, y:446.76 },
-    "process_9" : { x:663.605, y:336.487 },
-    "process_10" : { x:784.829, y:350.888 },
-    "process_18" : { x:673.314, y:219.557 },
-    "process_6" : { x:205.696, y:251.173 },
-    "process_5" : { x:831.912, y:70.733 },
-    "process_16" : { x:426.055, y:493.899 },
-    "process_2" : { x:905.734, y:250.657 },
-    "process_14" : { x:346.391, y:293.647 },
-    "process_7" : { x:286.315, y:412.089 },
-    "process_12" : { x:540.677, y:372.821 },
-    "process_15" : { x:90.305, y:74.123 },
-    "process_11" : { x:669.363, y:466.372 },
-    "process_13" : { x:511.439, y:164.009 },
-    "process_8" : { x:677.081, y:119.435 },
-    "process_17" : { x:333.998, y:124.899 }*/
-    "process_4" : { x:627.23, y:70.733 },
-    "process_3" : { x:122.599, y:430.647 },
-    "process_9" : { x:314.365, y:410.396 },
-    "process_10" : { x:314.365, y:100.871 },
-    "process_18" : { x:670.314, y:219.557 },
-    "process_6" : { x:162.603, y:302.437 },
-    "process_5" : { x:828.911, y:70.733 },
-    "process_16" : { x:454.119, y:310.67 },
-    "process_2" : { x:870.44, y:446.76 },
-    "process_14" : { x:861.177, y:240.033 },
-    "process_7" : { x:642.203, y:353.89 },
-    "process_12" : { x:448.327, y:454.165 },
-    "process_15" : { x:104.952, y:109.094 },
-    "process_11" : { x:287.65, y:262.641 },
-    "process_13" : { x:475.754, y:144.39 },
-    "process_8" : { x:736.422, y:446.76 },
-    "process_17" : { x:605.463, y:500.734 }
-}
-},{}],3:[function(require,module,exports){
 // Required scripts
 var _ = require('underscore');
 var areaCalc = require('./circle.geo.js');
 
-function dataFormatter(dataset){
+var log2Limit = 1.5,
+    pvalLimit = 0.05;
+
+function isUpRegulated(g){
+    return g.Log2FoldChange > log2Limit || (g.Log2FoldChange > 0 && g['p-value'] < 0.05);
+}
+
+function isDownRegulated(g){
+    return g.Log2FoldChange < - log2Limit || (g.Log2FoldChange < 0 && g['p-value'] < 0.05);
+}
+
+function isNotRegulated(g){
+     return !isUpRegulated(g) && !isDownRegulated(g);
+}
+
+function dataFormatter(nodes, links){
     
     var data = {};
     
-    data.nodes = dataset.nodes;
+    data.nodes = _.map(nodes, function(n){
+        n.id = _.uniqueId(n.Name + '_');
+        return n;
+    });
     
-    data.processes = _.groupBy(data.nodes, function(n){ return n.process; });
+    data.processes = _.groupBy(data.nodes, function(n){ return n.Process; });
     data.processes = _.map(data.processes, function(genes, key){
     
-        //Number of regulated genes
-        var up = _.filter(genes, function(g){ return g.Log2fold_change > 1.5; }),
-            down = _.filter(genes, function(g){ return g.Log2fold_change < -1.5; }),
-            none = _.filter(genes, function(g){ return (g.Log2fold_change > -1.5 && g.Log2fold_change < 1.5) ; }),
-            regulated = up.length + down.length,
-            log = _.reduce(genes, function(memo, n){ return memo + Math.abs(n.Log2fold_change); }, 0),
-            p_id = _.uniqueId('process_');
+        var process = {};
         
-        return {
-            id: p_id,
-            process: key, 
-            genes : genes,
-            Log2fold_change: log,
-            regulated: regulated,
-            down: down,
-            up: up,
-            none: genes.length ,
-        };
+        process.id = _.uniqueId('process_');
+        process.up = _.filter(genes, isUpRegulated);
+        process.down = _.filter(genes, isDownRegulated);
+        process.none = _.filter(genes, isNotRegulated);
+        process.Process = key;
+        process.genes = genes;
+        process.Log2FoldChange = _.reduce(genes, function(memo, n){ return memo + Math.abs(n.Log2FoldChange); }, 0);
+        process.regulated = process.up.length + process.down.length;
         
+        //Assign genes a parent
+        _.each(genes, function(g){
+            g.parent = process;
+        });
         
+        return process;
     });
     
-    data.processes.sort(function(a,b){return b.regulated_genes - a.regulated_genes;});
+    // Sort by number of regulated genes
+    data.processes.sort(function(a,b){
+        return b.regulated - a.regulated;
+    });
     
-    //Calculate radius for all nodes
+    // Calculate radius for all nodes
     var all_nodes = _.flatten( [data.processes, data.nodes] );
-    var max_abs_log2 = d3.max( all_nodes, function(d) {
-        return Math.abs(d.Log2fold_change);
+    var maxAbsLog2 = d3.max( all_nodes, function(d) {
+        return Math.abs(d.Log2FoldChange);
     });
     
-    var radiusScale = areaCalc.areaScale([1, max_abs_log2 + 1 ], [2, 20]);
+    var radiusScale = areaCalc.areaScale([1, maxAbsLog2 + 1 ], [2, 40]);
     _.each(all_nodes, function(d){
-        d.r = radiusScale(Math.abs(d.Log2fold_change) + 1);
+        d.r = radiusScale(Math.abs(d.Log2FoldChange) + 1);
     });
     
-    data.nodes.sort(function(a, b){ return (a.regulated < b.regulated) ? -1 : (a.regulated > b.regulated) ? 1 : 0; });
+    data.nodes.sort(function(a, b){ 
+        return (a.regulated < b.regulated) ? -1 : (a.regulated > b.regulated) ? 1 : 0; 
+    });
+    
+    //Calculate Links!
+    var nodeDic = {},
+        processLinksDic = {},
+        nodeProcessDic = {},
+        nlinks = [];
+    
+    // Create node dictionary
+    _.each(data.nodes, function(n){ 
+        
+        if(_.isUndefined(nodeDic[n.Name])){
+            nodeDic[n.Name] = [];
+        }
+        
+        nodeDic[n.Name].push(n);
+    });
+    
+    function getLink(source, target){
+        var k = source.id + target.id;
+        
+        if(_.isUndefined(processLinksDic[k])){
+            processLinksDic[k] = { source: source , target: target, links: 0 };
+        }
+        
+        return processLinksDic[k];
+    }
+    
+    function getPLink(n, p){
+        if(_.isUndefined(nodeProcessDic[n.id])){
+            nodeProcessDic[n.id] = { source: n, target: p, links: 0 };
+        }
+        return nodeProcessDic[n.id];
+    }
     
     
+    function processLink(source, target){
+        var p1 = source.parent,
+            p2 = target.parent,
+            b = p1.Process.localeCompare(p2.Process),
+            pLink;
+        
+        //Do not add links from same biological process
+        if(p1 === p2) return;
+        
+        if(b === -1){
+            pLink = getLink(p1, p2);
+            pLink.links ++;
+        }else if (b === 1){
+            pLink = getLink(p2, p1);
+            pLink.links ++;
+        }
+        
+        // Calculate process - node links
+        if(p1.id !== p2.id){
+            getPLink(source, p2).links ++; 
+            getPLink(target, p1).links ++;
+        }
+        
+        nlinks.push({ source: source , target: target});
+    }
+    
+    
+    function processLinks(l){
+        
+        var sources = nodeDic[l.source], // Several nodes with same name
+            targets = nodeDic[l.target]; // Some genes bellong to multiple processess
+        
+        _.each(sources, function(s){
+            _.each(targets, function(t){
+                processLink(s, t);
+            }); 
+        });
+        
+    }
+    
+    _.each(links, processLinks);
+    
+    data.links = nlinks;
+    data.pLinks = _.values(nodeProcessDic);
     
     return data;
 }
@@ -118,18 +178,23 @@ function dataFormatter(dataset){
 module.exports = dataFormatter;
 
 
-},{"./circle.geo.js":1,"underscore":59}],4:[function(require,module,exports){
+},{"./circle.geo.js":1,"underscore":58}],3:[function(require,module,exports){
+var d3 = require('d3');
+
 //Public members
 var App = {};
 
 App.init = function(options){
+    
+     
+    
     
     //Views
     var Main = require('./views/main');
     var ButtonGroup = require('./views/buttonGroup');
     
     App.views = {};
-    App.views.vis = require('./views/vis');
+    App.views.vis = require('./views/process.vis.js');
     
     App.views.main = new Main();
     App.views.main.setElement('body').render();
@@ -137,11 +202,27 @@ App.init = function(options){
     App.views.buttonGroup = new ButtonGroup();
     App.views.buttonGroup.setElement('#navbar').render();
     
-    App.views.vis.url(options.url).selector('#vis').width(1170).init();
+    App.views.vis.selector('#vis').width(1170);
+    
+    
+    d3.json('../data/mouse-21.3.json', function(error, nodes) {
+        if (error) return console.warn(error);
+        
+        d3.json('../data/links.json', function(error, links) {
+            if (error) return console.warn(error);
+            
+            App.views.vis.init(nodes, links);
+        });
+        
+    });
+    
+    
+    
+    
 };
 
 module.exports = App;
-},{"./views/buttonGroup":6,"./views/main":7,"./views/vis":8}],5:[function(require,module,exports){
+},{"./views/buttonGroup":5,"./views/main":6,"./views/process.vis.js":7,"d3":13}],4:[function(require,module,exports){
 (function (global){
 var glob = ('undefined' === typeof window) ? global : window,
 
@@ -152,27 +233,27 @@ this["Templates"] = this["Templates"] || {};
 this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper;
 
-  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\n    <div>"
-    + container.escapeExpression(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\n</div>";
+  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\r\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\r\n    <div>"
+    + container.escapeExpression(((helper = (helper = helpers.Process || (depth0 != null ? depth0.Process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"Process","hash":{},"data":data}) : helper)))
+    + "</div>\r\n</div>";
 },"useData":true});
 
 this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\n</ul>\n\n";
+    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\r\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\r\n    </label>\r\n</div>\r\n<ul class=\"nav nav-pills pull-right\">\r\n    <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\r\n</ul>\r\n\r\n";
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<!-- Page Content -->\n<div class=\"container\">\n\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n        \n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\n            </div>\n        </div>\n    </div>\n        \n    <div class=\"row\">\n        <div class=\"col-md-12\">\n            <div id=\"vis\" class=\"vis\"></div>\n        </div>        \n    </div>\n    \n</div>";
+    return "<!-- Page Content -->\r\n<div class=\"container\">\r\n\r\n    <div id=\"navbar\" class=\"nav_bar\"></div>\r\n        \r\n    <div class=\"legend\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\r\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\r\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\r\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n        \r\n    <div class=\"row\">\r\n        <div class=\"col-md-12\">\r\n            <div id=\"vis\" class=\"vis\"></div>\r\n        </div>        \r\n    </div>\r\n    \r\n</div>";
 },"useData":true});
 
 this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "        <div class=\"tip-process\">\n            <strong>Variant Sites:</strong> "
+  return "        <div class=\"tip-process\">\r\n            <strong>Variant Sites:</strong> "
     + container.escapeExpression(((helper = (helper = helpers.Variant_sites || (depth0 != null ? depth0.Variant_sites : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"Variant_sites","hash":{},"data":data}) : helper)))
-    + "\n            <br>\n            "
+    + "\r\n            <br>\r\n            "
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Chromosome_number : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n        </div>\n";
+    + "\r\n        </div>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var helper;
 
@@ -181,26 +262,26 @@ this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div>\n    <div class=\"tip-name\"><strong>"
+  return "<div>\r\n    <div class=\"tip-name\"><strong>"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div class=\"tip-rule\"></div>\n    <div class=\"tip-process\">"
+    + "</strong></div>\r\n    <div class=\"tip-rule\"></div>\r\n    <div class=\"tip-process\">"
     + alias4(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-function\">"
+    + "</div>\r\n    <div class=\"tip-function\">"
     + alias4(((helper = (helper = helpers.gene_function || (depth0 != null ? depth0.gene_function : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gene_function","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
+    + "</div>\r\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
     + alias4(((helper = (helper = helpers.p_value || (depth0 != null ? depth0.p_value : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"p_value","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div><strong>Log2 fold change:</strong> \n        <span class=\"tip-"
+    + "</strong></div>\r\n    <div><strong>Log2 fold change:</strong> \r\n        <span class=\"tip-"
     + alias4(((helper = (helper = helpers.regulated || (depth0 != null ? depth0.regulated : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"regulated","hash":{},"data":data}) : helper)))
     + "\"><strong>"
     + alias4(((helper = (helper = helpers.Log2fold_change || (depth0 != null ? depth0.Log2fold_change : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Log2fold_change","hash":{},"data":data}) : helper)))
-    + "</strong></span>\n    </div>\n\n"
+    + "</strong></span>\r\n    </div>\r\n\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Variant_sites : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</div>";
 },"useData":true});
 
 if (typeof exports === 'object' && exports) {module.exports = this["Templates"];}
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"handlebars":44}],6:[function(require,module,exports){
+},{"handlebars":43}],5:[function(require,module,exports){
 var templates = require('../templates');
 
 module.exports = Backbone.View.extend({
@@ -241,7 +322,7 @@ module.exports = Backbone.View.extend({
          App.views.vis.search($(e.target).val());
     }
 });
-},{"../templates":5}],7:[function(require,module,exports){
+},{"../templates":4}],6:[function(require,module,exports){
 var templates = require('../templates');
 
 module.exports = Backbone.View.extend({
@@ -253,225 +334,89 @@ module.exports = Backbone.View.extend({
         return this;
     }
 });
-},{"../templates":5}],8:[function(require,module,exports){
+},{"../templates":4}],7:[function(require,module,exports){
 // Required scripts
 var dataFormatter = require('../dataFormatter.js');
-var _processPositions = require('../data/process_positions.json');
 
-var _url, // data location
-    _width, // vis width
-    _height = 550, //vis height
-    _processHeight = 1200, //process height
-    _force, // force layout
-    _gravity = -0.01, 
-    _damper = 0.1, 
-    _center, // svg center
-    _offset = 150, 
-    _processAnnotations, // div process annotations  
-    _radiusScale, 
-    _view, // current view (process, group, chart, network)
-    _data, // variable holding all vis data
-    _geneCircles, // gene circles
-    _processCircles, 
-    _links,
-    _fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3498db', '#BECCAE', '#e74c3c']),
-    _stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']),
-    _highlightColor = '#FFFBCC',
-    _mutationColor = '#2c3e50',
-    _templates = require('../templates.js'),
-    _clickEvent = {target: null, holdClick: false};
+// Variables
+var selector,
+    svg, // SVG tag
+    width, // vis width
+    height = 550, //vis height 
+    offset = 150,
+    view, // current view (process, group, chart, network)
+    data, // variable holding all vis data
+    processes,
+    processAnnotations, // div process annotations
+    links,
+    fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3498db', '#BECCAE', '#e74c3c']),
+    stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']),
+    highlightColor = '#FFFBCC',
+    mutationColor = '#2c3e50',
+    templates = require('../templates.js'),
+    annTemplate = templates.annotation; // Annotations template
 
-// Initialize tooltip
-var _tipTemplate = _templates.tooltip;
-var _tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return _tipTemplate(d); });
-
-// Annotations template
-var _annTemplate = _templates.annotation;
-
-// Force charge
-var _charge = function(d){ 
-    return -Math.pow(d.radius, 2.0) / 8; 
-};
-
-// Move gens up or down according to expression
-var _buoyancy = function(alpha) {
-    return function(d) {
-        var val = d.y * 0.05 * alpha * alpha * alpha * 100;
-        d.y = (d.regulated === 'down') ? d.y + val : (d.regulated === 'up') ? d.y - val : d.y;
-    };
-};
-
-var _moveTowardsCenter = function(alpha){
-    return function(d) {
-        d.x = d.x + (_center.x - d.x) * (_damper + 0.02) * alpha;
-        d.y = d.y + (_center.y - d.y) * (_damper + 0.02) * alpha;
-    };
-};
-
-// Group genes by process
-var _displayByProcess = function(){
-    _force.stop(); // stop force
-    d3.selectAll('.axis').style('opacity', 0);
-    d3.select(_selector).transition().duration(2000).style('height', _processHeight);
+function initVis(){
     
-    // Transition genes to process positions
-    _geneCircles.transition().duration(2000)
-        .attr('cx', function(d) {
-            return d.parent.px + d.pack.x;
+    svg = d3.select(selector)
+        .append('svg')
+        .attr('class', 'canvas')
+        .attr('width', width)
+        .attr('id', 'svg_vis');
+    
+    var g = svg.append('g')
+        .attr('transform', 'translate(' + width/2 + ',' + height/2 + ')');
+    
+    
+    //Pack Layout positions
+    var bubble = d3.layout.pack()
+        .sort(function(a, b) {
+            return -(a.regulated - b.regulated);
         })
-        .attr('cy', function(d) {
-            return d.parent.py + d.pack.y;
-        });
+        .radius(function(r){ return r;})
+        .value(function(d){return d.r;})
+        .children(function(d) { return d.children;})
+        .padding(80);
+        
+    bubble.nodes({children: data.processes});
     
-    _processAnnotations.style('opacity', 1);
-};
-
-// Move genes toward the center focal point of the visualization
-var _displayGroupAll = function() {
-    
-    d3.select(_selector).transition().duration(2000).style('height', _height);
-    
-    d3.selectAll('.axis').style('opacity', 0);
-    _geneCircles.attr('transform', null);
-    _processAnnotations.style('opacity', 0);
-    
-    _force.gravity(_gravity)
-        .charge(_charge)
-        .friction(0.9)
-        .on('tick', function(e) {
-            _geneCircles.each(_moveTowardsCenter(e.alpha)).each(_buoyancy(e.alpha))
-                .attr('cx', function(d) {
-                    return d.x;
-                })
-                .attr('cy', function(d) {
-                    return d.y;
-                });
-        })
-        .start();
-};
-
-// Display processes as a network
-var _displayNetwork = function(){
-    
-    d3.selectAll('.axis').style('opacity', 0);
-    _geneCircles
-        .attr('transform', null)
-        .style('display', 'none')
-        .attr('opacity', 0);
-    
-    _processAnnotations.style('opacity', 1);
-    
-    _processCircles.transition().duration(3000).attr('opacity', 1);
-    
-    _force = d3.layout.force()
-        .linkDistance(400)
-        .size([_width, _height])
-        .nodes(_data.processes)
-        .links(_data.p_links)
-        .charge(0)
-        .start();
-    
-    _force.on('tick', function() {
-        /*link.attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });*/
-
-        _processCircles.attr('transform', function(d){
-            return 'translate(' + d.x + ',' + d.y + ')';
-        });
-    });
-    
-};
-
-// Move genes to chart positions
-var _displayChart = function() {
-    _force.stop();
-    _processAnnotations.style('opacity', 0);
-    
-    _geneCircles
-        .attr('cx', function(d){ return (_view === 'group') ? d.x : d.pack.x * 20; })
-        .attr('cy', function(d){ return (_view === 'group') ? d.y : d.pack.y * 20; })
-        .attr('transform', null);
-    
-    _geneCircles.transition().duration(2000)
-        .attr('cx', function(d){ return d.chart.x; })
-        .attr('cy', function(d){ return d.chart.y; });
-    
-    d3.selectAll('.axis').transition().duration(2000).style('opacity', 1);
-};
-
-// Initialize paths to display node relationships
-var _initLinks = function(){
-    
-    // Join process and gene links
-    var links = _.union(_data.p_links, _data.links);
-    
-    // Create link dictionary to prevent iteration over all links
-    var l_dic = {};
-    function get_node(n){
-        if(_.isUndefined(l_dic[n.id])){
-            l_dic[n.id] = [];
-        }
-        return l_dic[n.id];
-    }
-    
-    _.each(links, function(l){       
-        get_node(l.source).push(l);
-        get_node(l.target).push(l);
-    });
-    
-    // Calculate higher number of links to be displayed
-    var number = 0;
-    _.each(l_dic, function(v, k){
-        number = (number > v.length) ? number : v.length;
-    });
-    
-    var g = _vis.append('g').attr('id', '_links');
-    
-    // Data structure to store all variables related to links
-    _links = {};
-    _links.paths = g.selectAll('path').data(_.range(0, number)) // Append paths
-        .enter()
-        .append('path')
-        .attr('class', 'link')
-        .attr('opacity', 1)
-        .attr('fill', 'none')
-        .attr('stroke', 'rgba(44, 62, 80, 0.4)');
-    
-    _links.scale = d3.scale.linear().domain(d3.extent(links, function(l){ return l.links; })).range([2,10]);
-    
-    _links.data = l_dic;
-};
-
-var _initProcesses = function(){
-    
-    var g = _vis.append('g').attr('id', '_processes');
-    
-    _processCircles = g.selectAll('g').data(_data.processes);
+    //Init processess
+    processes = g.selectAll('g').data(data.processes, function(d){ return d.id; });
     
     var pie = d3.layout.pie()
         .sort(null)
-        .value(function(d) { return d.Log2fold_change; });
+        .value(function(d) { return d.Log2FoldChange; });
 
     var arc = d3.svg.arc();
     
-    _processCircles.enter().append('g')
+    processes.enter().append('g')
         .attr('id', function(d) { return  d.id; })
         .attr('class', 'process')
-        .attr('opacity', 0)
-        .attr('transform', function(d){ return 'translate(0,0)'; })
-        .on('mouseout', _onMouseOut)
-        .on('mouseover', _onMouseOverNode);
+        .attr('opacity', 1)
+        .attr('transform', function(d){ return 'translate(' + d.x + ',' + d.y + ')'; });
+    
+    function packGenes(p){
+        // Node Pack Layout positions
+        var nodePack = d3.layout.pack()
+            .sort(function(a, b) {
+                return -(a.value - b.value);
+            })
+            .radius(function(r){ return r;})
+            .value(function(d){return d.r;})
+            .children(function(d) { return d.genes;})
+            .padding(2);
+
+            nodePack.nodes(p);
+    }
     
     function appendArch(d){
         
         var g = d3.select(this),
             r = d.r * 0.7,
             arr = [ 
-                { stroke: _stroke('up'), color: _fill('up'), Log2fold_change:d.up}, 
-                { stroke: _stroke('none'), color: _fill('none'), Log2fold_change:d.none }, 
-                { stroke: _stroke('down'), color: _fill('down'), Log2fold_change: d.down }
+                { stroke: stroke('up'), color: fill('up'), Log2FoldChange: d.up.length}, 
+                { stroke: stroke('none'), color: fill('none'), Log2FoldChange: d.none.length }, 
+                { stroke: stroke('down'), color: fill('down'), Log2FoldChange: d.down.length }
             ];
         
         arc.innerRadius(r)
@@ -486,429 +431,33 @@ var _initProcesses = function(){
             .attr('stroke-width', 2)
             .attr('stroke', function(d){ 
                 var p = _.pluck(d.genes, 'Variant_sites');
-                return (p.join('').length > 0) ? _mutationColor : null;
+                return (p.join('').length > 0) ? mutationColor : null;
             });
         
         // Create ring
         g.selectAll('path').data(pie(arr))
             .enter().append('path')
             .attr('fill', function(d) { return d.data.color; })
-            //.attr('stroke', function(d) { return d.data.stroke; })
-            //.attr('stroke-width', 1)
             .attr('d', arc)
             .style('pointer-events', 'none'); // only the backgound circle listens to events
         
-        // Add text
-        /*g.append('text')
-            .attr('dy', r * 0.2)
-            .attr('font-size', r * 0.5)
-            .attr('fonr-family', 'Montserrat')
-            .style('text-anchor', 'middle')
-            .text(function(d) { return '56%'; });*/
+        var geneGroup = g.append('g');
         
-    }
+        //Init genes
+        packGenes(d);
+        var genes = g.selectAll('circle').data(d.genes, function(d){ return d.id; });
     
-    _processCircles.each(appendArch);
-};
-
-var _onClick = function(){
-    
-    var target = d3.event.target,
-        name = target.tagName.toLowerCase(),
-        id = target.id;
-    
-    if(_view === 'network'){
+        genes.enter().append('circle')
+            .attr('id', function(d) { return  d.id; })
+            .attr('r', function(d){ return d.r; })
+            .attr('fill', function(d){ return fill('up'); })
+            .attr('cx', function(d){ return d.x; })
+            .attr('cy', function(d){ return d.y; })
+            .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
+            .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke('up');})
+            .attr('class', function(d){ return d.parent.id; });
         
-        
-        if( (name === 'circle' && _.isNull(_clickEvent.target)) || (name === 'circle' && id === _clickEvent.target.id) ){
-            _clickEvent.holdClick = true;
-            _clickEvent.target = target;
-        }else{
-            _clickEvent.target = null;
-            _clickEvent.holdClick = false;
-            _onMouseOut();
-        }
-    }
-};
-
-var _onMouseOut = function(node){
-    
-    if(_clickEvent.holdClick) return;
-    
-    _links.paths.attr('opacity', 0);
-    _processCircles.attr('opacity', 1);
-    _geneCircles.attr('opacity', 1);
-    _processAnnotations.style('opacity', 1);
-};
-
-var _onMouseOverNode = function(node){
-    
-    if(_clickEvent.holdClick) return;
-    
-    var nodeLinks = _links.data[node.id], neighbors = [];
-            
-    _links.paths.each(function(n, i){
-        if(nodeLinks.length > i){
-            var l = nodeLinks[i],
-                source = l.source,
-                target = l.target,
-                s_display = d3.select('#' + source.id).style('display'),
-                t_display = d3.select('#' + target.id).style('display');
-            
-            if(s_display !== 'none' && t_display !== 'none'){
-                
-                d3.select(this)
-                    .style('stroke-width', _links.scale(l.links))
-                    .attr('opacity', 1)
-                    .attr('d', function (d) {
-                        var dx = target.x - source.x, dy = target.y - source.y, dr = Math.sqrt(dx * dx + dy * dy);
-                        return 'M' + source.x + ',' + source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.x + ',' + target.y;
-                });
-
-                neighbors.push(source.id);
-                neighbors.push(target.id);
-            }
-        }
-    });
-                              
-    function notNeighboors(n){
-        return ! _.contains(neighbors, n.id);
-    }
-    
-    _geneCircles.filter(notNeighboors).attr('opacity', 0.2);
-    _processCircles.filter(notNeighboors).attr('opacity', 0.2);
-    _processAnnotations.filter(notNeighboors).style('opacity', 0.2);
-};
-
-var _initProcessAnnotations = function(){
-    
-    var ann_scale = d3.scale.log().domain(d3.extent(_data.processes, function(d){ return d.r; })).range([10,16]);
-    
-    var div = d3.select(_selector)
-        .append('div')
-        .attr('class', 'node-label-container');
-    
-    _processAnnotations = div.selectAll('div').data(_data.processes);
-    
-    _processAnnotations.enter().append('div')
-        .html(_annTemplate)
-        .attr('style', function(d){ return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.x + 'px; top:' + (d.y + d.r) + 'px'; })
-        .on('mouseover', function(d){
-            if(_clickEvent.holdClick) return;
-        
-            d3.select(this).select('span').transition(2000).style('opacity', 1);
-        })
-        .on('mouseout', function(d){ 
-            d3.select(this).select('span').transition(2000).style('opacity', 0);
-        })
-        .on('click', function(d){
-        
-            if(_clickEvent.holdClick) return;
-        
-            var span = d3.select(this).select('span'),
-                genes = d3.selectAll('.' + d.id),
-                process = d3.select('#' + d.id);
-            
-            
-            if(span.classed('glyphicon-plus-sign')){
-                
-                genes.attr('cx', function(d) {
-                    return d.parent.x;
-                })
-                .attr('cy', function(d) {
-                    return d.parent.y;
-                });
-                
-                process
-                    .attr('opacity', 1)
-                    .transition(2000)
-                    .attr('opacity', 0)
-                    .each('end', function(d){ process.style('display', 'none'); });
-
-                genes.transition(2000)
-                    .attr('opacity', 1)
-                    .style('display', 'inline')
-                    .attr('cx', function(d) {
-                        return d.x;
-                    })
-                    .attr('cy', function(d) {
-                        return d.y;
-                    });
-                
-                span.classed('glyphicon-plus-sign', false).classed('glyphicon-minus-sign', true);
-            }else{
-
-                genes.transition(2000)
-                    .attr('opacity', 0)
-                    .attr('cx', function(d) {
-                        return d.parent.x;
-                    })
-                    .attr('cy', function(d) {
-                        return d.parent.y;
-                    })
-                    .each('end', function(d){ d3.select(this).style('display', 'none'); });
-                
-                process.style('display', 'inline')
-                    .attr('opacity', 0)
-                    .transition(2000)
-                    .attr('opacity', 1);
-                
-                span.classed('glyphicon-minus-sign', false).classed('glyphicon-plus-sign', true);
-            }
-        });
-};
-
-var _formatData = function(json){
-    
-    var duplicates = _.chain(json.nodes).groupBy('name').filter(function(v){return v.length > 1;}).flatten().value();
-    
-    console.log(duplicates);
-    
-    _center = { x:_width/2, y: _height/2 };
-    
-    _data = {};
-    _data.nodes = _.map(json.nodes, function(d){
-        d.regulated = (d.Log2fold_change > 1.5 || d.p_value < 0.05 && d.Log2fold_change > 0) ? 'up' : 
-            (d.Log2fold_change < - 1.5 || d.p_value < 0.05 && d.Log2fold_change < 0) ? 'down' : 'none';
-
-        return d;
-    });
-    
-    // Calculate process centers
-    var rows = 4, cols = 3;
-    var wScale = d3.scale.linear().domain([0, cols]).range([_offset, _width - _offset]);
-    var hScale = d3.scale.linear().domain([0, rows]).range([_offset, _processHeight - _offset]);
-    
-    function getPercentage(n, total){
-        return n * 100 / total;
-    }
-    
-    function countLog2(arr){
-        return _.reduce(arr, function(memo, d){
-            return memo + Math.abs(d.Log2fold_change);
-        }, 0);
-    }
-    
-    var i = 1;
-    _data.processes = _.groupBy(_data.nodes, function(n){ return n.process; });
-    _data.processes = _.map(_data.processes, function(genes, key){
-        
-        //Number of regulated genes
-        var regulated = 0;
-        var log = 0;
-        var p_id = 'process_' + (++i);
-        
-        var reg_groups = _.groupBy(genes, function(n){
-            regulated = (n.regulated === 'up' || n.regulated === 'down' || n.Chromosome_number.length > 0) ? regulated + 1 : regulated;
-            log += Math.abs(n.Log2fold_change);
-            
-            n.p_id = p_id;
-            
-            return n.regulated;
-        });
-        
-        var regulated_genes = getPercentage(regulated, genes.length);
-        
-        return {
-            regulated_genes: d3.round(regulated_genes, 2), 
-            process: key, 
-            genes : genes, 
-            id: p_id,
-            down: (reg_groups.down) ? getPercentage(countLog2(reg_groups.down), log) : 0,
-            up: (reg_groups.up) ?  getPercentage(countLog2(reg_groups.up), log) : 0,
-            none: (reg_groups.none) ?  getPercentage(countLog2(reg_groups.none), log) : 0,
-            Log2fold_change: log,
-            network: _processPositions[p_id]
-        };
-    });
-    
-    _data.processes.sort(function(a,b){return b.regulated_genes - a.regulated_genes;});
-    
-    //Calculate radius for all nodes
-    var all_nodes = _.flatten( [_data.processes, _data.nodes] );
-    var max_abs_log2 = d3.max( all_nodes, function(d) {
-        return Math.abs(d.Log2fold_change);
-    });
-    
-    _radiusScale = _areaCalc.areaScale([1, max_abs_log2 + 1 ], [2, 20]);
-    _.each(all_nodes, function(d){
-        d.radius = _radiusScale(Math.abs(d.Log2fold_change) + 1);
-    });
-    
-    _data.processes = _.map(_data.processes, function(p){
-        p.px = wScale(this.row);
-        p.py = hScale(this.col);
-        
-        if(this.row < rows-1){
-            this.row++;
-        }else{
-            this.row = 0;
-            this.col++;
-        }
-        
-        return p; 
-    }, {col:0,row:0});
-    
-    _.each(_data.processes, function(p){
-        
-        //Pack Layout positions
-        var bubble = d3.layout.pack()
-            .sort(function(a, b) {
-                return -(a.value - b.value);
-            })
-            .radius(function(r){ return r;})
-            .value(function(d){return d.radius;})
-            .children(function(d) { return d.genes;})
-            .padding(1);
-        
-        bubble.nodes(p);
-    });
-    
-    _data.nodes = _.map(_data.nodes, function(d){
-        d.pack = {x: d.x, y: d.y};
-        d.network = {x: d.parent.x + d.pack.x, y: d.parent.y + d.pack.y};
-        return _.omit(d, ['x', 'y']);
-    });
-    
-    _data.nodes.sort(function(a, b){ return (a.regulated < b.regulated) ? -1 : (a.regulated > b.regulated) ? 1 : 0; });
-    
-    //Calculate Links!
-    var node_dic = {}, process_links_dic = {};
-    _.each(_data.nodes, function(n){ node_dic[n.id] = n; });
-    
-    function get_link(source, target){
-        var k = source.id + target.id;
-        
-        if(_.isUndefined(process_links_dic[k])){
-            process_links_dic[k] = { source: source , target: target, links: 0 };
-        }
-        
-        return process_links_dic[k];
-    }
-    
-    var nodeProcessDic = {};
-    function getPLink(n, p){
-        if(_.isUndefined(nodeProcessDic[n.id])){
-            nodeProcessDic[n.id] = { source: n, target: p, links: 0 };
-        }
-        return nodeProcessDic[n.id];
-    }
-    
-    function process_links(l){
-        
-        var source = node_dic[l.source];
-        var target = node_dic[l.target];
-        var p1 = source.parent;
-        var p2 = target.parent;
-        
-        var b = p1.process.localeCompare(p2.process), p_link;
-        
-        if(b === -1){
-            p_link = get_link(p1, p2);
-            p_link.links ++;
-        }else if (b === 1){
-            p_link = get_link(p2, p1);
-            p_link.links ++;
-        }
-        
-        // Calculate process - node links
-        if(p1.id !== p2.id){
-            getPLink(source, p2).links ++; 
-            getPLink(target, p1).links ++;
-        }
-        
-        return { source: source , target: target};
-    }
-    
-    _data.links = _.filter( _.map(json.links, process_links), function(l){ return l.target.process !== l.source.process; });
-    _data.links = _.flatten([ _data.links, _.values(nodeProcessDic)]);
-    _data.p_links = _.values(process_links_dic);
-    
-    //init force
-    _force = d3.layout.force().nodes(_data.nodes).size([_width, _height]);
-};
-
-var _initChart = function(){
-    var margins = { top: 50, right: 50, bottom: 20, left: 50};
-    var pvalExtent = d3.extent(_data.nodes, function(d){ return d.p_value;});
-    var xRange = d3.scale.linear().range([margins.left, _width - margins.right]).domain(pvalExtent);
-    var log2Extent = d3.extent(_data.nodes, function(d){ return d.Log2fold_change;});
-    var yRange = d3.scale.linear().range([_height - margins.top, margins.bottom]).domain(log2Extent);
-    
-    var xAxis = d3.svg.axis()
-        .scale(xRange)
-        .tickSize(2)
-        .tickValues([0.05].concat(pvalExtent))
-        .tickSubdivide(true)
-        .tickFormat(d3.format('.1r'));
-    
-    var yAxis = d3.svg.axis()
-        .scale(yRange)
-        .tickSize(2)
-        .tickValues([0, -1.5, 1.5].concat(log2Extent))
-        .orient('left')
-        .tickSubdivide(true)
-        .tickFormat(d3.format('.3r'));
-    
-    _vis.append('g')
-        .attr('class', 'axis')
-        .attr('transform', 'translate(0,' + (_height - margins.bottom) + ')')
-        .attr('opacity', 0)
-        .call(xAxis)
-        .append('text')
-            .attr('class', 'x label')
-            .attr('text-anchor', 'end')
-            .attr('y', -5)
-            .attr('dx', '-50')
-            .attr('x', _width)
-            .text('p-value');
- 
-    _vis.append('g')
-        .attr('class', 'axis')
-        .attr('transform', 'translate(' + (margins.left) + ',0)')
-        .attr('opacity', 0)
-        .call(yAxis)
-        .append('text')
-            .attr('class', 'y label')
-            .attr('text-anchor', 'end')
-            .attr('y', -35)
-            .attr('transform', 'rotate(-90)')
-            .text('log2 fold chain');
-    
-    var d = [{x1:0, y1:1.5, x2: pvalExtent[1] ,y2:1.5 }, {x1:0, y1:-1.5, x2: pvalExtent[1] ,y2:-1.5}, {x1:0.05, y1:log2Extent[0], x2: 0.05 ,y2:log2Extent[1]}];
-    
-    var g = _vis.append('g');
-    
-    var lines = g.selectAll('line').data(d);
-    lines.enter().append('line')
-            .attr('x1', function(d){ return xRange(d.x1);})
-            .attr('x2', function(d){ return xRange(d.x2);})
-            .attr('y1', function(d){ return yRange(d.y1);})
-            .attr('y2', function(d){ return yRange(d.y2);})
-            .attr('fill', '#000')
-            .attr('class', 'axis scale_line tick');
-    
-    _data.nodes = _.map(_data.nodes, function(d){
-        d.chart =  {x:xRange(d.p_value), y:yRange(d.Log2fold_change)};
-        return d;
-    });
-};
-
-var _createVis = function(){
-    
-    _vis = d3.select(_selector)
-        .append('svg')
-        .attr('class', 'canvas')
-        .attr('width', _width)
-        .attr('id', 'svg_vis')
-        .on('click', _onClick);
-    
-    // Render links before circles
-    _initLinks();
-    
-    _geneCircles = _vis.selectAll('circle').data(_data.nodes, function(d){ return d.id; });
-    
-    _geneCircles.enter().append('circle')
+        /*_geneCircles.enter().append('circle')
         .attr('r', 0)
         .attr('fill', function(d){ return _fill(d.regulated); })
         .attr('stroke-width', function(d){ return (d.Variant_sites.length) ? 1.2 : 1; })
@@ -927,164 +476,80 @@ var _createVis = function(){
         .transition().duration(2000).attr('r', function(d) {
             return d.radius;
         })
-        .call(_tip);
+        .call(_tip);*/
+        
+    }
     
-    _initChart();
-    _initProcessAnnotations();
-    _initProcesses();
-    _createLegend();
-};
-
-var _createLegend = function(){
-
-    var legend = d3.select('#color_scale')
-        .append('ul')
-        .attr('class', 'list-inline');
-
-    var keys = legend.selectAll('li.key')
-        .data(_fill.domain());
-
-    keys.enter().append('li')
-        .attr('class', 'key')
-        .style('border-top-color', function(d){ return _fill(d);})
-        .text(function(d) {
-            return d;
+    processes.each(appendArch);
+    
+    // Create process Annotations
+    var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([10,16]);
+    
+    var div = d3.select(selector)
+        .append('div')
+        .attr('class', 'node-label-container');
+    
+    processAnnotations = div.selectAll('div').data(data.processes);
+    
+    processAnnotations.enter().append('div')
+        .html(annTemplate)
+        .attr('style', function(d){
+        
+            var x = width/2 + d.x,
+                y = height/2 + d.y + d.r;
+        
+            return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + x + 'px; top:' + y + 'px'; 
+        })
+        .on('mouseover', function(d){
+            //if(_clickEvent.holdClick) return;
+            d3.select(this).select('span').transition(2000).style('opacity', 1);
+        })
+        .on('mouseout', function(d){ 
+            d3.select(this).select('span').transition(2000).style('opacity', 0);
+        })
+        .on('click', function(d){
+        
         });
     
-    // Size
-    var svg = d3.select('#size_scale').append('svg')
-            .attr('width', 150)
-            .attr('height', 50).append('g').attr('transform', function(d) { return 'translate(' + 15 + ',' + 10 + ')'; });
-    
-    var min = _.min(_data.nodes, function(d){ return Math.abs(d.Log2fold_change); });
-    var max = _.max(_data.nodes, function(d){ return Math.abs(d.Log2fold_change); });
-    
-    var d = [min.radius, (max.radius + min.radius)/2, max.radius];
-    
-    svg.selectAll('circle').data(d).enter()
-        .append('circle')
-            .attr('r', function(d){ return d; })
-            .attr('class', 'size_circle')
-            .attr('cy', function(d){ return 30 - d;});
-    
-    svg.selectAll('line').data(d).enter()
-        .append('line')
-            .attr('x1', 0)
-            .attr('y1', function(d){ return 30 - 2*d; })
-            .attr('x2', 60)
-            .attr('y2', function(d){ return 30 - 2*d; })
-            .attr('class', 'scale_line');
-    
-    var l = [
-        { r:d[0], log: Math.abs(min.Log2fold_change)},
-        { r:d[1], log: Math.abs((min.Log2fold_change + max.Log2fold_change)/2)},
-        { r:d[2], log: Math.abs(max.Log2fold_change)}
-    ];
-    
-    svg.selectAll('text').data(l).enter()
-        .append('text')
-            .attr('x', 60)
-            .attr('y', function(d){ return 30 - 2*d.r; })
-            .attr('class', 'scale_text')
-            .text(function(d){ return d3.round(d.log,3); });
-    
-    // Border
-    svg = d3.select('#border_scale').append('svg')
-            .attr('width', 34)
-            .attr('height', 34).append('g').attr('transform', function(d) { return 'translate(' + 15 + ',' + 15 + ')'; });
-    
-    svg.selectAll('circle').data([d[2]]).enter()
-        .append('circle')
-            .attr('r', function(d){ return d; })
-            .attr('class', 'border_circle');
-};
-
-// Search genes by name
-function _search(str){
-    
-    d3.selectAll('.search').classed('search', false);
-    
-    if(str.length < 3) return;
-    
-    str = str.toLowerCase();
-    
-    var matchingGenes = _geneCircles
-                        .filter(function(d){ return d.name.toLocaleLowerCase().match(str); })
-                        .classed('search', true);
-    
-    matchingGenes.each(function(d){
-    
-        if( d3.select(this).style('display') === 'none'){
-            // process is visible set class
-            d3.select('#' + d.parent.id).select('circle').classed('search', true);
-        } 
-    });
     
 }
 
+
+
+
 //Public members
 var Vis = function(){};
-    
-Vis.url = function(_){
-    if (!arguments.length)
-        return _url;
-    _url = _;
-    return Vis;
-};
 
 Vis.selector = function(_){
     if (!arguments.length)
-        return _selector;
-    _selector = _;
+        return selector;
+    selector = _;
     return Vis;
 };
 
 Vis.width = function(_){
     if (!arguments.length)
-        return _width;
-    _width = _;
+        return width;
+    width = _;
     return Vis;
 };
 
 Vis.search = function(str){ 
-    _search(str);
+    //_search(str);
     return Vis;
 };
 
-Vis.displayTowardProcess = function(){
-    _displayByProcess();
-    _view = 'process';
-};
-
-Vis.displayGroupAll = function(){
-    _displayGroupAll();
-    _view = 'group';
-};
-
-Vis.displayChart = function(){
-    _displayChart();
-    _view = 'chart';
-};
-
 Vis.displayNetwork = function(){
-    _displayNetwork();
-    _view = 'network';
+    view = 'network';
 };
 
-Vis.init = function(){
-    d3.json(_url, function(error, json) {
-        if (error) return console.warn(error);
-        //_formatData(json);
-        
-        console.log(dataFormatter(json));
-        
-        //_createVis();
-        //Vis.displayNetwork();
-    });
+Vis.init = function(nodes, links){
+    data = dataFormatter(nodes, links);
+    initVis();
 };
 
 module.exports = Vis;
-},{"../data/process_positions.json":2,"../dataFormatter.js":3,"../templates.js":5}],9:[function(require,module,exports){
+},{"../dataFormatter.js":2,"../templates.js":4}],8:[function(require,module,exports){
 jQuery = $ = require('jquery');
 Backbone = require('backbone');
 Backbone.$ = jQuery;
@@ -1097,7 +562,7 @@ require('d3-tip')(d3);
 require('underscore'); // bootstrap
 
 App = require('./js/main');
-},{"./js/main":4,"backbone":11,"d3":14,"d3-tip":13,"handlebars":44,"jquery":45,"underscore":59}],10:[function(require,module,exports){
+},{"./js/main":3,"backbone":10,"d3":13,"d3-tip":12,"handlebars":43,"jquery":44,"underscore":58}],9:[function(require,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 1.0.0 Copyright (c) 2011-2015, The Dojo Foundation All Rights Reserved.
@@ -1401,8 +866,8 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,require('_process'),"/node_modules/amdefine/amdefine.js")
-},{"_process":47,"path":46}],11:[function(require,module,exports){
+}).call(this,require('_process'),"/node_modules\\amdefine\\amdefine.js")
+},{"_process":46,"path":45}],10:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.3
 
@@ -3326,9 +2791,9 @@ module.exports = amdefine;
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":45,"underscore":59}],12:[function(require,module,exports){
+},{"jquery":44,"underscore":58}],11:[function(require,module,exports){
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 // d3.tip
 // Copyright (c) 2013 Justin Palmer
 //
@@ -3634,10 +3099,10 @@ module.exports = amdefine;
 
 }));
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 !function() {
   var d3 = {
-    version: "3.5.17"
+    version: "3.5.16"
   };
   var d3_arraySlice = [].slice, d3_array = function(list) {
     return d3_arraySlice.call(list);
@@ -7162,7 +6627,7 @@ module.exports = amdefine;
         λ0 = λ, sinφ0 = sinφ, cosφ0 = cosφ, point0 = point;
       }
     }
-    return (polarAngle < -ε || polarAngle < ε && d3_geo_areaRingSum < -ε) ^ winding & 1;
+    return (polarAngle < -ε || polarAngle < ε && d3_geo_areaRingSum < 0) ^ winding & 1;
   }
   function d3_geo_clipCircle(radius) {
     var cr = Math.cos(radius), smallRadius = cr > 0, notHemisphere = abs(cr) > ε, interpolate = d3_geo_circleInterpolate(radius, 6 * d3_radians);
@@ -13189,7 +12654,7 @@ module.exports = amdefine;
   });
   if (typeof define === "function" && define.amd) this.d3 = d3, define(d3); else if (typeof module === "object" && module.exports) module.exports = d3; else this.d3 = d3;
 }();
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13256,7 +12721,7 @@ exports['default'] = inst;
 module.exports = exports['default'];
 
 
-},{"./handlebars.runtime":16,"./handlebars/compiler/ast":18,"./handlebars/compiler/base":19,"./handlebars/compiler/compiler":21,"./handlebars/compiler/javascript-compiler":23,"./handlebars/compiler/visitor":26,"./handlebars/no-conflict":40}],16:[function(require,module,exports){
+},{"./handlebars.runtime":15,"./handlebars/compiler/ast":17,"./handlebars/compiler/base":18,"./handlebars/compiler/compiler":20,"./handlebars/compiler/javascript-compiler":22,"./handlebars/compiler/visitor":25,"./handlebars/no-conflict":39}],15:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13324,7 +12789,7 @@ exports['default'] = inst;
 module.exports = exports['default'];
 
 
-},{"./handlebars/base":17,"./handlebars/exception":30,"./handlebars/no-conflict":40,"./handlebars/runtime":41,"./handlebars/safe-string":42,"./handlebars/utils":43}],17:[function(require,module,exports){
+},{"./handlebars/base":16,"./handlebars/exception":29,"./handlebars/no-conflict":39,"./handlebars/runtime":40,"./handlebars/safe-string":41,"./handlebars/utils":42}],16:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13430,7 +12895,7 @@ exports.createFrame = _utils.createFrame;
 exports.logger = _logger2['default'];
 
 
-},{"./decorators":28,"./exception":30,"./helpers":31,"./logger":39,"./utils":43}],18:[function(require,module,exports){
+},{"./decorators":27,"./exception":29,"./helpers":30,"./logger":38,"./utils":42}],17:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13463,7 +12928,7 @@ exports['default'] = AST;
 module.exports = exports['default'];
 
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13513,7 +12978,7 @@ function parse(input, options) {
 }
 
 
-},{"../utils":43,"./helpers":22,"./parser":24,"./whitespace-control":27}],20:[function(require,module,exports){
+},{"../utils":42,"./helpers":21,"./parser":23,"./whitespace-control":26}],19:[function(require,module,exports){
 /* global define */
 'use strict';
 
@@ -13681,7 +13146,7 @@ exports['default'] = CodeGen;
 module.exports = exports['default'];
 
 
-},{"../utils":43,"source-map":48}],21:[function(require,module,exports){
+},{"../utils":42,"source-map":47}],20:[function(require,module,exports){
 /* eslint-disable new-cap */
 
 'use strict';
@@ -14255,7 +13720,7 @@ function transformLiteralToPath(sexpr) {
 }
 
 
-},{"../exception":30,"../utils":43,"./ast":18}],22:[function(require,module,exports){
+},{"../exception":29,"../utils":42,"./ast":17}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -14487,7 +13952,7 @@ function preparePartialBlock(open, program, close, locInfo) {
 }
 
 
-},{"../exception":30}],23:[function(require,module,exports){
+},{"../exception":29}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -15615,7 +15080,7 @@ exports['default'] = JavaScriptCompiler;
 module.exports = exports['default'];
 
 
-},{"../base":17,"../exception":30,"../utils":43,"./code-gen":20}],24:[function(require,module,exports){
+},{"../base":16,"../exception":29,"../utils":42,"./code-gen":19}],23:[function(require,module,exports){
 /* istanbul ignore next */
 /* Jison generated parser */
 "use strict";
@@ -16355,7 +15820,7 @@ var handlebars = (function () {
 exports['default'] = handlebars;
 
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /* eslint-disable new-cap */
 'use strict';
 
@@ -16543,7 +16008,7 @@ PrintVisitor.prototype.HashPair = function (pair) {
 /* eslint-enable new-cap */
 
 
-},{"./visitor":26}],26:[function(require,module,exports){
+},{"./visitor":25}],25:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16685,7 +16150,7 @@ exports['default'] = Visitor;
 module.exports = exports['default'];
 
 
-},{"../exception":30}],27:[function(require,module,exports){
+},{"../exception":29}],26:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16908,7 +16373,7 @@ exports['default'] = WhitespaceControl;
 module.exports = exports['default'];
 
 
-},{"./visitor":26}],28:[function(require,module,exports){
+},{"./visitor":25}],27:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16926,7 +16391,7 @@ function registerDefaultDecorators(instance) {
 }
 
 
-},{"./decorators/inline":29}],29:[function(require,module,exports){
+},{"./decorators/inline":28}],28:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16957,7 +16422,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":43}],30:[function(require,module,exports){
+},{"../utils":42}],29:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16999,7 +16464,7 @@ exports['default'] = Exception;
 module.exports = exports['default'];
 
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17047,7 +16512,7 @@ function registerDefaultHelpers(instance) {
 }
 
 
-},{"./helpers/block-helper-missing":32,"./helpers/each":33,"./helpers/helper-missing":34,"./helpers/if":35,"./helpers/log":36,"./helpers/lookup":37,"./helpers/with":38}],32:[function(require,module,exports){
+},{"./helpers/block-helper-missing":31,"./helpers/each":32,"./helpers/helper-missing":33,"./helpers/if":34,"./helpers/log":35,"./helpers/lookup":36,"./helpers/with":37}],31:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17088,7 +16553,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":43}],33:[function(require,module,exports){
+},{"../utils":42}],32:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17184,7 +16649,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../exception":30,"../utils":43}],34:[function(require,module,exports){
+},{"../exception":29,"../utils":42}],33:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17211,7 +16676,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../exception":30}],35:[function(require,module,exports){
+},{"../exception":29}],34:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17242,7 +16707,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":43}],36:[function(require,module,exports){
+},{"../utils":42}],35:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17270,7 +16735,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17284,7 +16749,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17319,7 +16784,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":43}],39:[function(require,module,exports){
+},{"../utils":42}],38:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17368,7 +16833,7 @@ exports['default'] = logger;
 module.exports = exports['default'];
 
 
-},{"./utils":43}],40:[function(require,module,exports){
+},{"./utils":42}],39:[function(require,module,exports){
 (function (global){
 /* global window */
 'use strict';
@@ -17392,7 +16857,7 @@ module.exports = exports['default'];
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17686,7 +17151,7 @@ function executeDecorators(fn, prog, container, depths, data, blockParams) {
 }
 
 
-},{"./base":17,"./exception":30,"./utils":43}],42:[function(require,module,exports){
+},{"./base":16,"./exception":29,"./utils":42}],41:[function(require,module,exports){
 // Build out our basic SafeString type
 'use strict';
 
@@ -17703,7 +17168,7 @@ exports['default'] = SafeString;
 module.exports = exports['default'];
 
 
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17829,7 +17294,7 @@ function appendContextPath(contextPath, id) {
 }
 
 
-},{}],44:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 // USAGE:
 // var handlebars = require('handlebars');
 /* eslint-disable no-var */
@@ -17856,9 +17321,9 @@ if (typeof require !== 'undefined' && require.extensions) {
   require.extensions['.hbs'] = extension;
 }
 
-},{"../dist/cjs/handlebars":15,"../dist/cjs/handlebars/compiler/printer":25,"fs":12}],45:[function(require,module,exports){
+},{"../dist/cjs/handlebars":14,"../dist/cjs/handlebars/compiler/printer":24,"fs":11}],44:[function(require,module,exports){
 /*!
- * jQuery JavaScript Library v2.2.4
+ * jQuery JavaScript Library v2.2.3
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -17868,7 +17333,7 @@ if (typeof require !== 'undefined' && require.extensions) {
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2016-05-20T17:23Z
+ * Date: 2016-04-05T19:26Z
  */
 
 (function( global, factory ) {
@@ -17924,7 +17389,7 @@ var support = {};
 
 
 var
-	version = "2.2.4",
+	version = "2.2.3",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -22865,14 +22330,13 @@ jQuery.Event.prototype = {
 	isDefaultPrevented: returnFalse,
 	isPropagationStopped: returnFalse,
 	isImmediatePropagationStopped: returnFalse,
-	isSimulated: false,
 
 	preventDefault: function() {
 		var e = this.originalEvent;
 
 		this.isDefaultPrevented = returnTrue;
 
-		if ( e && !this.isSimulated ) {
+		if ( e ) {
 			e.preventDefault();
 		}
 	},
@@ -22881,7 +22345,7 @@ jQuery.Event.prototype = {
 
 		this.isPropagationStopped = returnTrue;
 
-		if ( e && !this.isSimulated ) {
+		if ( e ) {
 			e.stopPropagation();
 		}
 	},
@@ -22890,7 +22354,7 @@ jQuery.Event.prototype = {
 
 		this.isImmediatePropagationStopped = returnTrue;
 
-		if ( e && !this.isSimulated ) {
+		if ( e ) {
 			e.stopImmediatePropagation();
 		}
 
@@ -23820,6 +23284,19 @@ function getWidthOrHeight( elem, name, extra ) {
 		val = name === "width" ? elem.offsetWidth : elem.offsetHeight,
 		styles = getStyles( elem ),
 		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
+
+	// Support: IE11 only
+	// In IE 11 fullscreen elements inside of an iframe have
+	// 100x too small dimensions (gh-1764).
+	if ( document.msFullscreenElement && window.top !== window ) {
+
+		// Support: IE11 only
+		// Running getBoundingClientRect on a disconnected node
+		// in IE throws an error.
+		if ( elem.getClientRects().length ) {
+			val = Math.round( elem.getBoundingClientRect()[ name ] * 100 );
+		}
+	}
 
 	// Some non-html elements return undefined for offsetWidth, so check for null/undefined
 	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
@@ -25711,7 +25188,6 @@ jQuery.extend( jQuery.event, {
 	},
 
 	// Piggyback on a donor event to simulate a different one
-	// Used only for `focus(in | out)` events
 	simulate: function( type, elem, event ) {
 		var e = jQuery.extend(
 			new jQuery.Event(),
@@ -25719,10 +25195,27 @@ jQuery.extend( jQuery.event, {
 			{
 				type: type,
 				isSimulated: true
+
+				// Previously, `originalEvent: {}` was set here, so stopPropagation call
+				// would not be triggered on donor event, since in our own
+				// jQuery.event.stopPropagation function we had a check for existence of
+				// originalEvent.stopPropagation method, so, consequently it would be a noop.
+				//
+				// But now, this "simulate" function is used only for events
+				// for which stopPropagation() is noop, so there is no need for that anymore.
+				//
+				// For the 1.x branch though, guard for "click" and "submit"
+				// events is still used, but was moved to jQuery.event.stopPropagation function
+				// because `originalEvent` should point to the original event for the constancy
+				// with other events and for more focused logic
 			}
 		);
 
 		jQuery.event.trigger( e, null, elem );
+
+		if ( e.isDefaultPrevented() ) {
+			event.preventDefault();
+		}
 	}
 
 } );
@@ -27672,7 +27165,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],46:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -27900,7 +27393,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":47}],47:[function(require,module,exports){
+},{"_process":46}],46:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -27910,9 +27403,6 @@ var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
@@ -27996,7 +27486,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],48:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 /*
  * Copyright 2009-2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE.txt or:
@@ -28006,7 +27496,7 @@ exports.SourceMapGenerator = require('./source-map/source-map-generator').Source
 exports.SourceMapConsumer = require('./source-map/source-map-consumer').SourceMapConsumer;
 exports.SourceNode = require('./source-map/source-node').SourceNode;
 
-},{"./source-map/source-map-consumer":55,"./source-map/source-map-generator":56,"./source-map/source-node":57}],49:[function(require,module,exports){
+},{"./source-map/source-map-consumer":54,"./source-map/source-map-generator":55,"./source-map/source-node":56}],48:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28115,7 +27605,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":58,"amdefine":10}],50:[function(require,module,exports){
+},{"./util":57,"amdefine":9}],49:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28263,7 +27753,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./base64":51,"amdefine":10}],51:[function(require,module,exports){
+},{"./base64":50,"amdefine":9}],50:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28338,7 +27828,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":10}],52:[function(require,module,exports){
+},{"amdefine":9}],51:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28457,7 +27947,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":10}],53:[function(require,module,exports){
+},{"amdefine":9}],52:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2014 Mozilla Foundation and contributors
@@ -28545,7 +28035,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":58,"amdefine":10}],54:[function(require,module,exports){
+},{"./util":57,"amdefine":9}],53:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28667,7 +28157,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":10}],55:[function(require,module,exports){
+},{"amdefine":9}],54:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -29746,7 +29236,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":49,"./base64-vlq":50,"./binary-search":52,"./quick-sort":54,"./util":58,"amdefine":10}],56:[function(require,module,exports){
+},{"./array-set":48,"./base64-vlq":49,"./binary-search":51,"./quick-sort":53,"./util":57,"amdefine":9}],55:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -30147,7 +29637,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":49,"./base64-vlq":50,"./mapping-list":53,"./util":58,"amdefine":10}],57:[function(require,module,exports){
+},{"./array-set":48,"./base64-vlq":49,"./mapping-list":52,"./util":57,"amdefine":9}],56:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -30563,7 +30053,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./source-map-generator":56,"./util":58,"amdefine":10}],58:[function(require,module,exports){
+},{"./source-map-generator":55,"./util":57,"amdefine":9}],57:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -30935,7 +30425,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":10}],59:[function(require,module,exports){
+},{"amdefine":9}],58:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -32485,4 +31975,4 @@ define(function (require, exports, module) {
   }
 }.call(this));
 
-},{}]},{},[9]);
+},{}]},{},[8]);
