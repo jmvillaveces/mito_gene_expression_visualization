@@ -1,6 +1,5 @@
 // Required scripts
 var _ = require('underscore');
-var areaCalc = require('./circle.geo.js');
 
 var log2Limit = 1.5,
     pvalLimit = 0.05;
@@ -51,17 +50,6 @@ function dataFormatter(nodes, links){
     // Sort by number of regulated genes
     data.processes.sort(function(a,b){
         return b.regulated - a.regulated;
-    });
-    
-    // Calculate radius for all nodes
-    var all_nodes = _.flatten( [data.processes, data.nodes] );
-    var maxAbsLog2 = d3.max( all_nodes, function(d) {
-        return Math.abs(d.Log2FoldChange);
-    });
-    
-    var radiusScale = areaCalc.areaScale([1, maxAbsLog2 + 1 ], [2, 40]);
-    _.each(all_nodes, function(d){
-        d.r = radiusScale(Math.abs(d.Log2FoldChange) + 1);
     });
     
     data.nodes.sort(function(a, b){ 
