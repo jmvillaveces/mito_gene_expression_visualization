@@ -1,45 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-function circle(){}
-
-// Calculate circle radius given an area
-circle.getRadius = function(area){
-    return Math.sqrt( area / Math.PI);
-};
-
-// Calculate circle area given a radius
-circle.getArea = function(radius){
-    return radius * radius * Math.PI;
-};
-
-circle.areaScale = function(domain, range){
-
-    var areaRange = _.map(range, circle.getArea),
-        scale = d3.scale.log().domain(domain).range(areaRange);
-    
-    return function(val){
-        return circle.getRadius(scale(val));
-    };
-};
-
-module.exports = circle;
-},{}],2:[function(require,module,exports){
 // Required scripts
 var _ = require('underscore');
+var regulation = require('./geneRegulation')();
 
-var log2Limit = 1.5,
-    pvalLimit = 0.05;
-
-function isUpRegulated(g){
-    return g.Log2FoldChange > log2Limit || (g.Log2FoldChange > 0 && g['p-value'] < 0.05);
-}
-
-function isDownRegulated(g){
-    return g.Log2FoldChange < - log2Limit || (g.Log2FoldChange < 0 && g['p-value'] < 0.05);
-}
-
-function isNotRegulated(g){
-     return !isUpRegulated(g) && !isDownRegulated(g);
-}
 
 function dataFormatter(nodes, links){
     
@@ -56,9 +19,11 @@ function dataFormatter(nodes, links){
         var process = {};
         
         process.id = _.uniqueId('process_');
-        process.up = _.filter(genes, isUpRegulated);
-        process.down = _.filter(genes, isDownRegulated);
-        process.none = _.filter(genes, isNotRegulated);
+        
+        process.up = _.chain(genes).filter(regulation.isUpRegulated).map( function(d){ return _.extend(d, {'regulated': 'up'}); } ).value();
+        process.down = _.chain(genes).filter(regulation.isDownRegulated).map( function(d){ return _.extend(d, {'regulated': 'down'}); } ).value();
+        process.none = _.chain(genes).filter(regulation.isNotRegulated).map( function(d){ return _.extend(d, {'regulated': 'none'}); } ).value();
+        
         process.Process = key;
         process.genes = genes;
         process.Log2FoldChange = _.reduce(genes, function(memo, n){ return memo + Math.abs(n.Log2FoldChange); }, 0);
@@ -166,7 +131,48 @@ function dataFormatter(nodes, links){
 module.exports = dataFormatter;
 
 
-},{"underscore":58}],3:[function(require,module,exports){
+},{"./geneRegulation":2,"underscore":58}],2:[function(require,module,exports){
+function geneRegulation(log2Limit, pvalLimit){
+
+    log2Limit = (log2Limit !== undefined) ? log2Limit :  1.5;
+    pvalLimit = (pvalLimit !== undefined) ? pvalLimit :  0.05;
+
+    function isUpRegulated(g){
+        return g.Log2FoldChange > log2Limit || (g.Log2FoldChange > 0 && g['p-value'] < 0.05);
+    }
+
+    function isDownRegulated(g){
+        return g.Log2FoldChange < - log2Limit || (g.Log2FoldChange < 0 && g['p-value'] < 0.05);
+    }
+
+    function isNotRegulated(g){
+         return !isUpRegulated(g) && !isDownRegulated(g);
+    }
+    
+    function isRegulated(g){
+         return isUpRegulated(g) || isDownRegulated(g);
+    }
+    
+    function getRegulation(g){
+        
+        if(isUpRegulated(g)) return 'up';
+        
+        if(isUpRegulated(g)) return 'down';
+        
+        return 'none';
+    }
+    
+    return {
+        isUpRegulated : isUpRegulated,
+        isDownRegulated : isDownRegulated,
+        isNotRegulated : isNotRegulated,
+        isRegulated : isRegulated,
+        getRegulation : getRegulation,
+    };
+}
+
+module.exports = geneRegulation;
+},{}],3:[function(require,module,exports){
 var d3 = require('d3');
 
 //Public members
@@ -221,27 +227,27 @@ this["Templates"] = this["Templates"] || {};
 this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper;
 
-  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\r\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\r\n    <div>"
+  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\n    <div>"
     + container.escapeExpression(((helper = (helper = helpers.Process || (depth0 != null ? depth0.Process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"Process","hash":{},"data":data}) : helper)))
-    + "</div>\r\n</div>";
+    + "</div>\n</div>";
 },"useData":true});
 
 this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\r\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\r\n    </label>\r\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\r\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\r\n    </label>\r\n</div>\r\n<ul class=\"nav nav-pills pull-right\">\r\n    <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\r\n</ul>\r\n\r\n";
+    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\n</ul>\n\n";
 },"useData":true});
 
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<!-- Page Content -->\r\n<div class=\"container\">\r\n\r\n    <div id=\"navbar\" class=\"nav_bar\"></div>\r\n        \r\n    <div class=\"legend\">\r\n        <div class=\"row\">\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\r\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\r\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\r\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n        \r\n    <div class=\"row\">\r\n        <div class=\"col-md-12\">\r\n            <div id=\"vis\" class=\"vis\"></div>\r\n        </div>        \r\n    </div>\r\n    \r\n</div>";
+    return "<!-- Page Content -->\n<div class=\"container\">\n\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n        \n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\n            </div>\n        </div>\n    </div>\n        \n    <div class=\"row\">\n        <div class=\"col-md-12\">\n            <div id=\"vis\" class=\"vis\"></div>\n        </div>        \n    </div>\n    \n</div>";
 },"useData":true});
 
 this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
-  return "        <div class=\"tip-process\">\r\n            <strong>Variant Sites:</strong> "
+  return "        <div class=\"tip-process\">\n            <strong>Variant Sites:</strong> "
     + container.escapeExpression(((helper = (helper = helpers.Variant_sites || (depth0 != null ? depth0.Variant_sites : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"Variant_sites","hash":{},"data":data}) : helper)))
-    + "\r\n            <br>\r\n            "
+    + "\n            <br>\n            "
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Chromosome_number : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\r\n        </div>\r\n";
+    + "\n        </div>\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var helper;
 
@@ -250,19 +256,19 @@ this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div>\r\n    <div class=\"tip-name\"><strong>"
+  return "<div>\n    <div class=\"tip-name\"><strong>"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong></div>\r\n    <div class=\"tip-rule\"></div>\r\n    <div class=\"tip-process\">"
+    + "</strong></div>\n    <div class=\"tip-rule\"></div>\n    <div class=\"tip-process\">"
     + alias4(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\r\n    <div class=\"tip-function\">"
+    + "</div>\n    <div class=\"tip-function\">"
     + alias4(((helper = (helper = helpers.gene_function || (depth0 != null ? depth0.gene_function : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gene_function","hash":{},"data":data}) : helper)))
-    + "</div>\r\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
+    + "</div>\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
     + alias4(((helper = (helper = helpers.p_value || (depth0 != null ? depth0.p_value : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"p_value","hash":{},"data":data}) : helper)))
-    + "</strong></div>\r\n    <div><strong>Log2 fold change:</strong> \r\n        <span class=\"tip-"
+    + "</strong></div>\n    <div><strong>Log2 fold change:</strong> \n        <span class=\"tip-"
     + alias4(((helper = (helper = helpers.regulated || (depth0 != null ? depth0.regulated : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"regulated","hash":{},"data":data}) : helper)))
     + "\"><strong>"
     + alias4(((helper = (helper = helpers.Log2fold_change || (depth0 != null ? depth0.Log2fold_change : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Log2fold_change","hash":{},"data":data}) : helper)))
-    + "</strong></span>\r\n    </div>\r\n\r\n"
+    + "</strong></span>\n    </div>\n\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Variant_sites : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</div>";
 },"useData":true});
@@ -325,7 +331,8 @@ module.exports = Backbone.View.extend({
 },{"../templates":4}],7:[function(require,module,exports){
 // Required scripts
 var dataFormatter = require('../dataFormatter.js');
-var areaCalc = require('../circle.geo.js');
+var regulation = require('../geneRegulation')();
+
 
 // Variables
 var selector,
@@ -345,20 +352,8 @@ var selector,
     highlightColor = '#FFFBCC',
     mutationColor = '#2c3e50',
     templates = require('../templates.js'),
+    prPadding = 1.7,
     annTemplate = templates.annotation; // Annotations template
-
-// Calculate radius for all genes
-function setRadius(){
-    
-    var absLog2 = d3.extent( data.nodes, function(d) {
-            return Math.abs(d.Log2FoldChange);
-        }),
-        radiusScale = areaCalc.areaScale(absLog2, [0.5, maxRadius]);
-    
-    _.each(data.nodes, function(d){
-        d.radius = radiusScale(Math.abs(d.Log2FoldChange));
-    });
-}
 
 function initVis(){
     
@@ -368,6 +363,7 @@ function initVis(){
         .attr('width', width)
         .attr('id', 'svg_vis');
     
+    
     var root = { id:'root', genes:data.processes };
     
     var diameter = d3.min([width, height]) * 0.8,
@@ -376,29 +372,41 @@ function initVis(){
     var pack = d3.layout.pack()
         .size([diameter - 4, diameter - 4])
         .children(function(d){ return d.genes;})
-        .value(function(d) { return Math.abs(d.Log2FoldChange); });
+        .value(function(d) { return Math.abs(d.Log2FoldChange); })
+        .sort(function(a,b){
+            
+            if(a.genes && b.genes){
+                return  b.regulated - a.regulated;
+            }
+            
+            return a.value - b.value;
+        })
+        .nodes(root);
     
-    var nodes = svg.datum(root).selectAll('process')
-                .data(pack.nodes)
-                    .enter().append('g')
-                .attr('class', function(d) { return (d.id === 'root') ? 'root' : d.genes ? 'process' : 'gene'; })
-                .attr('transform', function(d) { return 'translate(' + d.x * 1.3 + ',' + d.y  * 1.3 + ')'; })
-                .attr('id', function(d) { return  d.id; });
-
+    console.log();
     
-    // Append process
-    nodes
-        .filter(function(d) { return d.genes && d.id !== 'root';})
-        .each(handleProcess);
+    var pxMin = _.min(data.processes, function(d){return d.x;}),
+        pyMin = _.min(data.processes, function(d){return d.y;}),
+        xMin = - (pxMin.x * prPadding) + pxMin.r,
+        yMin = - (pyMin.y * prPadding) + pyMin.r,
     
-    nodes
-        .filter(function(d) { return !d.genes;})
-        .each(handleGenes);
+        g = svg.append('g')
+            .attr('transform', 'translate(' + xMin + ',' + yMin + ')'),
+        processes = g.datum(root)
+            .selectAll('g')
+            .data(data.processes).enter()
+            .append('g')
+            .attr('id', function(d) { return  d.id; })
+            .each(handleProcess);
+    
+    
     
     function handleProcess(d){
         
-        var g = d3.select(this),
-            innerR = d.r * 0.7,
+        var g = d3.select(this)
+                .append('g')
+                .attr('transform', function(d) { return 'translate(' + d.x * prPadding + ',' + d.y  * prPadding  + ')'; }),
+            innerR = d.r * 0.8,
             arr = [ 
                 { stroke: stroke('up'), color: fill('up'), Log2FoldChange: d.up.length}, 
                 { stroke: stroke('none'), color: fill('none'), Log2FoldChange: d.none.length }, 
@@ -431,7 +439,7 @@ function initVis(){
             .style('pointer-events', 'none'); // only the backgound circle listens to events
         
         // Create text path
-        var txtArc = d3.svg.arc()
+        /*var txtArc = d3.svg.arc()
             .innerRadius(d.r)
             .outerRadius(d.r + 11)
             .startAngle(0)
@@ -447,24 +455,28 @@ function initVis(){
             .append('textPath')
                 .attr('xlink:href', function(d){ return '#txtPath' + d.id; })
 	           .attr('startOffset', '50%')	
-                .text(function(d) { return d.Process; });
+                .text(function(d) { return d.Process; });*/
+        
+        
+        handleGenes.call(this, d.genes);
+        
     }
     
     function handleGenes(d){
         
-        //console.log(d);
-        
-        var g = d3.select(this);
+        var g = d3.select(this)
+            .append('g')
+            .attr('transform', function(d) { return 'translate(' + d.x * prPadding + ',' + d.y  * prPadding + ')'; });
         
         g.selectAll('circle').data(d)
             .enter().append('circle')
                 .attr('id', function(d) { return  d.id; })
                 .attr('r', function(d){ return d.r; })
-                .attr('fill', function(d){ return fill('up'); })
-                .attr('cx', function(d){ return d.x; })
-                .attr('cy', function(d){ return d.y; })
+                .attr('fill', function(d){ return fill(d.regulated); })
+                .attr('cx', function(d){ return d.parent.x - d.x; })
+                .attr('cy', function(d){ return d.parent.y - d.y; })
                 .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
-                .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke('up');})
+                .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke(d.regulated);})
                 .attr('class', function(d){ return d.parent.id; });
     }
     
@@ -481,136 +493,30 @@ function initVis(){
         return 'M ' + x1 + ',' + y1 + ' A ' + d.r + ',' + d.r +' 0 0, 1, ' + x2 + ',' + y2;
     }
     
-      /*node.append("title")
-          .text(function(d) { return d.name + (d.genes ? "" : ": " + format(d.Log2FoldChange)); });
-
-      node.append("circle")
-          .attr("r", function(d) { return d.r; });
-
-      node.filter(function(d) { return !d.genes; }).append("text")
-          .attr("dy", ".3em")
-          .style("text-anchor", "middle")
-          .text(function(d) { return d.name.substring(0, d.r / 3); });*/
-
-    
-    /*var pie = d3.layout.pie()
-        .sort(null)
-        .value(function(d) { return d.Log2FoldChange; });
-    
-    var arc = d3.svg.arc();
-    
-    // Process Group
-    var g = svg.append('g');
-    
-    processes = g.selectAll('g').data(data.processes, function(d){ return d.id; });
-    
-    
-    // Find element size and positions
-    var nodePack = d3.layout.pack()
-        .size([width, height])
-        .sort(function(a, b) {
-            return -(a.regulated/a.genes.length - b.regulated/b.genes.length);
-        })
-        //.children(function(d) { return d.genes;})
-        .value(function(d){return Math.abs(d.Log2FoldChange);})
-        .padding(padding)
-        .nodes({ children: data.processes }, padding);
-    
-    processes.enter().append('g')
-        .attr('id', function(d) { return  d.id; })
-        .attr('class', 'process')
-        .attr('opacity', 1)
-        .attr('transform', function(d){ return 'translate(' + d.x + ',' + d.y + ')'; });*/
-    
-    
-    //processes.each(addElements);
-    
     // Create process Annotations
-    /*var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([10,16]);
+    var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([8,14]);
     
     var div = d3.select(selector)
         .append('div')
-        .attr('class', 'node-label-container');*/
+        .attr('class', 'node-label-container');
     
-    /*processAnnotations = div.selectAll('div').data(data.processes);
+    processAnnotations = div.selectAll('div').data(data.processes);
     
     processAnnotations.enter().append('div')
         .html(annTemplate)
         .attr('style', function(d){
-            return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.x + 'px; top:' + (d.y + d.r) + 'px'; 
+            return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.x * prPadding + 'px; top:' + ((d.y * prPadding) + d.r) + 'px'; 
         })
         .on('mouseover', function(d){
             //if(_clickEvent.holdClick) return;
-            d3.select(this).select('span').transition(2000).style('opacity', 1);
+            //d3.select(this).select('span').transition(2000).style('opacity', 1);
         })
         .on('mouseout', function(d){ 
-            d3.select(this).select('span').transition(2000).style('opacity', 0);
+            //d3.select(this).select('span').transition(2000).style('opacity', 0);
         })
         .on('click', function(d){
         
-        });*/
-    
-    function addElements(p){
-        
-        var g = d3.select(this),
-            r = p.r * 0.7,
-            arr = [ 
-                { stroke: stroke('up'), color: fill('up'), Log2FoldChange: p.up.length}, 
-                { stroke: stroke('none'), color: fill('none'), Log2FoldChange: p.none.length }, 
-                { stroke: stroke('down'), color: fill('down'), Log2FoldChange: p.down.length }
-            ];
-        
-        arc.innerRadius(r)
-            .outerRadius(p.r);
-        
-        // Add background circle circle to hide links and listen for events
-        g.selectAll('circle').data([p])
-            .enter().append('circle')
-            .attr('fill', '#ffffff')
-            .attr('id', function(d) { return 'circle_' + d.id; })
-            .attr('r', p.r)
-            .attr('stroke-width', 2)
-            .attr('stroke', function(d){ 
-                var p = _.pluck(d.genes, 'Variant_sites');
-                return (p.join('').length > 0) ? mutationColor : null;
-            });
-        
-        // Create ring
-        g.selectAll('path').data(pie(arr))
-            .enter().append('path')
-            .attr('fill', function(d) { return d.data.color; })
-            .attr('d', arc)
-            .style('pointer-events', 'none'); // only the backgound circle listens to events
-        
-        //Init genes
-        packGenes(p);
-        
-        var geneGroup = g.append('g');
-        var genes = g.selectAll('circle').data(p.genes, function(d){ return d.id; });
-    
-        genes.enter().append('circle')
-            .attr('id', function(d) { return  d.id; })
-            .attr('r', function(d){ return d.r; })
-            .attr('fill', function(d){ return fill('up'); })
-            .attr('cx', function(d){ return d.x; })
-            .attr('cy', function(d){ return d.y; })
-            .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
-            .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke('up');})
-            .attr('class', function(d){ return d.parent.id; });
-    }
-    
-    function packGenes(p){
-        // Node Pack Layout positions
-        var nodePack = d3.layout.pack()
-            .sort(function(a, b) {
-                return -(a.Log2FoldChange - b.Log2FoldChange);
-            })
-            //.radius(function(d){ return d.r;})
-            .children(function(d) { return d.genes;})
-            .value(function(d){return Math.abs(d.Log2FoldChange);})
-            .padding(1)
-            .nodes(p);
-    }
+        });
 }
 
 
@@ -648,7 +554,7 @@ Vis.init = function(nodes, links){
 };
 
 module.exports = Vis;
-},{"../circle.geo.js":1,"../dataFormatter.js":2,"../templates.js":4}],8:[function(require,module,exports){
+},{"../dataFormatter.js":1,"../geneRegulation":2,"../templates.js":4}],8:[function(require,module,exports){
 jQuery = $ = require('jquery');
 Backbone = require('backbone');
 Backbone.$ = jQuery;
@@ -965,7 +871,7 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,require('_process'),"/node_modules\\amdefine\\amdefine.js")
+}).call(this,require('_process'),"/node_modules/amdefine/amdefine.js")
 },{"_process":46,"path":45}],10:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.3
@@ -3201,7 +3107,7 @@ module.exports = amdefine;
 },{}],13:[function(require,module,exports){
 !function() {
   var d3 = {
-    version: "3.5.16"
+    version: "3.5.17"
   };
   var d3_arraySlice = [].slice, d3_array = function(list) {
     return d3_arraySlice.call(list);
@@ -6726,7 +6632,7 @@ module.exports = amdefine;
         λ0 = λ, sinφ0 = sinφ, cosφ0 = cosφ, point0 = point;
       }
     }
-    return (polarAngle < -ε || polarAngle < ε && d3_geo_areaRingSum < 0) ^ winding & 1;
+    return (polarAngle < -ε || polarAngle < ε && d3_geo_areaRingSum < -ε) ^ winding & 1;
   }
   function d3_geo_clipCircle(radius) {
     var cr = Math.cos(radius), smallRadius = cr > 0, notHemisphere = abs(cr) > ε, interpolate = d3_geo_circleInterpolate(radius, 6 * d3_radians);
@@ -17422,7 +17328,7 @@ if (typeof require !== 'undefined' && require.extensions) {
 
 },{"../dist/cjs/handlebars":14,"../dist/cjs/handlebars/compiler/printer":24,"fs":11}],44:[function(require,module,exports){
 /*!
- * jQuery JavaScript Library v2.2.3
+ * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -17432,7 +17338,7 @@ if (typeof require !== 'undefined' && require.extensions) {
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2016-04-05T19:26Z
+ * Date: 2016-05-20T17:23Z
  */
 
 (function( global, factory ) {
@@ -17488,7 +17394,7 @@ var support = {};
 
 
 var
-	version = "2.2.3",
+	version = "2.2.4",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -22429,13 +22335,14 @@ jQuery.Event.prototype = {
 	isDefaultPrevented: returnFalse,
 	isPropagationStopped: returnFalse,
 	isImmediatePropagationStopped: returnFalse,
+	isSimulated: false,
 
 	preventDefault: function() {
 		var e = this.originalEvent;
 
 		this.isDefaultPrevented = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.preventDefault();
 		}
 	},
@@ -22444,7 +22351,7 @@ jQuery.Event.prototype = {
 
 		this.isPropagationStopped = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.stopPropagation();
 		}
 	},
@@ -22453,7 +22360,7 @@ jQuery.Event.prototype = {
 
 		this.isImmediatePropagationStopped = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.stopImmediatePropagation();
 		}
 
@@ -23383,19 +23290,6 @@ function getWidthOrHeight( elem, name, extra ) {
 		val = name === "width" ? elem.offsetWidth : elem.offsetHeight,
 		styles = getStyles( elem ),
 		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
-
-	// Support: IE11 only
-	// In IE 11 fullscreen elements inside of an iframe have
-	// 100x too small dimensions (gh-1764).
-	if ( document.msFullscreenElement && window.top !== window ) {
-
-		// Support: IE11 only
-		// Running getBoundingClientRect on a disconnected node
-		// in IE throws an error.
-		if ( elem.getClientRects().length ) {
-			val = Math.round( elem.getBoundingClientRect()[ name ] * 100 );
-		}
-	}
 
 	// Some non-html elements return undefined for offsetWidth, so check for null/undefined
 	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
@@ -25287,6 +25181,7 @@ jQuery.extend( jQuery.event, {
 	},
 
 	// Piggyback on a donor event to simulate a different one
+	// Used only for `focus(in | out)` events
 	simulate: function( type, elem, event ) {
 		var e = jQuery.extend(
 			new jQuery.Event(),
@@ -25294,27 +25189,10 @@ jQuery.extend( jQuery.event, {
 			{
 				type: type,
 				isSimulated: true
-
-				// Previously, `originalEvent: {}` was set here, so stopPropagation call
-				// would not be triggered on donor event, since in our own
-				// jQuery.event.stopPropagation function we had a check for existence of
-				// originalEvent.stopPropagation method, so, consequently it would be a noop.
-				//
-				// But now, this "simulate" function is used only for events
-				// for which stopPropagation() is noop, so there is no need for that anymore.
-				//
-				// For the 1.x branch though, guard for "click" and "submit"
-				// events is still used, but was moved to jQuery.event.stopPropagation function
-				// because `originalEvent` should point to the original event for the constancy
-				// with other events and for more focused logic
 			}
 		);
 
 		jQuery.event.trigger( e, null, elem );
-
-		if ( e.isDefaultPrevented() ) {
-			event.preventDefault();
-		}
 	}
 
 } );
@@ -27502,6 +27380,9 @@ var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
