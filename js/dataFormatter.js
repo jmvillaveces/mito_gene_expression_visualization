@@ -1,20 +1,7 @@
 // Required scripts
 var _ = require('underscore');
+var regulation = require('./geneRegulation')();
 
-var log2Limit = 1.5,
-    pvalLimit = 0.05;
-
-function isUpRegulated(g){
-    return g.Log2FoldChange > log2Limit || (g.Log2FoldChange > 0 && g['p-value'] < 0.05);
-}
-
-function isDownRegulated(g){
-    return g.Log2FoldChange < - log2Limit || (g.Log2FoldChange < 0 && g['p-value'] < 0.05);
-}
-
-function isNotRegulated(g){
-     return !isUpRegulated(g) && !isDownRegulated(g);
-}
 
 function dataFormatter(nodes, links){
     
@@ -31,9 +18,11 @@ function dataFormatter(nodes, links){
         var process = {};
         
         process.id = _.uniqueId('process_');
-        process.up = _.filter(genes, isUpRegulated);
-        process.down = _.filter(genes, isDownRegulated);
-        process.none = _.filter(genes, isNotRegulated);
+        
+        process.up = _.chain(genes).filter(regulation.isUpRegulated).map( function(d){ return _.extend(d, {'regulated': 'up'}); } ).value();
+        process.down = _.chain(genes).filter(regulation.isDownRegulated).map( function(d){ return _.extend(d, {'regulated': 'down'}); } ).value();
+        process.none = _.chain(genes).filter(regulation.isNotRegulated).map( function(d){ return _.extend(d, {'regulated': 'none'}); } ).value();
+        
         process.Process = key;
         process.genes = genes;
         process.Log2FoldChange = _.reduce(genes, function(memo, n){ return memo + Math.abs(n.Log2FoldChange); }, 0);

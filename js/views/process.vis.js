@@ -1,6 +1,7 @@
 // Required scripts
 var dataFormatter = require('../dataFormatter.js');
-var areaCalc = require('../circle.geo.js');
+var regulation = require('../geneRegulation')();
+
 
 // Variables
 var selector,
@@ -20,20 +21,8 @@ var selector,
     highlightColor = '#FFFBCC',
     mutationColor = '#2c3e50',
     templates = require('../templates.js'),
+    prPadding = 1.7,
     annTemplate = templates.annotation; // Annotations template
-
-// Calculate radius for all genes
-function setRadius(){
-    
-    var absLog2 = d3.extent( data.nodes, function(d) {
-            return Math.abs(d.Log2FoldChange);
-        }),
-        radiusScale = areaCalc.areaScale(absLog2, [0.5, maxRadius]);
-    
-    _.each(data.nodes, function(d){
-        d.radius = radiusScale(Math.abs(d.Log2FoldChange));
-    });
-}
 
 function initVis(){
     
@@ -43,6 +32,7 @@ function initVis(){
         .attr('width', width)
         .attr('id', 'svg_vis');
     
+    
     var root = { id:'root', genes:data.processes };
     
     var diameter = d3.min([width, height]) * 0.8,
@@ -51,29 +41,40 @@ function initVis(){
     var pack = d3.layout.pack()
         .size([diameter - 4, diameter - 4])
         .children(function(d){ return d.genes;})
-        .value(function(d) { return Math.abs(d.Log2FoldChange); });
+        .value(function(d) { return Math.abs(d.Log2FoldChange); })
+        .sort(function(a,b){
+            
+            if(a.genes && b.genes){
+                return  b.regulated - a.regulated;
+            }
+            
+            return a.value - b.value;
+        })
+        .nodes(root);
     
-    var nodes = svg.datum(root).selectAll('process')
-                .data(pack.nodes)
-                    .enter().append('g')
-                .attr('class', function(d) { return (d.id === 'root') ? 'root' : d.genes ? 'process' : 'gene'; })
-                .attr('transform', function(d) { return 'translate(' + d.x * 1.3 + ',' + d.y  * 1.3 + ')'; })
-                .attr('id', function(d) { return  d.id; });
-
+    // Use all space available while keeping padding between elements
+    var pxMin = _.min(data.processes, function(d){return d.x;}),
+        pyMin = _.min(data.processes, function(d){return d.y;}),
+        xMin = - (pxMin.x * prPadding) + pxMin.r,
+        yMin = - (pyMin.y * prPadding) + pyMin.r,
     
-    // Append process
-    nodes
-        .filter(function(d) { return d.genes && d.id !== 'root';})
-        .each(handleProcess);
+        g = svg.append('g')
+            .attr('transform', 'translate(' + xMin + ',' + yMin + ')'),
+        processes = g.datum(root)
+            .selectAll('g')
+            .data(data.processes).enter()
+            .append('g')
+            .attr('id', function(d) { return  d.id; })
+            .each(handleProcess);
     
-    nodes
-        .filter(function(d) { return !d.genes;})
-        .each(handleGenes);
+    
     
     function handleProcess(d){
         
-        var g = d3.select(this),
-            innerR = d.r * 0.7,
+        var g = d3.select(this)
+                .append('g')
+                .attr('transform', function(d) { return 'translate(' + d.x * prPadding + ',' + d.y  * prPadding  + ')'; }),
+            innerR = d.r * 0.8,
             arr = [ 
                 { stroke: stroke('up'), color: fill('up'), Log2FoldChange: d.up.length}, 
                 { stroke: stroke('none'), color: fill('none'), Log2FoldChange: d.none.length }, 
@@ -106,7 +107,7 @@ function initVis(){
             .style('pointer-events', 'none'); // only the backgound circle listens to events
         
         // Create text path
-        var txtArc = d3.svg.arc()
+        /*var txtArc = d3.svg.arc()
             .innerRadius(d.r)
             .outerRadius(d.r + 11)
             .startAngle(0)
@@ -122,24 +123,28 @@ function initVis(){
             .append('textPath')
                 .attr('xlink:href', function(d){ return '#txtPath' + d.id; })
 	           .attr('startOffset', '50%')	
-                .text(function(d) { return d.Process; });
+                .text(function(d) { return d.Process; });*/
+        
+        
+        handleGenes.call(this, d.genes);
+        
     }
     
     function handleGenes(d){
         
-        //console.log(d);
-        
-        var g = d3.select(this);
+        var g = d3.select(this)
+            .append('g')
+            .attr('transform', function(d) { return 'translate(' + d.x * prPadding + ',' + d.y  * prPadding + ')'; });
         
         g.selectAll('circle').data(d)
             .enter().append('circle')
                 .attr('id', function(d) { return  d.id; })
                 .attr('r', function(d){ return d.r; })
-                .attr('fill', function(d){ return fill('up'); })
-                .attr('cx', function(d){ return d.x; })
-                .attr('cy', function(d){ return d.y; })
+                .attr('fill', function(d){ return fill(d.regulated); })
+                .attr('cx', function(d){ return d.parent.x - d.x; })
+                .attr('cy', function(d){ return d.parent.y - d.y; })
                 .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
-                .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke('up');})
+                .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke(d.regulated);})
                 .attr('class', function(d){ return d.parent.id; });
     }
     
@@ -156,136 +161,30 @@ function initVis(){
         return 'M ' + x1 + ',' + y1 + ' A ' + d.r + ',' + d.r +' 0 0, 1, ' + x2 + ',' + y2;
     }
     
-      /*node.append("title")
-          .text(function(d) { return d.name + (d.genes ? "" : ": " + format(d.Log2FoldChange)); });
-
-      node.append("circle")
-          .attr("r", function(d) { return d.r; });
-
-      node.filter(function(d) { return !d.genes; }).append("text")
-          .attr("dy", ".3em")
-          .style("text-anchor", "middle")
-          .text(function(d) { return d.name.substring(0, d.r / 3); });*/
-
-    
-    /*var pie = d3.layout.pie()
-        .sort(null)
-        .value(function(d) { return d.Log2FoldChange; });
-    
-    var arc = d3.svg.arc();
-    
-    // Process Group
-    var g = svg.append('g');
-    
-    processes = g.selectAll('g').data(data.processes, function(d){ return d.id; });
-    
-    
-    // Find element size and positions
-    var nodePack = d3.layout.pack()
-        .size([width, height])
-        .sort(function(a, b) {
-            return -(a.regulated/a.genes.length - b.regulated/b.genes.length);
-        })
-        //.children(function(d) { return d.genes;})
-        .value(function(d){return Math.abs(d.Log2FoldChange);})
-        .padding(padding)
-        .nodes({ children: data.processes }, padding);
-    
-    processes.enter().append('g')
-        .attr('id', function(d) { return  d.id; })
-        .attr('class', 'process')
-        .attr('opacity', 1)
-        .attr('transform', function(d){ return 'translate(' + d.x + ',' + d.y + ')'; });*/
-    
-    
-    //processes.each(addElements);
-    
     // Create process Annotations
-    /*var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([10,16]);
+    var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([8,14]);
     
     var div = d3.select(selector)
         .append('div')
-        .attr('class', 'node-label-container');*/
+        .attr('class', 'node-label-container');
     
-    /*processAnnotations = div.selectAll('div').data(data.processes);
+    processAnnotations = div.selectAll('div').data(data.processes);
     
     processAnnotations.enter().append('div')
         .html(annTemplate)
         .attr('style', function(d){
-            return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.x + 'px; top:' + (d.y + d.r) + 'px'; 
+            return 'position:absolute; font-size:' + ann_scale(d.r) + 'px; left:' + d.x * prPadding + 'px; top:' + ((d.y * prPadding) + d.r) + 'px'; 
         })
         .on('mouseover', function(d){
             //if(_clickEvent.holdClick) return;
-            d3.select(this).select('span').transition(2000).style('opacity', 1);
+            //d3.select(this).select('span').transition(2000).style('opacity', 1);
         })
         .on('mouseout', function(d){ 
-            d3.select(this).select('span').transition(2000).style('opacity', 0);
+            //d3.select(this).select('span').transition(2000).style('opacity', 0);
         })
         .on('click', function(d){
         
-        });*/
-    
-    function addElements(p){
-        
-        var g = d3.select(this),
-            r = p.r * 0.7,
-            arr = [ 
-                { stroke: stroke('up'), color: fill('up'), Log2FoldChange: p.up.length}, 
-                { stroke: stroke('none'), color: fill('none'), Log2FoldChange: p.none.length }, 
-                { stroke: stroke('down'), color: fill('down'), Log2FoldChange: p.down.length }
-            ];
-        
-        arc.innerRadius(r)
-            .outerRadius(p.r);
-        
-        // Add background circle circle to hide links and listen for events
-        g.selectAll('circle').data([p])
-            .enter().append('circle')
-            .attr('fill', '#ffffff')
-            .attr('id', function(d) { return 'circle_' + d.id; })
-            .attr('r', p.r)
-            .attr('stroke-width', 2)
-            .attr('stroke', function(d){ 
-                var p = _.pluck(d.genes, 'Variant_sites');
-                return (p.join('').length > 0) ? mutationColor : null;
-            });
-        
-        // Create ring
-        g.selectAll('path').data(pie(arr))
-            .enter().append('path')
-            .attr('fill', function(d) { return d.data.color; })
-            .attr('d', arc)
-            .style('pointer-events', 'none'); // only the backgound circle listens to events
-        
-        //Init genes
-        packGenes(p);
-        
-        var geneGroup = g.append('g');
-        var genes = g.selectAll('circle').data(p.genes, function(d){ return d.id; });
-    
-        genes.enter().append('circle')
-            .attr('id', function(d) { return  d.id; })
-            .attr('r', function(d){ return d.r; })
-            .attr('fill', function(d){ return fill('up'); })
-            .attr('cx', function(d){ return d.x; })
-            .attr('cy', function(d){ return d.y; })
-            .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
-            .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke('up');})
-            .attr('class', function(d){ return d.parent.id; });
-    }
-    
-    function packGenes(p){
-        // Node Pack Layout positions
-        var nodePack = d3.layout.pack()
-            .sort(function(a, b) {
-                return -(a.Log2FoldChange - b.Log2FoldChange);
-            })
-            //.radius(function(d){ return d.r;})
-            .children(function(d) { return d.genes;})
-            .value(function(d){return Math.abs(d.Log2FoldChange);})
-            .padding(1)
-            .nodes(p);
-    }
+        });
 }
 
 
