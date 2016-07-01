@@ -154,17 +154,17 @@ function initVis(){
         
         var g = d3.select(this)
             .append('g')
-            .attr('class', 'genes')
-            .attr('opacity', 0);
+            .attr('class', 'genes');
         
         g.selectAll('circle').data(d.genes)
             .enter().append('circle')
                 .attr('id', function(d) { return  d.id; })
                 .attr('r', function(d){ return d.r; })
-                .attr('opacity', 0)
                 .attr('fill', function(d){ return fill(d.regulated); })
                 .attr('cx', function(d){ return d.x; })
                 .attr('cy', function(d){ return d.y; })
+                .attr('opacity', 0)
+                .attr('display','none')
                 .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
                 .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke(d.regulated);})
                 .attr('class', function(d){ return d.parent.id; });
@@ -214,7 +214,7 @@ function initVis(){
             var span = d3.select(this).select('span'),
                 g = d3.select('#' + d.id),
                 process = g.select('.process'),
-                genes = g.select('.genes');
+                genes = g.selectAll('.' + d.id);
         
         
             if(span.classed('glyphicon-plus-sign')){
@@ -256,34 +256,21 @@ function initVis(){
 // Initialize paths to display node relationships
 function initLinks(){
     
-    // Join process and gene links
-    var dLinks = _.union(data.pLinks, data.links);
-    
-    // Create link dictionary to prevent iteration over all links
-    var lDic = {};
-    function getNode(n){
-        if(_.isUndefined(lDic[n.id])){
-            lDic[n.id] = [];
-        }
-        return lDic[n.id];
-    }
-    
-    _.each(dLinks, function(l){       
-        getNode(l.source).push(l);
-        getNode(l.target).push(l);
-    });
-    
-    // Calculate max number of links to be displayed
-    var maxLink = 0;
-    _.each(lDic, function(v, k){
-        maxLink = (maxLink > v.length) ? maxLink : v.length;
-    });
-    
-    var g = svg.append('g').attr('id', 'links');
+    var edges = _.chain(data.links)
+                .values()
+                .flatten()
+                .value(),
+        maxLinks = _.chain(data.links)
+                    .values()
+                    .sortBy('length')
+                    .last()
+                    .value()
+                    .length,
+        g = svg.append('g').attr('id', 'links');
     
     // Data structure to store all variables related to links
     links = {};
-    links.paths = g.selectAll('path').data(_.range(0, maxLink)) // Append paths
+    links.paths = g.selectAll('path').data(_.range(0, maxLinks)) // Append paths
         .enter()
         .append('path')
         .attr('class', 'link')
@@ -291,8 +278,7 @@ function initLinks(){
         .attr('fill', 'none')
         .attr('stroke', 'rgba(44, 62, 80, 0.4)');
     
-    links.scale = d3.scale.linear().domain(d3.extent(dLinks, function(l){ return l.links; })).range([2,10]);
-    links.data = lDic;    
+    links.scale = d3.scale.linear().domain(d3.extent(edges, function(l){ return l.links; })).range([2,10]);  
 }
 
 var onMouseOut = function(node){
@@ -310,9 +296,39 @@ var onMouseOverNode = function(node){
     
     if(clickEvent.holdClick) return;
     
-    var nodeLinks = links.data[node.id], neighbors = [];
-            
+    var nodeLinks = data.links[node.id], 
+        neighbors = _.chain(nodeLinks)
+                    .map(function(l){  
+                        if( node.id === l.source.id) return l.target;
+                        return l.source;    
+                    })
+                    .value();
+    
     links.paths.each(function(n, i){
+    
+         if(nodeLinks.length > i){
+            
+            var l = nodeLinks[i],
+                source = l.source,
+                target = l.target,
+                s_display = d3.select('#' + source.id).style('display'),
+                t_display = d3.select('#' + target.id).style('display');
+             
+             if(s_display !== 'none' && t_display !== 'none'){
+                
+                d3.select(this)
+                    .style('stroke-width', links.scale(l.links))
+                    .attr('opacity', 1)
+                    .attr('d', function (d) {
+                        var dx = target.x - source.x, dy = target.y - source.y, dr = Math.sqrt(dx * dx + dy * dy);
+                        return 'M' + source.x + ',' + source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.x + ',' + target.y;
+                });
+             }
+         }
+    });
+    
+            
+    /*links.paths.each(function(n, i){
         if(nodeLinks.length > i){
             var l = nodeLinks[i],
                 source = l.source,
@@ -341,9 +357,8 @@ var onMouseOverNode = function(node){
     }
     
     genes.filter(notNeighboors).attr('opacity', 0.2);
-    console.log(processes);
     processes.filter(notNeighboors).attr('opacity', 0.2);
-    processAnnotations.filter(notNeighboors).style('opacity', 0.2);
+    processAnnotations.filter(notNeighboors).style('opacity', 0.2);*/
 };
 
 

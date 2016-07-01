@@ -45,84 +45,92 @@ function dataFormatter(nodes, links){
         return (a.regulated < b.regulated) ? -1 : (a.regulated > b.regulated) ? 1 : 0; 
     });
     
-    //Calculate Links!
-    var nodeDic = {},
-        processLinksDic = {},
-        nodeProcessDic = {},
-        nlinks = [];
     
-    // Create node dictionary
+    /***************************
+     *
+     * Calculate Links!
+     *
+     ***************************/
+    var nodeDic = {},
+        processDic = {},
+        linkDic = {};
+    
+    // Create node dictionary 
+    // (many nodes can have same name)
     _.each(data.nodes, function(n){ 
         
         if(_.isUndefined(nodeDic[n.Name])){
             nodeDic[n.Name] = [];
         }
-        
         nodeDic[n.Name].push(n);
     });
     
-    function getLink(source, target){
-        var k = source.id + target.id;
-        
-        if(_.isUndefined(processLinksDic[k])){
-            processLinksDic[k] = { source: source , target: target, links: 0 };
-        }
-        
-        return processLinksDic[k];
-    }
+    // Create process dictionary
+    _.each(data.processes, function(n){
+        processDic[n.Process] = n;
+    });
     
-    function getPLink(n, p){
-        if(_.isUndefined(nodeProcessDic[n.id])){
-            nodeProcessDic[n.id] = { source: n, target: p, links: 0 };
-        }
-        return nodeProcessDic[n.id];
-    }
-    
-    
-    function processLink(source, target){
-        var p1 = source.parent,
-            p2 = target.parent,
-            b = p1.Process.localeCompare(p2.Process),
-            pLink;
+    _.each(links, function(l){
         
-        //Do not add links from same biological process
-        if(p1 === p2) return;
-        
-        if(b === -1){
-            pLink = getLink(p1, p2);
-            pLink.links ++;
-        }else if (b === 1){
-            pLink = getLink(p2, p1);
-            pLink.links ++;
-        }
-        
-        // Calculate process - node links
-        if(p1.id !== p2.id){
-            getPLink(source, p2).links ++; 
-            getPLink(target, p1).links ++;
-        }
-        
-        nlinks.push({ source: source , target: target});
-    }
-    
-    
-    function processLinks(l){
-        
-        var sources = nodeDic[l.source], // Several nodes with same name
-            targets = nodeDic[l.target]; // Some genes bellong to multiple processess
-        
+        // Arrays of nodes with same name 
+        // (genes with same name can belong to different processes)
+        var sources = nodeDic[l.source],
+            targets = nodeDic[l.target];
+            
+        //some nodes in links may not be present
+        if(_.isUndefined(sources) || _.isUndefined(targets)) return;
+         
         _.each(sources, function(s){
-            _.each(targets, function(t){
-                processLink(s, t);
-            }); 
-        });
         
+            _.each(targets, function(t){
+            
+                var p1 = processDic[s.Process],
+                    p2 = processDic[t.Process];
+        
+                // Only take into account interactions from different processes
+                if(p1.id === p2.id) return;
+                
+                addLink(s, t);
+                addLink(p1, p2);
+                addLink(s, p2);
+                addLink(p1, t);
+            });
+        });
+    });
+    
+    function addLink(){
+       
+        var arg = _.sortBy(arguments, 'id'),
+            s = arg[0],
+            t = arg[1];
+        
+        var id = s.id + t.id;
+        
+        if(_.isUndefined(linkDic[id])){
+            linkDic[id] = { source:s, target:t, links:1 };
+        }else{
+            linkDic[id].links += 1;   
+        }
     }
     
-    _.each(links, processLinks);
+    var nodeLinkDict = {};
+    _.each(linkDic, function(l, k){
+        
+        var s = l.source,
+            t = l.target;
+        
+        addElement(s.id, l);
+        addElement(t.id, l);
+    });
     
-    data.links = nlinks;
-    data.pLinks = _.values(nodeProcessDic);
+    function addElement(k, l){
+        if(_.isUndefined(nodeLinkDict[k])){
+            nodeLinkDict[k] = [];
+        }
+        nodeLinkDict[k].push(l);
+    }
+    
+    data.links = nodeLinkDict;
     
     return data;
 }
