@@ -244,7 +244,6 @@ function initVis(){
                 
                 span.classed('glyphicon-minus-sign', false).classed('glyphicon-plus-sign', true);
             }
-        
         });
     
     //select all genes
@@ -298,11 +297,14 @@ var onMouseOverNode = function(node){
     
     var nodeLinks = data.links[node.id], 
         neighbors = _.chain(nodeLinks)
-                    .map(function(l){  
-                        if( node.id === l.source.id) return l.target;
-                        return l.source;    
+                    .map(function(l){ 
+                        if( node.id === l.source.id) return l.target.id;
+                        return l.source.id;    
                     })
                     .value();
+    
+    // Add target to neighbors
+    neighbors.push(node.id);
     
     links.paths.each(function(n, i){
     
@@ -327,6 +329,14 @@ var onMouseOverNode = function(node){
          }
     });
     
+    console.log('neigh', neighbors);
+    function notNeighbors(n){
+        return ! _.contains(neighbors, n.id);
+    }
+    
+    genes.filter(notNeighbors).attr('opacity', 0.2);
+    processes.filter(notNeighbors).attr('opacity', 0.2);
+    processAnnotations.filter(notNeighbors).style('opacity', 0.2);
             
     /*links.paths.each(function(n, i){
         if(nodeLinks.length > i){
