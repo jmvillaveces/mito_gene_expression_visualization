@@ -15,7 +15,7 @@ var selector,
     data, // variable holding all vis data
     processes, // process rings 
     genes, // gene circles
-    processAnnotations, // div process annotations
+    annotations, // div process annotations
     links,
     fill = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#3498db', '#BECCAE', '#e74c3c']),
     stroke = d3.scale.ordinal().domain(['up', 'none', 'down']).range(['#2171b5', '#A7BB8F', '#C72D0A']),
@@ -23,8 +23,7 @@ var selector,
     mutationColor = '#2c3e50',
     templates = require('../templates.js'),
     prPadding = 1.7,
-    clickEvent = {target: null, holdClick: false},
-    annTemplate = templates.annotation; // Annotations template
+    clickEvent = {target: null, holdClick: false};
 
 function initVis(){
     
@@ -37,7 +36,8 @@ function initVis(){
         .attr('class', 'canvas svg-content-responsive')
         .attr('preserveAspectRatio', 'xMinYMin meet')
         .attr('viewBox', [0, 0, width, height].join(' '))
-        .attr('id', 'svg_vis');
+        .attr('id', 'svg_vis')
+        .on('click', onClick);
     
     // Init links!
     initLinks();
@@ -196,7 +196,7 @@ function initVis(){
     
     var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([8,12]);
     
-    var annotations = svg.selectAll('.node')
+    annotations = svg.selectAll('.node')
                         .data(data.processes);
     
     var txt = annotations.enter()
@@ -387,7 +387,7 @@ var onMouseOut = function(node){
     
     processes.attr('opacity', 1);
     d3.selectAll('.gene').attr('opacity', 1);
-    processAnnotations.style('opacity', 1);
+    annotations.style('opacity', 1);
 };
 
 var onMouseOverNode = function(node){
@@ -435,7 +435,28 @@ var onMouseOverNode = function(node){
     
     d3.selectAll('.gene').filter(notNeighbors).attr('opacity', 0.2);
     processes.filter(notNeighbors).attr('opacity', 0.2);
-    processAnnotations.filter(notNeighbors).style('opacity', 0.2);
+    annotations.filter(notNeighbors).style('opacity', 0.2);
+};
+
+var onClick = function(){
+    
+    console.log('click');
+    
+    var target = d3.event.target,
+        name = target.tagName.toLowerCase(),
+        id = target.id;
+    
+    
+        
+    if( (name === 'circle' && _.isNull(clickEvent.target)) || (name === 'circle' && id === clickEvent.target.id) ){
+        clickEvent.holdClick = true;
+        clickEvent.target = target;
+    }else{
+        clickEvent.target = null;
+        clickEvent.holdClick = false;
+        onMouseOut();
+    }
+    
 };
 
 
