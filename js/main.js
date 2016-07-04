@@ -8,7 +8,7 @@ App.init = function(options){
     
     //Views
     var Main = require('./views/main');
-    var ButtonGroup = require('./views/buttonGroup');
+    var NavBar = require('./views/navBar');
     
     App.views = {};
     App.views.vis = require('./views/process.vis.js');
@@ -16,8 +16,8 @@ App.init = function(options){
     App.views.main = new Main();
     App.views.main.setElement('body').render();
     
-    App.views.buttonGroup = new ButtonGroup();
-    App.views.buttonGroup.setElement('#navbar').render();
+    App.views.navBar = new NavBar();
+    App.views.navBar.setElement('#navbar').render();
     
     App.views.vis.selector('#vis');
     
@@ -32,10 +32,6 @@ App.init = function(options){
         });
         
     });
-    
-    
-    
-    
 };
 
 module.exports = App;

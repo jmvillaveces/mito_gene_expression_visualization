@@ -440,13 +440,9 @@ var onMouseOverNode = function(node){
 
 var onClick = function(){
     
-    console.log('click');
-    
     var target = d3.event.target,
         name = target.tagName.toLowerCase(),
         id = target.id;
-    
-    
         
     if( (name === 'circle' && _.isNull(clickEvent.target)) || (name === 'circle' && id === clickEvent.target.id) ){
         clickEvent.holdClick = true;
@@ -456,8 +452,29 @@ var onClick = function(){
         clickEvent.holdClick = false;
         onMouseOut();
     }
-    
 };
+
+// Search genes by name
+function search(str){
+    
+    d3.selectAll('.search').classed('search', false);
+    
+    if(str.length < 3) return;
+    
+    str = str.toLowerCase();
+    
+    var matchingGenes = d3.selectAll('.gene')
+                        .filter(function(d){ return d.Name.toLocaleLowerCase().match(str); })
+                        .classed('search', true);
+    
+    matchingGenes.each(function(d){
+    
+        if( d3.select(this).style('display') === 'none'){
+            // process is visible set class
+            d3.select('#' + d.parent.id).select('circle').classed('search', true);
+        } 
+    });   
+}
 
 
 //Public members
@@ -471,7 +488,7 @@ Vis.selector = function(_){
 };
 
 Vis.search = function(str){ 
-    //_search(str);
+    search(str);
     return Vis;
 };
 
