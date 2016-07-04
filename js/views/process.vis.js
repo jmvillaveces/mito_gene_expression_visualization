@@ -82,8 +82,6 @@ function initVis(){
         .data(data.processes).enter()
         .append('g')
         .attr('id', function(d) { return  d.id; })
-        .on('mouseout', onMouseOut)
-        .on('mouseover', onMouseOverNode)
         .each(handleProcess);
     
     
@@ -107,7 +105,7 @@ function initVis(){
                 .sort(null)
                 .value(function(d) { return d.Log2FoldChange; });
         
-        // Add background circle circle to hide links
+        // Add background circle circle to hide links and listen to events
         g.selectAll('circle').data([d])
             .enter().append('circle')
             .attr('fill', '#ffffff')
@@ -117,7 +115,9 @@ function initVis(){
             .attr('stroke', function(d){ 
                 var p = _.pluck(d.genes, 'Variant_sites');
                 return (p.join('').length > 0) ? mutationColor : null;
-            });
+            })
+            .on('mouseout', onMouseOut)
+            .on('mouseover', onMouseOverNode);
         
         // Create ring
         g.selectAll('path').data(pie(arr))
@@ -167,7 +167,9 @@ function initVis(){
                 .attr('display','none')
                 .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
                 .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke(d.regulated);})
-                .attr('class', function(d){ return d.parent.id; });
+                .attr('class', function(d){ return 'gene ' + d.parent.id; })
+                .on('mouseout', onMouseOut)
+                .on('mouseover', onMouseOverNode);
     }
     
     function getPath(d){
@@ -287,7 +289,7 @@ var onMouseOut = function(node){
     links.paths.attr('opacity', 0);
     
     processes.attr('opacity', 1);
-    genes.attr('opacity', 1);
+    d3.selectAll('.gene').attr('opacity', 1);
     processAnnotations.style('opacity', 1);
 };
 
@@ -302,6 +304,7 @@ var onMouseOverNode = function(node){
                         return l.source.id;    
                     })
                     .value();
+    
     
     // Add target to neighbors
     neighbors.push(node.id);
@@ -329,46 +332,13 @@ var onMouseOverNode = function(node){
          }
     });
     
-    console.log('neigh', neighbors);
     function notNeighbors(n){
         return ! _.contains(neighbors, n.id);
     }
     
-    genes.filter(notNeighbors).attr('opacity', 0.2);
+    d3.selectAll('.gene').filter(notNeighbors).attr('opacity', 0.2);
     processes.filter(notNeighbors).attr('opacity', 0.2);
     processAnnotations.filter(notNeighbors).style('opacity', 0.2);
-            
-    /*links.paths.each(function(n, i){
-        if(nodeLinks.length > i){
-            var l = nodeLinks[i],
-                source = l.source,
-                target = l.target,
-                s_display = d3.select('#' + source.id).style('display'),
-                t_display = d3.select('#' + target.id).style('display');
-            
-            if(s_display !== 'none' && t_display !== 'none'){
-                
-                d3.select(this)
-                    .style('stroke-width', links.scale(l.links))
-                    .attr('opacity', 1)
-                    .attr('d', function (d) {
-                        var dx = target.x - source.x, dy = target.y - source.y, dr = Math.sqrt(dx * dx + dy * dy);
-                        return 'M' + source.x + ',' + source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.x + ',' + target.y;
-                });
-
-                neighbors.push(source.id);
-                neighbors.push(target.id);
-            }
-        }
-    });
-                              
-    function notNeighboors(n){
-        return ! _.contains(neighbors, n.id);
-    }
-    
-    genes.filter(notNeighboors).attr('opacity', 0.2);
-    processes.filter(notNeighboors).attr('opacity', 0.2);
-    processAnnotations.filter(notNeighboors).style('opacity', 0.2);*/
 };
 
 
