@@ -186,9 +186,7 @@ var d3 = require('d3');
 //Public members
 var App = {};
 
-App.init = function(options){
-    
-     
+App.init = function(options){ 
     
     
     //Views
@@ -204,7 +202,7 @@ App.init = function(options){
     App.views.buttonGroup = new ButtonGroup();
     App.views.buttonGroup.setElement('#navbar').render();
     
-    App.views.vis.selector('#vis').width(1170);
+    App.views.vis.selector('#vis');
     
     
     d3.json('../data/mouse-21.3.json', function(error, nodes) {
@@ -345,7 +343,7 @@ var regulation = require('../geneRegulation')();
 // Variables
 var selector,
     svg, // SVG tag
-    width, // vis width
+    width = 900, // vis width
     height = 900, //vis height
     padding = 100,
     offset = 150,
@@ -367,10 +365,15 @@ var selector,
 
 function initVis(){
     
-    svg = d3.select(selector)
+    var resp = d3.select(selector)
+        .append('div')
+        .attr('class', 'svg-container'); //container class to make it responsive
+    
+    svg = resp
         .append('svg')
-        .attr('class', 'canvas')
-        .attr('width', width)
+        .attr('class', 'canvas svg-content-responsive')
+        .attr('preserveAspectRatio', 'xMinYMin meet')
+        .attr('viewBox', [0, 0, width, height].join(' '))
         .attr('id', 'svg_vis');
     
     // Init links!
@@ -378,7 +381,7 @@ function initVis(){
     
     var root = { id:'root', genes:data.processes };
     
-    var diameter = d3.min([width, height]) * 0.8,
+    var diameter = d3.min([width, height]) * 0.65,
         format = d3.format(",d");
 
     var pack = d3.layout.pack()
@@ -421,8 +424,6 @@ function initVis(){
         .data(data.processes).enter()
         .append('g')
         .attr('id', function(d) { return  d.id; })
-        .on('mouseout', onMouseOut)
-        .on('mouseover', onMouseOverNode)
         .each(handleProcess);
     
     
@@ -446,7 +447,7 @@ function initVis(){
                 .sort(null)
                 .value(function(d) { return d.Log2FoldChange; });
         
-        // Add background circle circle to hide links
+        // Add background circle circle to hide links and listen to events
         g.selectAll('circle').data([d])
             .enter().append('circle')
             .attr('fill', '#ffffff')
@@ -456,7 +457,9 @@ function initVis(){
             .attr('stroke', function(d){ 
                 var p = _.pluck(d.genes, 'Variant_sites');
                 return (p.join('').length > 0) ? mutationColor : null;
-            });
+            })
+            .on('mouseout', onMouseOut)
+            .on('mouseover', onMouseOverNode);
         
         // Create ring
         g.selectAll('path').data(pie(arr))
@@ -506,7 +509,9 @@ function initVis(){
                 .attr('display','none')
                 .attr('stroke-width', function(d){ return (d.mutation.length) ? 1.2 : 1; })
                 .attr('stroke', function(d){ return (d.mutation.length) ? mutationColor : stroke(d.regulated);})
-                .attr('class', function(d){ return d.parent.id; });
+                .attr('class', function(d){ return 'gene ' + d.parent.id; })
+                .on('mouseout', onMouseOut)
+                .on('mouseover', onMouseOverNode);
     }
     
     function getPath(d){
@@ -522,10 +527,102 @@ function initVis(){
         return 'M ' + x1 + ',' + y1 + ' A ' + d.r + ',' + d.r +' 0 0, 1, ' + x2 + ',' + y2;
     }
     
-    // Create process Annotations
-    var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([8,14]);
+    /***************************** 
+     * Create process Annotations
+     *****************************/
     
-    var div = d3.select(selector)
+    var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([8,12]);
+    
+    var annotations = svg.selectAll('.node')
+                        .data(data.processes);
+    
+    var txt = annotations.enter()
+        .append('text')
+        .attr('x', function(d){ return d.x;})
+        .attr('y', function(d){ return d.y + d.r;})
+        .attr('class', 'node theme')
+        .style('text-anchor','middle')
+        .style('font-size', function(d){ return ann_scale(d.r); })
+        .on('mouseover', function(d){
+            if(clickEvent.holdClick) return;
+            
+            d3.select(this).select('.handle').transition(3000).style('opacity', 1);
+            d3.select(this).transition(3000).style('font-size', function(d){ return 1.1 * ann_scale(d.r); });
+            
+        })
+        .on('mouseout', function(d){ 
+            d3.select(this).select('.handle').transition(3000).style('opacity', 0);
+            d3.select(this).transition(3000).style('font-size', function(d){ return ann_scale(d.r); });
+        })
+        .on('click', function(d){
+        
+            
+            if(clickEvent.holdClick) return;
+        
+            var handle = d3.select(this).select('.handle'),
+                g = d3.select('#' + d.id),
+                process = g.select('.process'),
+                genes = g.selectAll('.' + d.id);
+        
+        
+            if(handle.text() === '+'){
+                
+                genes
+                    .style('display', 'inline')
+                    .transition(1000)
+                    .attr('opacity', 1);
+                
+                process
+                    .transition(1000)
+                    .attr('opacity', 0)
+                    .each('end', function(d){ process.style('display', 'none'); });
+                
+                handle.text('-');
+            }else{
+                
+                process
+                    .style('display', 'inline')
+                    .transition(1000)
+                    .attr('opacity', 1);
+                
+                genes
+                    .transition(1000)
+                    .attr('opacity', 0)
+                    .each('end', function(d){ genes.style('display', 'none'); });
+                
+                handle.text('+');
+            }
+        })
+        .each(appendTSpan);
+    
+    function appendTSpan(d){
+        
+        var txt = d3.select(this),
+            words = d.Process.split(' '),
+            y = 0;
+        
+        words.unshift('+');
+        txt.selectAll('tspan')
+            .data(words)
+            .enter()
+            .append('tspan')
+            .attr('dy', function(j){
+                var dy = ann_scale(d.r);
+                y += dy;
+                return dy;
+            })
+            .attr('x', d.x)
+            .attr('class', function(d){ return (d === '+') ? 'handle' : ''; })
+            .attr('opacity', function(d){ return (d === '+') ? 0 : 1; })
+            .text(function(j){ return j; });
+    }
+    
+    
+        
+    //.text(function(d){ return d.Process;});
+    
+    
+    /*var div = d3.select(selector)
         .append('div')
         .attr('class', 'node-label-container');
     
@@ -583,7 +680,7 @@ function initVis(){
                 
                 span.classed('glyphicon-minus-sign', false).classed('glyphicon-plus-sign', true);
             }
-        });
+        });*/
     
     //select all genes
     genes = d3.selectAll('.genes');
@@ -626,7 +723,7 @@ var onMouseOut = function(node){
     links.paths.attr('opacity', 0);
     
     processes.attr('opacity', 1);
-    genes.attr('opacity', 1);
+    d3.selectAll('.gene').attr('opacity', 1);
     processAnnotations.style('opacity', 1);
 };
 
@@ -641,6 +738,7 @@ var onMouseOverNode = function(node){
                         return l.source.id;    
                     })
                     .value();
+    
     
     // Add target to neighbors
     neighbors.push(node.id);
@@ -668,46 +766,13 @@ var onMouseOverNode = function(node){
          }
     });
     
-    console.log('neigh', neighbors);
     function notNeighbors(n){
         return ! _.contains(neighbors, n.id);
     }
     
-    genes.filter(notNeighbors).attr('opacity', 0.2);
+    d3.selectAll('.gene').filter(notNeighbors).attr('opacity', 0.2);
     processes.filter(notNeighbors).attr('opacity', 0.2);
     processAnnotations.filter(notNeighbors).style('opacity', 0.2);
-            
-    /*links.paths.each(function(n, i){
-        if(nodeLinks.length > i){
-            var l = nodeLinks[i],
-                source = l.source,
-                target = l.target,
-                s_display = d3.select('#' + source.id).style('display'),
-                t_display = d3.select('#' + target.id).style('display');
-            
-            if(s_display !== 'none' && t_display !== 'none'){
-                
-                d3.select(this)
-                    .style('stroke-width', links.scale(l.links))
-                    .attr('opacity', 1)
-                    .attr('d', function (d) {
-                        var dx = target.x - source.x, dy = target.y - source.y, dr = Math.sqrt(dx * dx + dy * dy);
-                        return 'M' + source.x + ',' + source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + target.x + ',' + target.y;
-                });
-
-                neighbors.push(source.id);
-                neighbors.push(target.id);
-            }
-        }
-    });
-                              
-    function notNeighboors(n){
-        return ! _.contains(neighbors, n.id);
-    }
-    
-    genes.filter(notNeighboors).attr('opacity', 0.2);
-    processes.filter(notNeighboors).attr('opacity', 0.2);
-    processAnnotations.filter(notNeighboors).style('opacity', 0.2);*/
 };
 
 
@@ -718,13 +783,6 @@ Vis.selector = function(_){
     if (!arguments.length)
         return selector;
     selector = _;
-    return Vis;
-};
-
-Vis.width = function(_){
-    if (!arguments.length)
-        return width;
-    width = _;
     return Vis;
 };
 
