@@ -6,7 +6,7 @@ var regulation = require('../geneRegulation')();
 // Variables
 var selector,
     svg, // SVG tag
-    width, // vis width
+    width = 900, // vis width
     height = 900, //vis height
     padding = 100,
     offset = 150,
@@ -28,10 +28,15 @@ var selector,
 
 function initVis(){
     
-    svg = d3.select(selector)
+    var resp = d3.select(selector)
+        .append('div')
+        .attr('class', 'svg-container'); //container class to make it responsive
+    
+    svg = resp
         .append('svg')
-        .attr('class', 'canvas')
-        .attr('width', width)
+        .attr('class', 'canvas svg-content-responsive')
+        .attr('preserveAspectRatio', 'xMinYMin meet')
+        .attr('viewBox', [0, 0, width, height].join(' '))
         .attr('id', 'svg_vis');
     
     // Init links!
@@ -39,7 +44,7 @@ function initVis(){
     
     var root = { id:'root', genes:data.processes };
     
-    var diameter = d3.min([width, height]) * 0.8,
+    var diameter = d3.min([width, height]) * 0.65,
         format = d3.format(",d");
 
     var pack = d3.layout.pack()
@@ -185,10 +190,102 @@ function initVis(){
         return 'M ' + x1 + ',' + y1 + ' A ' + d.r + ',' + d.r +' 0 0, 1, ' + x2 + ',' + y2;
     }
     
-    // Create process Annotations
-    var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([8,14]);
+    /***************************** 
+     * Create process Annotations
+     *****************************/
     
-    var div = d3.select(selector)
+    var ann_scale = d3.scale.log().domain(d3.extent(data.processes, function(d){ return d.r; })).range([8,12]);
+    
+    var annotations = svg.selectAll('.node')
+                        .data(data.processes);
+    
+    var txt = annotations.enter()
+        .append('text')
+        .attr('x', function(d){ return d.x;})
+        .attr('y', function(d){ return d.y + d.r;})
+        .attr('class', 'node theme')
+        .style('text-anchor','middle')
+        .style('font-size', function(d){ return ann_scale(d.r); })
+        .on('mouseover', function(d){
+            if(clickEvent.holdClick) return;
+            
+            d3.select(this).select('.handle').transition(3000).style('opacity', 1);
+            d3.select(this).transition(3000).style('font-size', function(d){ return 1.1 * ann_scale(d.r); });
+            
+        })
+        .on('mouseout', function(d){ 
+            d3.select(this).select('.handle').transition(3000).style('opacity', 0);
+            d3.select(this).transition(3000).style('font-size', function(d){ return ann_scale(d.r); });
+        })
+        .on('click', function(d){
+        
+            
+            if(clickEvent.holdClick) return;
+        
+            var handle = d3.select(this).select('.handle'),
+                g = d3.select('#' + d.id),
+                process = g.select('.process'),
+                genes = g.selectAll('.' + d.id);
+        
+        
+            if(handle.text() === '+'){
+                
+                genes
+                    .style('display', 'inline')
+                    .transition(1000)
+                    .attr('opacity', 1);
+                
+                process
+                    .transition(1000)
+                    .attr('opacity', 0)
+                    .each('end', function(d){ process.style('display', 'none'); });
+                
+                handle.text('-');
+            }else{
+                
+                process
+                    .style('display', 'inline')
+                    .transition(1000)
+                    .attr('opacity', 1);
+                
+                genes
+                    .transition(1000)
+                    .attr('opacity', 0)
+                    .each('end', function(d){ genes.style('display', 'none'); });
+                
+                handle.text('+');
+            }
+        })
+        .each(appendTSpan);
+    
+    function appendTSpan(d){
+        
+        var txt = d3.select(this),
+            words = d.Process.split(' '),
+            y = 0;
+        
+        words.unshift('+');
+        txt.selectAll('tspan')
+            .data(words)
+            .enter()
+            .append('tspan')
+            .attr('dy', function(j){
+                var dy = ann_scale(d.r);
+                y += dy;
+                return dy;
+            })
+            .attr('x', d.x)
+            .attr('class', function(d){ return (d === '+') ? 'handle' : ''; })
+            .attr('opacity', function(d){ return (d === '+') ? 0 : 1; })
+            .text(function(j){ return j; });
+    }
+    
+    
+        
+    //.text(function(d){ return d.Process;});
+    
+    
+    /*var div = d3.select(selector)
         .append('div')
         .attr('class', 'node-label-container');
     
@@ -246,7 +343,7 @@ function initVis(){
                 
                 span.classed('glyphicon-minus-sign', false).classed('glyphicon-plus-sign', true);
             }
-        });
+        });*/
     
     //select all genes
     genes = d3.selectAll('.genes');
@@ -349,13 +446,6 @@ Vis.selector = function(_){
     if (!arguments.length)
         return selector;
     selector = _;
-    return Vis;
-};
-
-Vis.width = function(_){
-    if (!arguments.length)
-        return width;
-    width = _;
     return Vis;
 };
 

@@ -3,9 +3,7 @@ var d3 = require('d3');
 //Public members
 var App = {};
 
-App.init = function(options){
-    
-     
+App.init = function(options){ 
     
     
     //Views
@@ -21,7 +19,7 @@ App.init = function(options){
     App.views.buttonGroup = new ButtonGroup();
     App.views.buttonGroup.setElement('#navbar').render();
     
-    App.views.vis.selector('#vis').width(1170);
+    App.views.vis.selector('#vis');
     
     
     d3.json('../data/mouse-21.3.json', function(error, nodes) {
