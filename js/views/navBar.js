@@ -3,29 +3,15 @@ var templates = require('../templates');
 module.exports = Backbone.View.extend({
     
     events: {
-        'change input[name=vis_setting]' : 'onVisSettingChange',
         'click #save' : 'onSaveClick',
         'keyup input' : 'search'
     },
     
-    template: templates.buttonGroup,
+    template: templates.navBar,
     
     render: function(){
         this.$el.append(this.template({}));
         return this;
-    },
-    
-    onVisSettingChange : function(e){
-        var val = $(e.target).val();
-        if(val === 'all'){
-            App.views.vis.displayGroupAll();
-        }else if (val === 'chart'){
-            App.views.vis.displayChart();
-        }else if (val === 'process'){
-            App.views.vis.displayTowardProcess();
-        }else if (val === 'network'){
-            App.views.vis.displayNetwork();
-        }
     },
     
     onSaveClick : function(e){
@@ -35,6 +21,6 @@ module.exports = Backbone.View.extend({
     },
     
     search : function(e){
-         App.views.vis.search($(e.target).val());
+        App.views.vis.search($(e.target).val());
     }
 });
