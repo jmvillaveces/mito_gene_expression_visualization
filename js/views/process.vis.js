@@ -23,7 +23,8 @@ var selector,
     mutationColor = '#2c3e50',
     templates = require('../templates.js'),
     prPadding = 1.7,
-    clickEvent = {target: null, holdClick: false};
+    clickEvent = {target: null, holdClick: false},
+    tipTemplate = require('../templates').tooltip;
 
 function initVis(){
     
@@ -88,7 +89,6 @@ function initVis(){
         .append('g')
         .attr('id', function(d) { return  d.id; })
         .each(handleProcess);
-    
     
     
     function handleProcess(d){
@@ -383,6 +383,10 @@ var onMouseOut = function(node){
     
     if(clickEvent.holdClick) return;
     
+    //Clear tooltip
+    if( !_.isUndefined(node) && _.isUndefined(node.genes) )
+        $('.tip').empty();
+    
     links.paths.attr('opacity', 0);
     
     processes.attr('opacity', 1);
@@ -393,6 +397,10 @@ var onMouseOut = function(node){
 var onMouseOverNode = function(node){
     
     if(clickEvent.holdClick) return;
+    
+    //Init tooltip if hover over gene
+    if(_.isUndefined(node.genes))
+        $('.tip').append(tipTemplate(node));
     
     var nodeLinks = data.links[node.id], 
         neighbors = _.chain(nodeLinks)
@@ -451,6 +459,8 @@ var onClick = function(){
         clickEvent.target = null;
         clickEvent.holdClick = false;
         onMouseOut();
+        
+        console.log('click and mouse out');
     }
 };
 
