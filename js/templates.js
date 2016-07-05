@@ -4,44 +4,35 @@ Handlebars = glob.Handlebars || require('handlebars');
 
 this["Templates"] = this["Templates"] || {};
 
-this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\" checked=\"\"> All Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><a id=\"save\" href=\"#\">Save</a></li>\n</ul>\n\n";
-},"useData":true});
-
-this["Templates"]["main"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div id=\"container\" class=\"container\">\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\n            </div>\n        </div>\n    </div>\n    <div id=\"vis\" class=\"vis\">\n    </div>\n</div>";
-},"useData":true});
-
-this["Templates"]["tooltip"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-    var stack1, helper;
-
-  return "        <div class=\"tip-process\">\n            <strong>Variant Sites:</strong> "
-    + this.escapeExpression(((helper = (helper = helpers.Variant_sites || (depth0 != null ? depth0.Variant_sites : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"Variant_sites","hash":{},"data":data}) : helper)))
-    + "\n            <br>\n            "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.Chromosome_number : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\n        </div>\n";
-},"2":function(depth0,helpers,partials,data) {
+this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper;
 
-  return "<strong>Chromosome:</strong> "
-    + this.escapeExpression(((helper = (helper = helpers.Chromosome_number || (depth0 != null ? depth0.Chromosome_number : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"Chromosome_number","hash":{},"data":data}) : helper)));
-},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
+  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\n    <div>"
+    + container.escapeExpression(((helper = (helper = helpers.Process || (depth0 != null ? depth0.Process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"Process","hash":{},"data":data}) : helper)))
+    + "</div>\n</div>";
+},"useData":true});
 
-  return "<div>\n    <div class=\"tip-name\"><strong>"
-    + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div class=\"tip-rule\"></div>\n    <div class=\"tip-process\">"
-    + alias3(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-function\">"
-    + alias3(((helper = (helper = helpers.gene_function || (depth0 != null ? depth0.gene_function : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"gene_function","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
-    + alias3(((helper = (helper = helpers.p_value || (depth0 != null ? depth0.p_value : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"p_value","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div><strong>Log2 fold change:</strong> \n        <span class=\"tip-"
-    + alias3(((helper = (helper = helpers.regulated || (depth0 != null ? depth0.regulated : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"regulated","hash":{},"data":data}) : helper)))
-    + "\"><strong>"
-    + alias3(((helper = (helper = helpers.Log2fold_change || (depth0 != null ? depth0.Log2fold_change : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"Log2fold_change","hash":{},"data":data}) : helper)))
-    + "</strong></span>\n    </div>\n\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.Variant_sites : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<!-- Page Content -->\n<div class=\"container main\">\n    \n    \n    <div class=\"row\">\n        \n        <div class=\"col-md-3\">\n            \n            <div class=\"row\">\n            \n                <div class=\"col-md-12 title\" style=\"margin-top:20px;\">Find a Gene</div>\n            \n                <div class=\"col-md-12\" style=\"margin-top:10px;\">\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\">\n                </div>\n\n\n                <div class=\"col-md-12 miniTitle\" style=\"margin-top:20px;\">\n                    Legend\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Color</strong> shows gene regulation\n                </div>\n\n                <div class=\"col-md-6\">\n                    <svg width=\"120\" height=\"40\">\n                        <rect x=\"0\" y=\"10\" width=\"38\" height=\"7\" fill=\"#2171b5\"></rect>\n                        <rect x=\"38\" y=\"10\" width=\"38\" height=\"7\" fill=\"#BECCAE\"></rect>\n                        <rect x=\"76\" y=\"10\" width=\"38\" height=\"7\" fill=\"#C72D0A\"></rect>\n\n                        <text x=\"10\" y=\"26\" class=\"legendText\">Up</text>\n                        <text x=\"44\" y=\"26\" class=\"legendText\">None</text>\n                        <text x=\"80\" y=\"26\" class=\"legendText\">Down</text>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Dark Borders</strong> show mutations\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" fill=\"none\" r=\"18\" stroke-width=\"1.2\" stroke=\"#2c3e50\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Size</strong> shows Log2 fold change\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"18\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                        <circle cx=\"58\" cy=\"31\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"6\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-12\">\n                    <hr>\n                </div>\n            \n            </div>\n            \n            \n            <div class=\"row tip\" style=\"margin-top:20px;\">\n            </div>\n            \n            \n        </div>\n        \n        <div class=\"col-md-9\">\n            <div id=\"vis\" class=\"vis\"></div>\n        </div> \n    </div>\n    \n</div>\n\n";
+},"useData":true});
+
+this["Templates"]["navBar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"row\">\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n        <div id=\"color_scale\" class=\"col-md-6\">\n            <svg width=\"120\" height=\"40\"><!-- 'up', 'none', 'down' -->\n                <rect x=\"0\" y=\"10\" width=\"38\" height=\"7\" fill=\"#2171b5\"></rect>\n                <rect x=\"38\" y=\"10\" width=\"38\" height=\"7\" fill=\"#BECCAE\"></rect>\n                <rect x=\"76\" y=\"10\" width=\"38\" height=\"7\" fill=\"#C72D0A\"></rect>\n                \n                <text x=\"10\" y=\"24\" class=\"scale_text\">Up</text>\n                <text x=\"44\" y=\"24\" class=\"scale_text\">None</text>\n                <text x=\"80\" y=\"24\" class=\"scale_text\">Down</text>\n            </svg>\n        </div>\n    </div>\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n        <div id=\"border_scale\" class=\"col-md-5\">\n            <svg width=\"40\" height=\"40\">\n                <circle cx=\"20\" cy=\"20\" fill=\"none\" r=\"18\" stroke-width=\"1.2\" stroke=\"#2c3e50\"></circle>\n            </svg>\n        </div>\n    </div>\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-7\"><strong>Size</strong> shows Log2 fold change</div>\n        <div id=\"size_scale\" class=\"col-md-5\">\n            <svg width=\"40\" height=\"40\">\n                <circle cx=\"20\" cy=\"20\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"18\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                <circle cx=\"20\" cy=\"31\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"6\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n            </svg>\n        </div>\n    </div>\n    \n    <ul class=\"nav nav-pills pull-right\">\n        <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\n    </ul>\n</div>\n";
+},"useData":true});
+
+this["Templates"]["tooltip"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<div class=\"col-md-12 title\">"
+    + alias4(((helper = (helper = helpers.Name || (depth0 != null ? depth0.Name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Name","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-12 process\">"
+    + alias4(((helper = (helper = helpers.Process || (depth0 != null ? depth0.Process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Process","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-12 function\">"
+    + alias4(((helper = (helper = helpers.Function || (depth0 != null ? depth0.Function : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Function","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-6 miniTitle\">\n    Pvalue\n</div>\n                \n<div class=\"col-md-6\">"
+    + alias4(((helper = (helper = helpers["p-value"] || (depth0 != null ? depth0["p-value"] : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"p-value","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-6 miniTitle\">\n    Log2 fold change\n</div>\n                \n<div class=\"col-md-6\">"
+    + alias4(((helper = (helper = helpers.Log2FoldChange || (depth0 != null ? depth0.Log2FoldChange : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Log2FoldChange","hash":{},"data":data}) : helper)))
     + "</div>";
 },"useData":true});
 
