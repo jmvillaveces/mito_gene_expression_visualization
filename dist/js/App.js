@@ -139,7 +139,7 @@ function dataFormatter(nodes, links){
 module.exports = dataFormatter;
 
 
-},{"./geneRegulation":2,"underscore":58}],2:[function(require,module,exports){
+},{"./geneRegulation":2,"underscore":57}],2:[function(require,module,exports){
 function geneRegulation(log2Limit, pvalLimit){
 
     log2Limit = (log2Limit !== undefined) ? log2Limit :  1.5;
@@ -191,7 +191,7 @@ App.init = function(options){
     
     //Views
     var Main = require('./views/main');
-    var ButtonGroup = require('./views/buttonGroup');
+    //var NavBar = require('./views/navBar');
     
     App.views = {};
     App.views.vis = require('./views/process.vis.js');
@@ -199,8 +199,8 @@ App.init = function(options){
     App.views.main = new Main();
     App.views.main.setElement('body').render();
     
-    App.views.buttonGroup = new ButtonGroup();
-    App.views.buttonGroup.setElement('#navbar').render();
+    //App.views.navBar = new NavBar();
+    //App.views.navBar.setElement('#navbar').render();
     
     App.views.vis.selector('#vis');
     
@@ -215,14 +215,10 @@ App.init = function(options){
         });
         
     });
-    
-    
-    
-    
 };
 
 module.exports = App;
-},{"./views/buttonGroup":5,"./views/main":6,"./views/process.vis.js":7,"d3":13}],4:[function(require,module,exports){
+},{"./views/main":5,"./views/process.vis.js":6,"d3":12}],4:[function(require,module,exports){
 (function (global){
 var glob = ('undefined' === typeof window) ? global : window,
 
@@ -238,103 +234,53 @@ this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"]
     + "</div>\n</div>";
 },"useData":true});
 
-this["Templates"]["buttonGroup"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"form-group btn-group\" data-toggle=\"buttons\">\n    <label class=\"btn btn-default active\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"network\" autocomplete=\"off\" checked=\"\"> Network\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"all\" autocomplete=\"off\"> Gene Expression\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"process\" autocomplete=\"off\"> Gene Expression by Process\n    </label>\n    <label class=\"btn btn-default\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n        <input type=\"radio\" name=\"vis_setting\" value=\"chart\" autocomplete=\"off\"> Gene Expression Chart\n    </label>\n</div>\n<ul class=\"nav nav-pills pull-right\">\n    <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\n</ul>\n\n";
-},"useData":true});
-
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<!-- Page Content -->\n<div class=\"container\">\n\n    <div id=\"navbar\" class=\"nav_bar\"></div>\n        \n    <div class=\"legend\">\n        <div class=\"row\">\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n                <div id=\"color_scale\" class=\"col-md-6\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n                <div id=\"border_scale\" class=\"col-md-5\"></div>\n            </div>\n            <div class=\"col-md-4\">\n                <div class=\"col-md-6\"><strong>Size</strong> shows Log2 fold change</div>\n                <div id=\"size_scale\" class=\"col-md-6\"></div>\n            </div>\n        </div>\n    </div>\n        \n    <div class=\"row\">\n        <div class=\"col-md-12\">\n            <div id=\"vis\" class=\"vis\"></div>\n        </div>        \n    </div>\n    \n</div>";
+    return "<!-- Page Content -->\n<div class=\"container main\">\n    \n    \n    <div class=\"row\">\n        \n        <div class=\"col-md-3\">\n            \n            <div class=\"row\">\n            \n                <div class=\"col-md-12 title\" style=\"margin-top:20px;\">Find a Gene</div>\n            \n                <div class=\"col-md-12\" style=\"margin-top:10px;\">\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\">\n                </div>\n\n\n                <div class=\"col-md-12 miniTitle\" style=\"margin-top:20px;\">\n                    Legend\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Color</strong> shows gene regulation\n                </div>\n\n                <div class=\"col-md-6\">\n                    <svg width=\"120\" height=\"40\">\n                        <rect x=\"0\" y=\"10\" width=\"38\" height=\"7\" fill=\"#2171b5\"></rect>\n                        <rect x=\"38\" y=\"10\" width=\"38\" height=\"7\" fill=\"#BECCAE\"></rect>\n                        <rect x=\"76\" y=\"10\" width=\"38\" height=\"7\" fill=\"#C72D0A\"></rect>\n\n                        <text x=\"10\" y=\"26\" class=\"legendText\">Up</text>\n                        <text x=\"44\" y=\"26\" class=\"legendText\">None</text>\n                        <text x=\"80\" y=\"26\" class=\"legendText\">Down</text>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Dark Borders</strong> show mutations\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" fill=\"none\" r=\"18\" stroke-width=\"1.2\" stroke=\"#2c3e50\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Size</strong> shows Log2 fold change\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"18\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                        <circle cx=\"58\" cy=\"31\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"6\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-12\">\n                    <hr>\n                </div>\n            \n            </div>\n            \n            \n            <div class=\"row tip\" style=\"margin-top:20px;\">\n            </div>\n            \n            \n        </div>\n        \n        <div class=\"col-md-9\">\n            <div id=\"vis\" class=\"vis\"></div>\n        </div> \n    </div>\n    \n</div>\n\n";
 },"useData":true});
 
-this["Templates"]["tooltip"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {};
+this["Templates"]["navBar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"row\">\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n        <div id=\"color_scale\" class=\"col-md-6\">\n            <svg width=\"120\" height=\"40\"><!-- 'up', 'none', 'down' -->\n                <rect x=\"0\" y=\"10\" width=\"38\" height=\"7\" fill=\"#2171b5\"></rect>\n                <rect x=\"38\" y=\"10\" width=\"38\" height=\"7\" fill=\"#BECCAE\"></rect>\n                <rect x=\"76\" y=\"10\" width=\"38\" height=\"7\" fill=\"#C72D0A\"></rect>\n                \n                <text x=\"10\" y=\"24\" class=\"scale_text\">Up</text>\n                <text x=\"44\" y=\"24\" class=\"scale_text\">None</text>\n                <text x=\"80\" y=\"24\" class=\"scale_text\">Down</text>\n            </svg>\n        </div>\n    </div>\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n        <div id=\"border_scale\" class=\"col-md-5\">\n            <svg width=\"40\" height=\"40\">\n                <circle cx=\"20\" cy=\"20\" fill=\"none\" r=\"18\" stroke-width=\"1.2\" stroke=\"#2c3e50\"></circle>\n            </svg>\n        </div>\n    </div>\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-7\"><strong>Size</strong> shows Log2 fold change</div>\n        <div id=\"size_scale\" class=\"col-md-5\">\n            <svg width=\"40\" height=\"40\">\n                <circle cx=\"20\" cy=\"20\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"18\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                <circle cx=\"20\" cy=\"31\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"6\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n            </svg>\n        </div>\n    </div>\n    \n    <ul class=\"nav nav-pills pull-right\">\n        <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\n    </ul>\n</div>\n";
+},"useData":true});
 
-  return "        <div class=\"tip-process\">\n            <strong>Variant Sites:</strong> "
-    + container.escapeExpression(((helper = (helper = helpers.Variant_sites || (depth0 != null ? depth0.Variant_sites : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"Variant_sites","hash":{},"data":data}) : helper)))
-    + "\n            <br>\n            "
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Chromosome_number : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n        </div>\n";
-},"2":function(container,depth0,helpers,partials,data) {
-    var helper;
+this["Templates"]["tooltip"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<strong>Chromosome:</strong> "
-    + container.escapeExpression(((helper = (helper = helpers.Chromosome_number || (depth0 != null ? depth0.Chromosome_number : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"Chromosome_number","hash":{},"data":data}) : helper)));
-},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "<div>\n    <div class=\"tip-name\"><strong>"
-    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div class=\"tip-rule\"></div>\n    <div class=\"tip-process\">"
-    + alias4(((helper = (helper = helpers.process || (depth0 != null ? depth0.process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"process","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-function\">"
-    + alias4(((helper = (helper = helpers.gene_function || (depth0 != null ? depth0.gene_function : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gene_function","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class=\"tip-pvalue\"><strong>Pvalue: "
-    + alias4(((helper = (helper = helpers.p_value || (depth0 != null ? depth0.p_value : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"p_value","hash":{},"data":data}) : helper)))
-    + "</strong></div>\n    <div><strong>Log2 fold change:</strong> \n        <span class=\"tip-"
-    + alias4(((helper = (helper = helpers.regulated || (depth0 != null ? depth0.regulated : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"regulated","hash":{},"data":data}) : helper)))
-    + "\"><strong>"
-    + alias4(((helper = (helper = helpers.Log2fold_change || (depth0 != null ? depth0.Log2fold_change : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Log2fold_change","hash":{},"data":data}) : helper)))
-    + "</strong></span>\n    </div>\n\n"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.Variant_sites : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+  return "<div class=\"col-md-12 title\">"
+    + alias4(((helper = (helper = helpers.Name || (depth0 != null ? depth0.Name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Name","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-12 process\">"
+    + alias4(((helper = (helper = helpers.Process || (depth0 != null ? depth0.Process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Process","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-12 function\">"
+    + alias4(((helper = (helper = helpers.Function || (depth0 != null ? depth0.Function : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Function","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-6 miniTitle\">\n    Pvalue\n</div>\n                \n<div class=\"col-md-6\">"
+    + alias4(((helper = (helper = helpers["p-value"] || (depth0 != null ? depth0["p-value"] : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"p-value","hash":{},"data":data}) : helper)))
+    + "</div>\n\n<div class=\"col-md-6 miniTitle\">\n    Log2 fold change\n</div>\n                \n<div class=\"col-md-6\">"
+    + alias4(((helper = (helper = helpers.Log2FoldChange || (depth0 != null ? depth0.Log2FoldChange : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Log2FoldChange","hash":{},"data":data}) : helper)))
     + "</div>";
 },"useData":true});
 
 if (typeof exports === 'object' && exports) {module.exports = this["Templates"];}
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"handlebars":43}],5:[function(require,module,exports){
+},{"handlebars":42}],5:[function(require,module,exports){
 var templates = require('../templates');
 
 module.exports = Backbone.View.extend({
     
     events: {
-        'change input[name=vis_setting]' : 'onVisSettingChange',
-        'click #save' : 'onSaveClick',
         'keyup input' : 'search'
     },
-    
-    template: templates.buttonGroup,
-    
-    render: function(){
-        this.$el.append(this.template({}));
-        return this;
-    },
-    
-    onVisSettingChange : function(e){
-        var val = $(e.target).val();
-        if(val === 'all'){
-            App.views.vis.displayGroupAll();
-        }else if (val === 'chart'){
-            App.views.vis.displayChart();
-        }else if (val === 'process'){
-            App.views.vis.displayTowardProcess();
-        }else if (val === 'network'){
-            App.views.vis.displayNetwork();
-        }
-    },
-    
-    onSaveClick : function(e){
-        d3.selectAll("#save")
-            .attr("href", "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(d3.selectAll("#svg_vis")
-                .attr("version", "1.1").attr("xmlns", "http://www.w3.org/2000/svg").node().parentNode.innerHTML)))).attr("download",'image.svg');
-    },
-    
-    search : function(e){
-         App.views.vis.search($(e.target).val());
-    }
-});
-},{"../templates":4}],6:[function(require,module,exports){
-var templates = require('../templates');
-
-module.exports = Backbone.View.extend({
     
     template: templates.main,
     
     render: function(){
         this.$el.append(this.template({}));
         return this;
+    },
+    
+    search : function(e){
+        App.views.vis.search($(e.target).val());
     }
 });
-},{"../templates":4}],7:[function(require,module,exports){
+},{"../templates":4}],6:[function(require,module,exports){
 // Required scripts
 var dataFormatter = require('../dataFormatter.js');
 var regulation = require('../geneRegulation')();
@@ -360,7 +306,8 @@ var selector,
     mutationColor = '#2c3e50',
     templates = require('../templates.js'),
     prPadding = 1.7,
-    clickEvent = {target: null, holdClick: false};
+    clickEvent = {target: null, holdClick: false},
+    tipTemplate = require('../templates').tooltip;
 
 function initVis(){
     
@@ -425,7 +372,6 @@ function initVis(){
         .append('g')
         .attr('id', function(d) { return  d.id; })
         .each(handleProcess);
-    
     
     
     function handleProcess(d){
@@ -720,6 +666,10 @@ var onMouseOut = function(node){
     
     if(clickEvent.holdClick) return;
     
+    //Clear tooltip
+    if( !_.isUndefined(node) && _.isUndefined(node.genes) )
+        $('.tip').empty();
+    
     links.paths.attr('opacity', 0);
     
     processes.attr('opacity', 1);
@@ -730,6 +680,10 @@ var onMouseOut = function(node){
 var onMouseOverNode = function(node){
     
     if(clickEvent.holdClick) return;
+    
+    //Init tooltip if hover over gene
+    if(_.isUndefined(node.genes))
+        $('.tip').append(tipTemplate(node));
     
     var nodeLinks = data.links[node.id], 
         neighbors = _.chain(nodeLinks)
@@ -777,13 +731,9 @@ var onMouseOverNode = function(node){
 
 var onClick = function(){
     
-    console.log('click');
-    
     var target = d3.event.target,
         name = target.tagName.toLowerCase(),
         id = target.id;
-    
-    
         
     if( (name === 'circle' && _.isNull(clickEvent.target)) || (name === 'circle' && id === clickEvent.target.id) ){
         clickEvent.holdClick = true;
@@ -792,9 +742,32 @@ var onClick = function(){
         clickEvent.target = null;
         clickEvent.holdClick = false;
         onMouseOut();
+        
+        console.log('click and mouse out');
     }
-    
 };
+
+// Search genes by name
+function search(str){
+    
+    d3.selectAll('.search').classed('search', false);
+    
+    if(str.length < 3) return;
+    
+    str = str.toLowerCase();
+    
+    var matchingGenes = d3.selectAll('.gene')
+                        .filter(function(d){ return d.Name.toLocaleLowerCase().match(str); })
+                        .classed('search', true);
+    
+    matchingGenes.each(function(d){
+    
+        if( d3.select(this).style('display') === 'none'){
+            // process is visible set class
+            d3.select('#' + d.parent.id).select('circle').classed('search', true);
+        } 
+    });   
+}
 
 
 //Public members
@@ -808,7 +781,7 @@ Vis.selector = function(_){
 };
 
 Vis.search = function(str){ 
-    //_search(str);
+    search(str);
     return Vis;
 };
 
@@ -822,7 +795,7 @@ Vis.init = function(nodes, links){
 };
 
 module.exports = Vis;
-},{"../dataFormatter.js":1,"../geneRegulation":2,"../templates.js":4}],8:[function(require,module,exports){
+},{"../dataFormatter.js":1,"../geneRegulation":2,"../templates":4,"../templates.js":4}],7:[function(require,module,exports){
 jQuery = $ = require('jquery');
 Backbone = require('backbone');
 Backbone.$ = jQuery;
@@ -835,7 +808,7 @@ require('d3-tip')(d3);
 require('underscore'); // bootstrap
 
 App = require('./js/main');
-},{"./js/main":3,"backbone":10,"d3":13,"d3-tip":12,"handlebars":43,"jquery":44,"underscore":58}],9:[function(require,module,exports){
+},{"./js/main":3,"backbone":9,"d3":12,"d3-tip":11,"handlebars":42,"jquery":43,"underscore":57}],8:[function(require,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 1.0.0 Copyright (c) 2011-2015, The Dojo Foundation All Rights Reserved.
@@ -1140,7 +1113,7 @@ function amdefine(module, requireFn) {
 module.exports = amdefine;
 
 }).call(this,require('_process'),"/node_modules/amdefine/amdefine.js")
-},{"_process":46,"path":45}],10:[function(require,module,exports){
+},{"_process":45,"path":44}],9:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.3
 
@@ -3064,9 +3037,9 @@ module.exports = amdefine;
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":44,"underscore":58}],11:[function(require,module,exports){
+},{"jquery":43,"underscore":57}],10:[function(require,module,exports){
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 // d3.tip
 // Copyright (c) 2013 Justin Palmer
 //
@@ -3372,7 +3345,7 @@ module.exports = amdefine;
 
 }));
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.17"
@@ -12927,7 +12900,7 @@ module.exports = amdefine;
   });
   if (typeof define === "function" && define.amd) this.d3 = d3, define(d3); else if (typeof module === "object" && module.exports) module.exports = d3; else this.d3 = d3;
 }();
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -12994,7 +12967,7 @@ exports['default'] = inst;
 module.exports = exports['default'];
 
 
-},{"./handlebars.runtime":15,"./handlebars/compiler/ast":17,"./handlebars/compiler/base":18,"./handlebars/compiler/compiler":20,"./handlebars/compiler/javascript-compiler":22,"./handlebars/compiler/visitor":25,"./handlebars/no-conflict":39}],15:[function(require,module,exports){
+},{"./handlebars.runtime":14,"./handlebars/compiler/ast":16,"./handlebars/compiler/base":17,"./handlebars/compiler/compiler":19,"./handlebars/compiler/javascript-compiler":21,"./handlebars/compiler/visitor":24,"./handlebars/no-conflict":38}],14:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13062,7 +13035,7 @@ exports['default'] = inst;
 module.exports = exports['default'];
 
 
-},{"./handlebars/base":16,"./handlebars/exception":29,"./handlebars/no-conflict":39,"./handlebars/runtime":40,"./handlebars/safe-string":41,"./handlebars/utils":42}],16:[function(require,module,exports){
+},{"./handlebars/base":15,"./handlebars/exception":28,"./handlebars/no-conflict":38,"./handlebars/runtime":39,"./handlebars/safe-string":40,"./handlebars/utils":41}],15:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13168,7 +13141,7 @@ exports.createFrame = _utils.createFrame;
 exports.logger = _logger2['default'];
 
 
-},{"./decorators":27,"./exception":29,"./helpers":30,"./logger":38,"./utils":42}],17:[function(require,module,exports){
+},{"./decorators":26,"./exception":28,"./helpers":29,"./logger":37,"./utils":41}],16:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13201,7 +13174,7 @@ exports['default'] = AST;
 module.exports = exports['default'];
 
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13251,7 +13224,7 @@ function parse(input, options) {
 }
 
 
-},{"../utils":42,"./helpers":21,"./parser":23,"./whitespace-control":26}],19:[function(require,module,exports){
+},{"../utils":41,"./helpers":20,"./parser":22,"./whitespace-control":25}],18:[function(require,module,exports){
 /* global define */
 'use strict';
 
@@ -13419,7 +13392,7 @@ exports['default'] = CodeGen;
 module.exports = exports['default'];
 
 
-},{"../utils":42,"source-map":47}],20:[function(require,module,exports){
+},{"../utils":41,"source-map":46}],19:[function(require,module,exports){
 /* eslint-disable new-cap */
 
 'use strict';
@@ -13993,7 +13966,7 @@ function transformLiteralToPath(sexpr) {
 }
 
 
-},{"../exception":29,"../utils":42,"./ast":17}],21:[function(require,module,exports){
+},{"../exception":28,"../utils":41,"./ast":16}],20:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -14225,7 +14198,7 @@ function preparePartialBlock(open, program, close, locInfo) {
 }
 
 
-},{"../exception":29}],22:[function(require,module,exports){
+},{"../exception":28}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -15353,7 +15326,7 @@ exports['default'] = JavaScriptCompiler;
 module.exports = exports['default'];
 
 
-},{"../base":16,"../exception":29,"../utils":42,"./code-gen":19}],23:[function(require,module,exports){
+},{"../base":15,"../exception":28,"../utils":41,"./code-gen":18}],22:[function(require,module,exports){
 /* istanbul ignore next */
 /* Jison generated parser */
 "use strict";
@@ -16093,7 +16066,7 @@ var handlebars = (function () {
 exports['default'] = handlebars;
 
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /* eslint-disable new-cap */
 'use strict';
 
@@ -16281,7 +16254,7 @@ PrintVisitor.prototype.HashPair = function (pair) {
 /* eslint-enable new-cap */
 
 
-},{"./visitor":25}],25:[function(require,module,exports){
+},{"./visitor":24}],24:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16423,7 +16396,7 @@ exports['default'] = Visitor;
 module.exports = exports['default'];
 
 
-},{"../exception":29}],26:[function(require,module,exports){
+},{"../exception":28}],25:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16646,7 +16619,7 @@ exports['default'] = WhitespaceControl;
 module.exports = exports['default'];
 
 
-},{"./visitor":25}],27:[function(require,module,exports){
+},{"./visitor":24}],26:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16664,7 +16637,7 @@ function registerDefaultDecorators(instance) {
 }
 
 
-},{"./decorators/inline":28}],28:[function(require,module,exports){
+},{"./decorators/inline":27}],27:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16695,7 +16668,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":42}],29:[function(require,module,exports){
+},{"../utils":41}],28:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16737,7 +16710,7 @@ exports['default'] = Exception;
 module.exports = exports['default'];
 
 
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16785,7 +16758,7 @@ function registerDefaultHelpers(instance) {
 }
 
 
-},{"./helpers/block-helper-missing":31,"./helpers/each":32,"./helpers/helper-missing":33,"./helpers/if":34,"./helpers/log":35,"./helpers/lookup":36,"./helpers/with":37}],31:[function(require,module,exports){
+},{"./helpers/block-helper-missing":30,"./helpers/each":31,"./helpers/helper-missing":32,"./helpers/if":33,"./helpers/log":34,"./helpers/lookup":35,"./helpers/with":36}],30:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16826,7 +16799,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":42}],32:[function(require,module,exports){
+},{"../utils":41}],31:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16922,7 +16895,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../exception":29,"../utils":42}],33:[function(require,module,exports){
+},{"../exception":28,"../utils":41}],32:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16949,7 +16922,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../exception":29}],34:[function(require,module,exports){
+},{"../exception":28}],33:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -16980,7 +16953,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":42}],35:[function(require,module,exports){
+},{"../utils":41}],34:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17008,7 +16981,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17022,7 +16995,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17057,7 +17030,7 @@ exports['default'] = function (instance) {
 module.exports = exports['default'];
 
 
-},{"../utils":42}],38:[function(require,module,exports){
+},{"../utils":41}],37:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17106,7 +17079,7 @@ exports['default'] = logger;
 module.exports = exports['default'];
 
 
-},{"./utils":42}],39:[function(require,module,exports){
+},{"./utils":41}],38:[function(require,module,exports){
 (function (global){
 /* global window */
 'use strict';
@@ -17130,7 +17103,7 @@ module.exports = exports['default'];
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17424,7 +17397,7 @@ function executeDecorators(fn, prog, container, depths, data, blockParams) {
 }
 
 
-},{"./base":16,"./exception":29,"./utils":42}],41:[function(require,module,exports){
+},{"./base":15,"./exception":28,"./utils":41}],40:[function(require,module,exports){
 // Build out our basic SafeString type
 'use strict';
 
@@ -17441,7 +17414,7 @@ exports['default'] = SafeString;
 module.exports = exports['default'];
 
 
-},{}],42:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -17567,7 +17540,7 @@ function appendContextPath(contextPath, id) {
 }
 
 
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 // USAGE:
 // var handlebars = require('handlebars');
 /* eslint-disable no-var */
@@ -17594,7 +17567,7 @@ if (typeof require !== 'undefined' && require.extensions) {
   require.extensions['.hbs'] = extension;
 }
 
-},{"../dist/cjs/handlebars":14,"../dist/cjs/handlebars/compiler/printer":24,"fs":11}],44:[function(require,module,exports){
+},{"../dist/cjs/handlebars":13,"../dist/cjs/handlebars/compiler/printer":23,"fs":10}],43:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
@@ -27410,7 +27383,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],45:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -27638,7 +27611,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":46}],46:[function(require,module,exports){
+},{"_process":45}],45:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -27734,7 +27707,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],47:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 /*
  * Copyright 2009-2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE.txt or:
@@ -27744,7 +27717,7 @@ exports.SourceMapGenerator = require('./source-map/source-map-generator').Source
 exports.SourceMapConsumer = require('./source-map/source-map-consumer').SourceMapConsumer;
 exports.SourceNode = require('./source-map/source-node').SourceNode;
 
-},{"./source-map/source-map-consumer":54,"./source-map/source-map-generator":55,"./source-map/source-node":56}],48:[function(require,module,exports){
+},{"./source-map/source-map-consumer":53,"./source-map/source-map-generator":54,"./source-map/source-node":55}],47:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -27853,7 +27826,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":57,"amdefine":9}],49:[function(require,module,exports){
+},{"./util":56,"amdefine":8}],48:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28001,7 +27974,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./base64":50,"amdefine":9}],50:[function(require,module,exports){
+},{"./base64":49,"amdefine":8}],49:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28076,7 +28049,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":9}],51:[function(require,module,exports){
+},{"amdefine":8}],50:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28195,7 +28168,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":9}],52:[function(require,module,exports){
+},{"amdefine":8}],51:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2014 Mozilla Foundation and contributors
@@ -28283,7 +28256,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":57,"amdefine":9}],53:[function(require,module,exports){
+},{"./util":56,"amdefine":8}],52:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -28405,7 +28378,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":9}],54:[function(require,module,exports){
+},{"amdefine":8}],53:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -29484,7 +29457,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":48,"./base64-vlq":49,"./binary-search":51,"./quick-sort":53,"./util":57,"amdefine":9}],55:[function(require,module,exports){
+},{"./array-set":47,"./base64-vlq":48,"./binary-search":50,"./quick-sort":52,"./util":56,"amdefine":8}],54:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -29885,7 +29858,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":48,"./base64-vlq":49,"./mapping-list":52,"./util":57,"amdefine":9}],56:[function(require,module,exports){
+},{"./array-set":47,"./base64-vlq":48,"./mapping-list":51,"./util":56,"amdefine":8}],55:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -30301,7 +30274,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./source-map-generator":55,"./util":57,"amdefine":9}],57:[function(require,module,exports){
+},{"./source-map-generator":54,"./util":56,"amdefine":8}],56:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -30673,7 +30646,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":9}],58:[function(require,module,exports){
+},{"amdefine":8}],57:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -32223,4 +32196,4 @@ define(function (require, exports, module) {
   }
 }.call(this));
 
-},{}]},{},[8]);
+},{}]},{},[7]);
