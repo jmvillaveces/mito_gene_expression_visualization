@@ -458,8 +458,6 @@ var onClick = function(){
         clickEvent.target = null;
         clickEvent.holdClick = false;
         onMouseOut();
-        
-        console.log('click and mouse out');
     }
 };
 
