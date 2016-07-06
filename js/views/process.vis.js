@@ -384,8 +384,7 @@ var onMouseOut = function(node){
     if(clickEvent.holdClick) return;
     
     //Clear tooltip
-    if( !_.isUndefined(node) && _.isUndefined(node.genes) )
-        $('.tip').empty();
+    $('.tip').empty();
     
     links.paths.attr('opacity', 0);
     
@@ -483,7 +482,9 @@ function search(str){
             // process is visible set class
             d3.select('#' + d.parent.id).select('circle').classed('search', true);
         } 
-    });   
+    });
+    
+    return matchingGenes.data();
 }
 
 
@@ -498,8 +499,7 @@ Vis.selector = function(_){
 };
 
 Vis.search = function(str){ 
-    search(str);
-    return Vis;
+    return search(str);
 };
 
 Vis.displayNetwork = function(){
