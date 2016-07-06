@@ -226,20 +226,18 @@ Handlebars = glob.Handlebars || require('handlebars');
 
 this["Templates"] = this["Templates"] || {};
 
-this["Templates"]["annotation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper;
-
-  return "<div class=\"node theme\" style=\"vertical-align: middle;display: inline-block;\">\n    <span class=\"glyphicon glyphicon-plus-sign\" style=\"position: absolute;margin-left:-65%;opacity:0;\"></span>\n    <div>"
-    + container.escapeExpression(((helper = (helper = helpers.Process || (depth0 != null ? depth0.Process : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"Process","hash":{},"data":data}) : helper)))
-    + "</div>\n</div>";
-},"useData":true});
-
 this["Templates"]["main"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<!-- Page Content -->\n<div class=\"container main\">\n    \n    \n    <div class=\"row\">\n        \n        <div class=\"col-md-3\">\n            \n            <div class=\"row\">\n            \n                <div class=\"col-md-12 title\" style=\"margin-top:20px;\">Find a Gene</div>\n            \n                <div class=\"col-md-12\" style=\"margin-top:10px;\">\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\">\n                </div>\n\n\n                <div class=\"col-md-12 miniTitle\" style=\"margin-top:20px;\">\n                    Legend\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Color</strong> shows gene regulation\n                </div>\n\n                <div class=\"col-md-6\">\n                    <svg width=\"120\" height=\"40\">\n                        <rect x=\"0\" y=\"10\" width=\"38\" height=\"7\" fill=\"#2171b5\"></rect>\n                        <rect x=\"38\" y=\"10\" width=\"38\" height=\"7\" fill=\"#BECCAE\"></rect>\n                        <rect x=\"76\" y=\"10\" width=\"38\" height=\"7\" fill=\"#C72D0A\"></rect>\n\n                        <text x=\"10\" y=\"26\" class=\"legendText\">Up</text>\n                        <text x=\"44\" y=\"26\" class=\"legendText\">None</text>\n                        <text x=\"80\" y=\"26\" class=\"legendText\">Down</text>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Dark Borders</strong> show mutations\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" fill=\"none\" r=\"18\" stroke-width=\"1.2\" stroke=\"#2c3e50\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Size</strong> shows Log2 fold change\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"18\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                        <circle cx=\"58\" cy=\"31\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"6\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-12\">\n                    <hr>\n                </div>\n            \n            </div>\n            \n            \n            <div class=\"row tip\" style=\"margin-top:20px;\">\n            </div>\n            \n            \n        </div>\n        \n        <div class=\"col-md-9\">\n            <div id=\"vis\" class=\"vis\"></div>\n        </div> \n    </div>\n    \n</div>\n\n";
+    return "<!-- Page Content -->\n<div class=\"container main\">\n    \n    \n    <div class=\"row\">\n        \n        <div class=\"col-md-3\">\n            \n            <div class=\"row\">\n            \n                <div class=\"col-md-12 title\" style=\"margin-top:20px;\">Find a Gene</div>\n            \n                <div class=\"col-md-12\" style=\"margin-top:10px;\">\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\">\n                    <ul class=\"list-group results\"></ul>\n                </div>\n\n\n                <div class=\"col-md-12 miniTitle\" style=\"margin-top:20px;\">\n                    Legend\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Color</strong> shows gene regulation\n                </div>\n\n                <div class=\"col-md-6\">\n                    <svg width=\"120\" height=\"40\">\n                        <rect x=\"0\" y=\"10\" width=\"38\" height=\"7\" fill=\"#2171b5\"></rect>\n                        <rect x=\"38\" y=\"10\" width=\"38\" height=\"7\" fill=\"#BECCAE\"></rect>\n                        <rect x=\"76\" y=\"10\" width=\"38\" height=\"7\" fill=\"#C72D0A\"></rect>\n\n                        <text x=\"10\" y=\"26\" class=\"legendText\">Up</text>\n                        <text x=\"44\" y=\"26\" class=\"legendText\">None</text>\n                        <text x=\"80\" y=\"26\" class=\"legendText\">Down</text>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Dark Borders</strong> show mutations\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" fill=\"none\" r=\"18\" stroke-width=\"1.2\" stroke=\"#2c3e50\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <strong>Size</strong> shows Log2 fold change\n                </div>\n\n                <div class=\"col-md-6 legendText\">\n                    <svg width=\"120\" height=\"40\">\n                        <circle cx=\"58\" cy=\"20\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"18\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                        <circle cx=\"58\" cy=\"31\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"6\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                    </svg>\n                </div>\n\n                <div class=\"col-md-12\">\n                    <hr>\n                </div>\n            \n            </div>\n            \n            \n            <div class=\"row tip\" style=\"margin-top:20px;\">\n            </div>\n            \n            \n        </div>\n        \n        <div class=\"col-md-9\">\n            <div id=\"vis\" class=\"vis\"></div>\n        </div> \n    </div>\n    \n</div>\n\n";
 },"useData":true});
 
-this["Templates"]["navBar"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"row\">\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-6\"><strong>Color</strong> shows gene regulation</div>\n        <div id=\"color_scale\" class=\"col-md-6\">\n            <svg width=\"120\" height=\"40\"><!-- 'up', 'none', 'down' -->\n                <rect x=\"0\" y=\"10\" width=\"38\" height=\"7\" fill=\"#2171b5\"></rect>\n                <rect x=\"38\" y=\"10\" width=\"38\" height=\"7\" fill=\"#BECCAE\"></rect>\n                <rect x=\"76\" y=\"10\" width=\"38\" height=\"7\" fill=\"#C72D0A\"></rect>\n                \n                <text x=\"10\" y=\"24\" class=\"scale_text\">Up</text>\n                <text x=\"44\" y=\"24\" class=\"scale_text\">None</text>\n                <text x=\"80\" y=\"24\" class=\"scale_text\">Down</text>\n            </svg>\n        </div>\n    </div>\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-7\"><strong>Dark Borders</strong> show mutations</div>\n        <div id=\"border_scale\" class=\"col-md-5\">\n            <svg width=\"40\" height=\"40\">\n                <circle cx=\"20\" cy=\"20\" fill=\"none\" r=\"18\" stroke-width=\"1.2\" stroke=\"#2c3e50\"></circle>\n            </svg>\n        </div>\n    </div>\n    \n    <div class=\"col-md-3\">\n        <div class=\"col-md-7\"><strong>Size</strong> shows Log2 fold change</div>\n        <div id=\"size_scale\" class=\"col-md-5\">\n            <svg width=\"40\" height=\"40\">\n                <circle cx=\"20\" cy=\"20\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"18\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n                <circle cx=\"20\" cy=\"31\" style=\"stroke-dasharray: 2 2\" fill=\"none\" r=\"6\" stroke-width=\"1\" stroke=\"#5f6062\"></circle>\n            </svg>\n        </div>\n    </div>\n    \n    <ul class=\"nav nav-pills pull-right\">\n        <li role=\"presentation\"><input type=\"text\" class=\"form-control\" placeholder=\"Search gene by name...\"></li>\n    </ul>\n</div>\n";
+this["Templates"]["result"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<li class=\"list-group-item\"><span class=\"title\">"
+    + alias4(((helper = (helper = helpers.Name || (depth0 != null ? depth0.Name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Name","hash":{},"data":data}) : helper)))
+    + "</span><br><span>"
+    + alias4(((helper = (helper = helpers.Process || (depth0 != null ? depth0.Process : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Process","hash":{},"data":data}) : helper)))
+    + "</span></li>";
 },"useData":true});
 
 this["Templates"]["tooltip"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
@@ -266,7 +264,10 @@ var templates = require('../templates');
 module.exports = Backbone.View.extend({
     
     events: {
-        'keyup input' : 'search'
+        'keyup input' : 'onSearch',
+        'blur input' : 'onBlur',
+        'focus input' : 'onFocus',
+        'click .results li' : 'onClick'
     },
     
     template: templates.main,
@@ -276,8 +277,60 @@ module.exports = Backbone.View.extend({
         return this;
     },
     
-    search : function(e){
-        App.views.vis.search($(e.target).val());
+    onBlur : function(e){
+        
+        setTimeout(function(){
+            $('.results').empty().css('display', 'none');
+        }, 200);
+    },
+    
+    onFocus : function(e){
+        this.search($.trim($(e.target).val()));
+    },
+    
+    onClick : function(e){
+        
+        var name = $(e.currentTarget).find('.title').text();
+        
+        $('input').val(name);
+        this.search(name);
+        $('.results').empty().css('display', 'none');
+    },
+    
+    onSearch : function(e){
+        
+        var val = $.trim($(e.target).val()),
+            c = String.fromCharCode(e.keyCode),
+            isWordCharacter = c.match(/\w/),
+            isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46);
+                
+        
+        if(isWordCharacter || isBackspaceOrDelete){
+            this.search(val);
+        }
+    },
+    
+    search : function(val){    
+        
+        var results = App.views.vis.search(val),
+            view = this;
+
+        results = _.chain(results)
+                .sortBy('Name') //function(r){ return r.Name + r.Process; }
+                .filter(function(r, i){ return i < 5; })
+                .value();
+            
+
+        if(results.length > 0){
+
+            var resTpl = templates.result;
+            html = _.map(results, resTpl);
+
+            $('.results').empty().append(html).css('display', 'block');
+
+        }else{
+            $('.results').empty().css('display', 'none');
+        }
     }
 });
 },{"../templates":4}],6:[function(require,module,exports){
@@ -667,8 +720,7 @@ var onMouseOut = function(node){
     if(clickEvent.holdClick) return;
     
     //Clear tooltip
-    if( !_.isUndefined(node) && _.isUndefined(node.genes) )
-        $('.tip').empty();
+    $('.tip').empty();
     
     links.paths.attr('opacity', 0);
     
@@ -742,8 +794,6 @@ var onClick = function(){
         clickEvent.target = null;
         clickEvent.holdClick = false;
         onMouseOut();
-        
-        console.log('click and mouse out');
     }
 };
 
@@ -766,7 +816,9 @@ function search(str){
             // process is visible set class
             d3.select('#' + d.parent.id).select('circle').classed('search', true);
         } 
-    });   
+    });
+    
+    return matchingGenes.data();
 }
 
 
@@ -781,8 +833,7 @@ Vis.selector = function(_){
 };
 
 Vis.search = function(str){ 
-    search(str);
-    return Vis;
+    return search(str);
 };
 
 Vis.displayNetwork = function(){
