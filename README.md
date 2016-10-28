@@ -1,6 +1,6 @@
 # Mitomodels Gene Expression Visualization
 
-This project aims to visualize gene expression profiles in the context of mithocondrial processes. See a working demo [here](http://jmvillaveces.github.io/mito_models_visualization/dist/).
+This project aims to visualize gene expression profiles in the context of mitochondrial processes. See a working demo [here](http://jmvillaveces.github.io/mito_models_visualization/dist/).
 
 ## Getting Started
 
