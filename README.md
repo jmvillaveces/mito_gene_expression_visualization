@@ -23,22 +23,28 @@ This project aims to visualize gene expression profiles in the context of mithoc
         <link href='css/App.css' rel='stylesheet' type='text/css'>
 
     </head>
-    
+
     <body></body>
-    
+
     <!-- 2. Import javascript  -->
     <script src="js/App.min.js"></script>
-    
+
     <script>
         App.init(); // 3. Initialize application!
     </script>
 </html>
 ```
 
+## Built With
+
+* [NPM](https://www.npmjs.com/) - Dependency Management
+* [GRUNT](http://gruntjs.com/) - Task Runner
+* [Backbone](http://backbonejs.org/) -  model–view–presenter (MVP) application design paradigm
+* [Handlebars](http://handlebarsjs.com/) - HTML templating
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/jmvillaveces/mito_models_visualization/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/jmvillaveces/mito_models_visualization/tags).
 
 ## Authors
 
