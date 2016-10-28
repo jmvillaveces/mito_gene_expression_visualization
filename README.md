@@ -1,6 +1,6 @@
 # Mitomodels Gene Expression Visualization
 
-This project aims to visualize gene expression profiles in the context of mithocondrial processes.
+This project aims to visualize gene expression profiles in the context of mithocondrial processes. See a working demo [here](http://jmvillaveces.github.io/mito_models_visualization/dist/).
 
 ## Getting Started
 
@@ -13,51 +13,32 @@ This project aims to visualize gene expression profiles in the context of mithoc
 4. Run
 `grunt serve`
 
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+## Usage
 
 ```
-Give the example
+<html>
+    <head>
+
+        <!-- 1. Import the app styles CSS -->
+        <link href='css/App.css' rel='stylesheet' type='text/css'>
+
+    </head>
+    
+    <body></body>
+    
+    <!-- 2. Import javascript  -->
+    <script src="js/App.min.js"></script>
+    
+    <script>
+        App.init(); // 3. Initialize application!
+    </script>
+</html>
 ```
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/jmvillaveces/mito_models_visualization/tags). 
 
 ## Authors
 
