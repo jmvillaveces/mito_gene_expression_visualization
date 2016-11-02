@@ -48,4 +48,4 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **José M. Villaveces** - [jmvillaveces](http://jmvillaveces.github.io/)
+* **José M. Villaveces** - [jmvillaveces](http://jmvillaveces.github.io/) 
